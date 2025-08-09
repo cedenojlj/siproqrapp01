@@ -61,7 +61,7 @@ class Create extends Component
         return view('livewire.product.create', [
             'classifications' => $classifications,
             'warehouses' => $warehouses,
-        ])->layout('layouts.app');
+        ]);
     }
 
     public function fillFormFromQrCode($data)

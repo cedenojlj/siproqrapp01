@@ -47,7 +47,6 @@ class Edit extends Component
 
     public function render()
     {
-        return view('livewire.customer.edit')
-            ->layout('layouts.app');
+        return view('livewire.customer.edit');
     }
 }

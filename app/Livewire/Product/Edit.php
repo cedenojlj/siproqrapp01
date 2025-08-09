@@ -67,6 +67,6 @@ class Edit extends Component
         return view('livewire.product.edit', [
             'classifications' => $classifications,
             'warehouses' => $warehouses,
-        ])->layout('layouts.app');
+        ]);
     }
 }

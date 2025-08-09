@@ -25,7 +25,7 @@ class Index extends Component
 
         return view('livewire.petition.index', [
             'petitions' => $petitions,
-        ])->layout('layouts.app');
+        ]);
     }
 
     public function delete(Petition $petition)

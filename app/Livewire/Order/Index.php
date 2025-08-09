@@ -32,7 +32,7 @@ class Index extends Component
 
         return view('livewire.order.index', [
             'orders' => $orders,
-        ])->layout('layouts.app');
+        ]);
     }
 
     public function delete(Order $order)

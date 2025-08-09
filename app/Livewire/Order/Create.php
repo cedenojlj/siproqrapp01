@@ -194,6 +194,6 @@ class Create extends Component
             'customers' => $customers,
             'warehouses' => $warehouses,
             'allProducts' => $allProducts,
-        ])->layout('layouts.app');
+        ]);
     }
 }

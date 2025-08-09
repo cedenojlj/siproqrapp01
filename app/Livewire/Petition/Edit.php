@@ -172,6 +172,6 @@ class Edit extends Component
         return view('livewire.petition.edit', [
             'customers' => $customers,
             'allProducts' => $allProducts,
-        ])->layout('layouts.app');
+        ]);
     }
 }

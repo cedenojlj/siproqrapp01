@@ -46,6 +46,6 @@ class InventoryByWarehouse extends Component
     {
         return view('livewire.report.inventory-by-warehouse', [
             'inventory' => $this->getInventoryData(),
-        ])->layout('layouts.app');
+        ]);
     }
 }

@@ -20,7 +20,7 @@ class Table extends Component
 
         return view('livewire.product.table', [
             'products' => $products,
-        ])->layout('layouts.app');
+        ]);
     }
 
     public function delete(Product $product)

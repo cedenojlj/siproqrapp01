@@ -76,6 +76,6 @@ class HistoricalMovements extends Component
     {
         return view('livewire.report.historical-movements', [
             'movements' => $this->getMovementData(),
-        ])->layout('layouts.app');
+        ]);
     }
 }

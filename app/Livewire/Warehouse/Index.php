@@ -20,7 +20,7 @@ class Index extends Component
 
         return view('livewire.warehouse.index', [
             'warehouses' => $warehouses,
-        ])->layout('layouts.app');
+        ]);
     }
 
     public function delete(Warehouse $warehouse)

@@ -34,7 +34,6 @@ class GenerateQrCodes extends Component
 
     public function render()
     {
-        return view('livewire.product.generate-qr-codes')
-            ->layout('layouts.app');
+        return view('livewire.product.generate-qr-codes');
     }
 }

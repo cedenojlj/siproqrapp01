@@ -158,6 +158,6 @@ class Create extends Component
         return view('livewire.petition.create', [
             'customers' => $customers,
             'allProducts' => $allProducts,
-        ])->layout('layouts.app');
+        ]);
     }
 }

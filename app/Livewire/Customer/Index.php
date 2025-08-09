@@ -20,7 +20,7 @@ class Index extends Component
 
         return view('livewire.customer.index', [
             'customers' => $customers,
-        ])->layout('layouts.app');
+        ]);
     }
 
     public function delete(Customer $customer)
