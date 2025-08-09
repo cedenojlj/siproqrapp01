@@ -30,7 +30,35 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav me-auto">
-
+                        @auth
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('dashboard.index') }}">{{ __('Dashboard') }}</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('products.index') }}">{{ __('Products') }}</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('customers.index') }}">{{ __('Customers') }}</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('warehouses.index') }}">{{ __('Warehouses') }}</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('petitions.index') }}">{{ __('Petitions') }}</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('orders.index') }}">{{ __('Orders') }}</a>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a id="reportsDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                    {{ __('Reports') }}
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="reportsDropdown">
+                                    <a class="dropdown-item" href="{{ route('reports.inventory-by-warehouse') }}">{{ __('Inventory by Warehouse') }}</a>
+                                    <a class="dropdown-item" href="{{ route('reports.historical-movements') }}">{{ __('Historical Movements') }}</a>
+                                </div>
+                            </li>
+                        @endauth
                     </ul>
 
                     <!-- Right Side Of Navbar -->
