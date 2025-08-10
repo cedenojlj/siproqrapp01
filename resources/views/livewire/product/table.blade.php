@@ -5,7 +5,7 @@
         </div>
         <div class="col-md-6 text-end">
             <a href="{{ route('products.create') }}" class="btn btn-primary">Create Product</a>
-            <a href="{{ route('products.generate-qrcodes') }}" class="btn btn-info">Generate QR Codes</a>
+            <a href="{{ route('products.generate-qrcodes') }}" class="btn btn-info">Generate QR</a>            
         </div>
     </div>
 

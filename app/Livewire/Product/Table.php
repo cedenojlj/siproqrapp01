@@ -6,12 +6,14 @@ use Livewire\Component;
 use App\Models\Product;
 use Livewire\WithPagination;
 
+
 class Table extends Component
 {
     use WithPagination;
 
     public $search = '';
 
+   
     public function render()
     {
         $products = Product::where('name', 'like', '%' . $this->search . '%')

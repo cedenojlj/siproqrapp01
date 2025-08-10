@@ -12,12 +12,14 @@ class Product extends Model
     
     protected $fillable = [
         'name',
-        'description',
         'sku',
-        'price',
-        'stock',
-        'classification_id',
-        'warehouse_id',
+        'type',
+        'size',
+        'GN',
+        'GW',
+        'Box',
+        'invoice_number',
+        'classification_id',        
     ];
 
     public function classification()
@@ -39,13 +41,15 @@ class Product extends Model
     {
         $data = json_encode([
             'id' => $this->id,
-            'name' => $this->name,
-            'description' => $this->description,
+            'name' => $this->name,            
             'sku' => $this->sku,
-            'price' => $this->price,
-            'stock' => $this->stock,
-            'classification_id' => $this->classification_id,
-            'warehouse_id' => $this->warehouse_id,
+            'type' => $this->type,
+            'size' => $this->size,
+            'GN' => $this->GN,
+            'GW' => $this->GW,
+            'Box' => $this->Box,
+            'invoice_number' => $this->invoice_number,
+            'classification_id' => $this->classification_id,            
         ]);
 
         return QrCode::size(200)->generate($data);

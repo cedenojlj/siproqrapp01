@@ -14,6 +14,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/products', App\Livewire\Product\Index::class)->name('products.index');
     Route::get('/products/create', App\Livewire\Product\Create::class)->name('products.create');
     Route::get('/products/{product}/edit', App\Livewire\Product\Edit::class)->name('products.edit');
+    Route::get('/products/lista', App\Livewire\Product\Lista::class)->name('products.lista');
+    Route::get('/products/modalproduct', App\Livewire\Product\ModalProduct::class)->name('products.modalproduct');
     Route::get('/products/generate-qrcodes', App\Livewire\Product\GenerateQrCodes::class)->name('products.generate-qrcodes');
     Route::get('/customers', App\Livewire\Customer\Index::class)->name('customers.index');
     Route::get('/customers/create', App\Livewire\Customer\Create::class)->name('customers.create');

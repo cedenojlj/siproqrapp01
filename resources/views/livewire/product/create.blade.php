@@ -23,49 +23,76 @@
                         </div>
                     @endif
 
-                    <form wire:submit.prevent="save">
-                        <div class="mb-3">
+                    
+
+                    <form class="row g-1" wire:submit.prevent="save">
+                        <div class="col-md-12 ">
                             <label for="name" class="form-label">Name</label>
                             <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" wire:model="name">
                             @error('name') <div class="invalid-feedback">{{ $message }}</div> @enderror
                         </div>
 
-                        <div class="mb-3">
-                            <label for="description" class="form-label">Description</label>
-                            <textarea class="form-control @error('description') is-invalid @enderror" id="description" wire:model="description"></textarea>
-                            @error('description') <div class="invalid-feedback">{{ $message }}</div> @enderror
-                        </div>
-
-                        <div class="mb-3">
+                        <div class="col-md-12 ">
                             <label for="sku" class="form-label">SKU</label>
                             <input type="text" class="form-control @error('sku') is-invalid @enderror" id="sku" wire:model="sku">
                             @error('sku') <div class="invalid-feedback">{{ $message }}</div> @enderror
                         </div>
 
-                        <div class="mb-3">
-                            <label for="price" class="form-label">Price</label>
-                            <input type="number" step="0.01" class="form-control @error('price') is-invalid @enderror" id="price" wire:model="price">
-                            @error('price') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                        <div class="col-md-12 ">
+                            <label for="size" class="form-label">Size</label>
+                            <input type="text" class="form-control @error('size') is-invalid @enderror" id="size" wire:model="size">
+                            @error('size') <div class="invalid-feedback">{{ $message }}</div> @enderror
                         </div>
 
-                        <div class="mb-3">
-                            <label for="stock" class="form-label">Stock</label>
-                            <input type="number" class="form-control @error('stock') is-invalid @enderror" id="stock" wire:model="stock">
-                            @error('stock') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                        <div class="col-md-12 ">
+                            <label for="GN" class="form-label">GN</label>
+                            <input type="text" class="form-control @error('GN') is-invalid @enderror" id="GN" wire:model="GN">
+                            @error('GN') <div class="invalid-feedback">{{ $message }}</div> @enderror
                         </div>
 
-                        <div class="mb-3">
+                        <div class="col-md-12 ">
+                            <label for="GW" class="form-label">GW</label>
+                            <input type="text" class="form-control @error('GW') is-invalid @enderror" id="GW" wire:model="GW">
+                            @error('GW') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                        </div>
+
+                        <div class="col-md-12 ">
+                            <label for="Box" class="form-label">Box</label>
+                            <input type="text" class="form-control @error('Box') is-invalid @enderror" id="Box" wire:model="Box">
+                            @error('Box') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                        </div>
+
+                        <div class="col-md-12 ">
+                            <label for="invoice_number" class="form-label">Invoice Number</label>
+                            <input type="text" class="form-control @error('invoice_number') is-invalid @enderror" id="invoice_number" wire:model="invoice_number">
+                            @error('invoice_number') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                        </div>
+
+                        {{-- <div class="col-md-12 ">
                             <label for="classification_id" class="form-label">Classification</label>
+                            
                             <select class="form-select @error('classification_id') is-invalid @enderror" id="classification_id" wire:model="classification_id">
                                 <option value="">Select Classification</option>
                                 @foreach ($classifications as $classification)
                                     <option value="{{ $classification->id }}">{{ $classification->name }}</option>
                                 @endforeach
                             </select>
+                            
                             @error('classification_id') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                        </div> --}}
+
+                        <div class="col-md-10">
+                            <label for="classification_id" class="form-label">Classification</label>
+                            <input type="text" class="form-control @error('classification_id') is-invalid @enderror" id="classification_id" wire:model="classification_id" readonly>
+                            @error('classification_id') <div class="invalid-feedback">{{ $message }}</div> @enderror
+
                         </div>
 
-                        <div class="mb-3">
+                        <div class="col-md-2 align-self-end">
+                            <livewire:Product.ModalProduct />
+                        </div>
+
+                        <div class="col-md-12 mb-2">
                             <label for="warehouse_id" class="form-label">Warehouse</label>
                             <select class="form-select @error('warehouse_id') is-invalid @enderror" id="warehouse_id" wire:model="warehouse_id">
                                 <option value="">Select Warehouse</option>
@@ -76,6 +103,12 @@
                             @error('warehouse_id') <div class="invalid-feedback">{{ $message }}</div> @enderror
                         </div>
 
+                        <div class="col-md-12 mb-2">
+                            <label for="cantidad" class="form-label">Cantidad</label>
+                            <input type="number" class="form-control @error('cantidad') is-invalid @enderror" id="cantidad" wire:model="cantidad">
+                            @error('cantidad') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                        </div>
+
                         <button type="submit" class="btn btn-primary">Save Product</button>
                     </form>
 
@@ -84,6 +117,7 @@
                     <h5>Scan QR Code to Fill Form</h5>
                     <div class="mb-3">
                         <!-- Placeholder for QR code scanner. In a real application, this would be a JavaScript-based scanner library -->
+                        
                         <textarea id="qr-data-input" class="form-control" rows="3" placeholder="Paste QR code data here or integrate a scanner..."></textarea>
                         <button type="button" class="btn btn-info mt-2" onclick="Livewire.dispatch('fillFormFromQrCode', document.getElementById('qr-data-input').value)">Fill from QR Data</button>
                     </div>

@@ -6,6 +6,7 @@ use Livewire\Component;
 use App\Models\Product;
 use App\Models\Classification;
 use App\Models\Warehouse;
+use Livewire\Attributes\On; 
 
 class Create extends Component
 {
@@ -13,16 +14,20 @@ class Create extends Component
     public $description;
     public $sku;
     public $price;
-    public $stock;
+    public $cantidad;
     public $classification_id;
     public $warehouse_id;
 
     protected $rules = [
         'name' => 'required|string|max:255',
-        'description' => 'nullable|string',
         'sku' => 'required|string|max:255|unique:products,sku',
-        'price' => 'required|numeric|min:0',
-        'stock' => 'required|integer|min:0',
+        'type' => 'nullable|string',
+        'size' => 'nullable|string',
+        'GN' => 'nullable|string',
+        'GW' => 'nullable|string',
+        'Box' => 'nullable|string',
+        'invoice_number' => 'nullable|string',
+        'cantidad' => 'required|integer|min:0',
         'classification_id' => 'required|exists:classifications,id',
         'warehouse_id' => 'required|exists:warehouses,id',
     ];
@@ -30,6 +35,12 @@ class Create extends Component
     public function mount()
     {
         // Initialize with default values if needed
+    }
+
+     #[On('colocarCodigo')] 
+    public function updatingCode($idcodigo)
+    {
+        dd($idcodigo);
     }
 
     public function save()
@@ -41,7 +52,7 @@ class Create extends Component
             'description' => $this->description,
             'sku' => $this->sku,
             'price' => $this->price,
-            'stock' => $this->stock,
+            'cantidad' => $this->cantidad,
             'classification_id' => $this->classification_id,
             'warehouse_id' => $this->warehouse_id,
         ]);
@@ -73,7 +84,7 @@ class Create extends Component
             $this->description = $scannedData['description'] ?? '';
             $this->sku = $scannedData['sku'] ?? '';
             $this->price = $scannedData['price'] ?? 0;
-            $this->stock = $scannedData['stock'] ?? 0;
+            $this->cantidad = $scannedData['cantidad'] ?? 0;
             $this->classification_id = $scannedData['classification_id'] ?? '';
             $this->warehouse_id = $scannedData['warehouse_id'] ?? '';
 
