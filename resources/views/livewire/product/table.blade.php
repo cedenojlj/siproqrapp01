@@ -4,8 +4,10 @@
             <input wire:model.debounce.300ms="search" type="text" class="form-control" placeholder="Search products...">
         </div>
         <div class="col-md-6 text-end">
-            <a href="{{ route('products.create') }}" class="btn btn-primary">Create Product</a>
-            <a href="{{ route('products.generate-qrcodes') }}" class="btn btn-info">Generate QR</a>            
+            <i class="bi bi-plus"></i>
+            <a href="{{ route('products.create') }}" class="btn btn-primary">
+                <i class="bi bi-plus-lg"></i>Create</a>
+            <a href="{{ route('products.generate-qrcodes') }}" class="btn btn-info"><i class="bi bi-qr-code"></i>Generate QR</a>            
         </div>
     </div>
 

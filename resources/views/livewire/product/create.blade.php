@@ -32,16 +32,31 @@
                             @error('name') <div class="invalid-feedback">{{ $message }}</div> @enderror
                         </div>
 
-                        <div class="col-md-12 ">
-                            <label for="sku" class="form-label">SKU</label>
-                            <input type="text" class="form-control @error('sku') is-invalid @enderror" id="sku" wire:model="sku">
-                            @error('sku') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                        <div class="col-md-12">
+                            <label for="type" class="form-label">Type</label>
+                            <input type="text" class="form-control @error('type') is-invalid @enderror" id="type" wire:model.blur="type">
+                            @error('type') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                        </div>
+
+                        <div class="col-md-12">
+                            <livewire:Product.ModalProduct />
                         </div>
 
                         <div class="col-md-12 ">
-                            <label for="size" class="form-label">Size</label>
-                            <input type="text" class="form-control @error('size') is-invalid @enderror" id="size" wire:model="size">
-                            @error('size') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                            <label for="sku" class="form-label">SKU</label>
+                            <input type="text" class="form-control @error('sku') is-invalid @enderror" id="sku" wire:model="sku"> 
+                            @error('sku') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                        
+                        </div>
+
+                         <div class="col-12 col-md-12 mt-2">
+                            <button type="button" class="btn btn-secondary" wire:click="crearSku">Generate SKU</button>
+                        </div>
+
+                        <div class="col-md-12 ">
+                            <label for="tamanio" class="form-label">Size</label>
+                            <input type="text" class="form-control @error('tamanio') is-invalid @enderror" id="tamanio" wire:model="tamanio">
+                            @error('tamanio') <div class="invalid-feedback">{{ $message }}</div> @enderror
                         </div>
 
                         <div class="col-md-12 ">
@@ -80,18 +95,16 @@
                             
                             @error('classification_id') <div class="invalid-feedback">{{ $message }}</div> @enderror
                         </div> --}}
-
-                        <div class="col-md-10">
+                       
+                        
+                       {{--  <div class="col-md-12">
                             <label for="classification_id" class="form-label">Classification</label>
                             <input type="text" class="form-control @error('classification_id') is-invalid @enderror" id="classification_id" wire:model="classification_id" readonly>
                             @error('classification_id') <div class="invalid-feedback">{{ $message }}</div> @enderror
 
-                        </div>
+                        </div> --}}
 
-                        <div class="col-md-2 align-self-end">
-                            <livewire:Product.ModalProduct />
-                        </div>
-
+                        
                         <div class="col-md-12 mb-2">
                             <label for="warehouse_id" class="form-label">Warehouse</label>
                             <select class="form-select @error('warehouse_id') is-invalid @enderror" id="warehouse_id" wire:model="warehouse_id">
@@ -109,7 +122,13 @@
                             @error('cantidad') <div class="invalid-feedback">{{ $message }}</div> @enderror
                         </div>
 
-                        <button type="submit" class="btn btn-primary">Save Product</button>
+                        {{-- input hide classification --}}
+
+                        <div class="d-none">
+                            <input type="number" class="form-control" id="hidden_classification_id" wire:model="classification_id">
+                        </div>
+
+                        <button type="submit" class="btn btn-secondary">Save Product</button>
                     </form>
 
                     <hr class="my-4">
