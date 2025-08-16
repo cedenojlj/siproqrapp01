@@ -8,15 +8,21 @@ class Order extends Model
 {
     protected $fillable = [
         'customer_id',
+        'user_id',
         'warehouse_id',
         'order_type',
-        'total_amount',
+        'total',
         'status',
     ];
 
     public function customer()
     {
         return $this->belongsTo(Customer::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 
     public function warehouse()

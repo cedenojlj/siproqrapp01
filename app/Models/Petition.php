@@ -8,13 +8,19 @@ class Petition extends Model
 {
     protected $fillable = [
         'customer_id',
-        'total_amount',
+        'user_id',
         'status',
+        'total',
     ];
 
     public function customer()
     {
         return $this->belongsTo(Customer::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 
     public function petitionProducts()

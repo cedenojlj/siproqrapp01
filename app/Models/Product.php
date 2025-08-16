@@ -27,9 +27,15 @@ class Product extends Model
         return $this->belongsTo(Classification::class);
     }
 
-    public function warehouse()
+    /* public function warehouse()
     {
         return $this->belongsTo(Warehouse::class);
+    } */
+
+     //un producto puede estar en varios almacenes
+    public function warehouses()
+    {
+        return $this->belongsToMany(Warehouse::class);
     }
 
     public function prices()

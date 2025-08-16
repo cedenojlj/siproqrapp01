@@ -33,6 +33,13 @@ class User extends Authenticatable
         'remember_token',
     ];
 
+
+    //un user puede tener muchas ordenes
+    public function orders()
+    {
+        return $this->hasMany(Order::class);
+    }
+
     /**
      * Get the attributes that should be cast.
      *

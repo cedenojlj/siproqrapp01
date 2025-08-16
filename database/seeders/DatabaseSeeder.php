@@ -26,11 +26,11 @@ class DatabaseSeeder extends Seeder
 
        // Classification::factory(10)->create();
 
-        //Customer::factory(10)->create();
+        //Customer::factory(1)->create();
 
         //Warehouse::factory(5)->create();
         
-        //Product::factory(50)->create();
+        //Product::factory(10)->create();
 
           // You can add more seeders here as needed
         // $this->call(OtherSeeder::class);

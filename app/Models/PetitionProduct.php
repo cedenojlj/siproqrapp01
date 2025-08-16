@@ -11,6 +11,7 @@ class PetitionProduct extends Model
         'product_id',
         'quantity',
         'price',
+        'subtotal',
     ];
 
     public function petition()

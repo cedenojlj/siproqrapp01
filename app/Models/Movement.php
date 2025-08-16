@@ -12,6 +12,7 @@ class Movement extends Model
         'quantity',
         'type',
         'order_id',
+        'date',
     ];
 
     public function product()
