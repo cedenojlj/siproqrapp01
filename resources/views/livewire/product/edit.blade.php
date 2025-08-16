@@ -17,51 +17,51 @@
                             <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" wire:model="name">
                             @error('name') <div class="invalid-feedback">{{ $message }}</div> @enderror
                         </div>
-
                         <div class="mb-3">
-                            <label for="description" class="form-label">Description</label>
-                            <textarea class="form-control @error('description') is-invalid @enderror" id="description" wire:model="description"></textarea>
-                            @error('description') <div class="invalid-feedback">{{ $message }}</div> @enderror
-                        </div>
+                            <label for="type" class="form-label">Type</label>
+                            <input type="text" class="form-control @error('type') is-invalid @enderror" id="type" wire:model.blur="type" disabled>
+                            @error('type') <div class="invalid-feedback">{{ $message }}</div> @enderror                       
 
                         <div class="mb-3">
                             <label for="sku" class="form-label">SKU</label>
-                            <input type="text" class="form-control @error('sku') is-invalid @enderror" id="sku" wire:model="sku">
+                            <input type="text" class="form-control @error('sku') is-invalid @enderror" id="sku" wire:model="sku" disabled>
                             @error('sku') <div class="invalid-feedback">{{ $message }}</div> @enderror
                         </div>
 
                         <div class="mb-3">
-                            <label for="price" class="form-label">Price</label>
-                            <input type="number" step="0.01" class="form-control @error('price') is-invalid @enderror" id="price" wire:model="price">
-                            @error('price') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                            <label for="size" class="form-label">Size</label>
+                            <input type="text" class="form-control @error('size') is-invalid @enderror" id="size" wire:model="size" disabled>
+                            @error('size') <div class="invalid-feedback">{{ $message }}</div> @enderror
                         </div>
 
                         <div class="mb-3">
-                            <label for="stock" class="form-label">Stock</label>
-                            <input type="number" class="form-control @error('stock') is-invalid @enderror" id="stock" wire:model="stock">
-                            @error('stock') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                            <label for="GN" class="form-label">GN</label>
+                            <input type="text" class="form-control @error('GN') is-invalid @enderror" id="GN" wire:model="GN">
+                            @error('GN') <div class="invalid-feedback">{{ $message }}</div> @enderror
                         </div>
 
                         <div class="mb-3">
-                            <label for="classification_id" class="form-label">Classification</label>
-                            <select class="form-select @error('classification_id') is-invalid @enderror" id="classification_id" wire:model="classification_id">
-                                <option value="">Select Classification</option>
-                                @foreach ($classifications as $classification)
-                                    <option value="{{ $classification->id }}">{{ $classification->name }}</option>
-                                @endforeach
-                            </select>
-                            @error('classification_id') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                            <label for="GW" class="form-label">GW</label>
+                            <input type="text" class="form-control @error('GW') is-invalid @enderror" id="GW" wire:model="GW">
+                            @error('GW') <div class="invalid-feedback">{{ $message }}</div> @enderror
                         </div>
 
                         <div class="mb-3">
-                            <label for="warehouse_id" class="form-label">Warehouse</label>
-                            <select class="form-select @error('warehouse_id') is-invalid @enderror" id="warehouse_id" wire:model="warehouse_id">
-                                <option value="">Select Warehouse</option>
-                                @foreach ($warehouses as $warehouse)
-                                    <option value="{{ $warehouse->id }}">{{ $warehouse->name }}</option>
-                                @endforeach
-                            </select>
-                            @error('warehouse_id') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                            <label for="Box" class="form-label">Box</label>
+                            <input type="text" class="form-control @error('Box') is-invalid @enderror" id="Box" wire:model="Box">
+                            @error('Box') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="invoice_number" class="form-label">Invoice Number</label>
+                            <input type="text" class="form-control @error('invoice_number') is-invalid @enderror" id="invoice_number" wire:model="invoice_number">
+                            @error('invoice_number') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                        </div>
+
+                        {{-- input hide classification --}}
+
+                        <div class="d-none">
+                            <input type="number" class="form-control" id="hidden_classification_id" wire:model="classification_id">
                         </div>
 
                         <button type="submit" class="btn btn-primary">Update Product</button>

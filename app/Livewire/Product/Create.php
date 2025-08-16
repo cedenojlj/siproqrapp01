@@ -5,27 +5,32 @@ namespace App\Livewire\Product;
 use Livewire\Component;
 use App\Models\Product;
 use App\Models\Classification;
+use App\Models\ProductWarehouse;
 use Illuminate\Support\Str;
 use App\Models\Warehouse;
 use Livewire\Attributes\On; 
 
 class Create extends Component
 {
-    public $name;
-    public $description;
+    public $name;    
     public $sku;
-    public $tamanio; // size in the database
-    public $cantidad;
-    public $classification_id;
-    public $warehouse_id;
+    public $size; // size in the database
+    public $cantidad=1;
+    public $classification_id;   
     public $type;
+    public $GN;
+    public $GW;
+    public $Box;
+    public $invoice_number;
+    public $product_id; // Added to store the product ID if needed
+    public $warehouse_id; // Added to store the selected warehouse ID
     
 
     protected $rules = [
         'name' => 'required|string|max:255',
         'sku' => 'required|string|max:255|unique:products,sku',
         'type' => 'required|string|max:255',
-        'tamanio' => 'nullable', //size en la base de datos
+        'size' => 'nullable', //size en la base de datos
         //'GN' => 'nullable',
         //'GW' => 'nullable',
         //'Box' => 'nullable',
@@ -51,7 +56,7 @@ class Create extends Component
            
             $this->name=$clasificacion->description;
             $this->type=$clasificacion->code;
-            $this->tamanio=$clasificacion->size;    
+            $this->size=$clasificacion->size;    
             $this->classification_id = $clasificacion->id;
 
         }
@@ -93,18 +98,23 @@ class Create extends Component
     {
         $this->validate();
 
-        Product::create([
+       $producto =Product::create([
             'name' => $this->name,            
-            'sku' => $this->sku,
+            'sku' => $this->sku,        
             'type' => $this->type,
-            'size' => $this->tamanio,
+            'size' => $this->size,
             'GN' => $this->GN,
             'GW' => $this->GW,
             'Box' => $this->Box,
-            'invoice_number' => $this->invoice_number,
-            'cantidad' => $this->cantidad,
+            'invoice_number' => $this->invoice_number,            
             'classification_id' => $this->classification_id,
+        ]);
+
+        //crear un productwarehouses
+        ProductWarehouse::create([
+            'product_id' => $producto->id,
             'warehouse_id' => $this->warehouse_id,
+            'stock' => $this->cantidad, // Assuming initial stock is 0
         ]);
 
         session()->flash('message', 'Product created successfully.');
@@ -130,10 +140,9 @@ class Create extends Component
         $scannedData = json_decode($data, true);
 
         if ($scannedData) {
-            $this->name = $scannedData['name'] ?? '';
-            $this->description = $scannedData['description'] ?? '';
+            $this->name = $scannedData['name'] ?? '';            
             $this->sku = $scannedData['sku'] ?? '';
-            $this->tamanio = $scannedData['tamanio'] ?? '';
+            $this->size = $scannedData['size'] ?? '';
             $this->cantidad = $scannedData['cantidad'] ?? 0;
             $this->classification_id = $scannedData['classification_id'] ?? '';
             $this->warehouse_id = $scannedData['warehouse_id'] ?? '';

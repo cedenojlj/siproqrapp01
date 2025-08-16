@@ -27,6 +27,15 @@ class Table extends Component
 
     public function delete(Product $product)
     {
+        // Verificar si el producto tiene órdenes asociadas
+        if ($product->orderProducts()->count() > 0) {
+            session()->flash('error', 'Cannot delete product with existing orders.');
+            return;
+        }
+
+        //eliminar producto de la tabla productwarehouses
+        $product->productWarehouses()->delete();
+
         $product->delete();
         session()->flash('message', 'Product deleted successfully.');
     }

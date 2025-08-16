@@ -10,34 +10,42 @@ use App\Models\Warehouse;
 class Edit extends Component
 {
     public $product;
-    public $name;
-    public $description;
+    public $name;   
     public $sku;
-    public $price;
-    public $stock;
+    public $size;    
     public $classification_id;
-    public $warehouse_id;
+    public $type;
+    public $GN;
+    public $GW;
+    public $Box;
+    public $invoice_number;
+    
 
     protected $rules = [
         'name' => 'required|string|max:255',
-        'description' => 'nullable|string',
-        'sku' => 'required|string|max:255|unique:products,sku',
-        'price' => 'required|numeric|min:0',
-        'stock' => 'required|integer|min:0',
-        'classification_id' => 'required|exists:classifications,id',
-        'warehouse_id' => 'required|exists:warehouses,id',
+        //'size' => 'nullable|string|max:255',
+        //'sku' => 'required|string|max:255|unique:products,sku',
+        //'type' => 'required|string|max:255',
+        'GN' => 'nullable|string|max:255',
+        'GW' => 'nullable|string|max:255',
+        'Box' => 'nullable|string|max:255',
+        'invoice_number' => 'nullable|string|max:255',
+        'classification_id' => 'required|exists:classifications,id',        
     ];
 
     public function mount(Product $product)
     {
         $this->product = $product;
         $this->name = $product->name;
-        $this->description = $product->description;
+        $this->type = $product->type;
         $this->sku = $product->sku;
-        $this->price = $product->price;
-        $this->stock = $product->stock;
+        $this->size = $product->size;
+        $this->GN = $product->GN;
+        $this->GW = $product->GW;
+        $this->Box = $product->Box;
+        $this->invoice_number = $product->invoice_number;
         $this->classification_id = $product->classification_id;
-        $this->warehouse_id = $product->warehouse_id;
+        
     }
 
     public function update()
@@ -45,13 +53,16 @@ class Edit extends Component
         $this->validate();
 
         $this->product->update([
-            'name' => $this->name,
-            'description' => $this->description,
-            'sku' => $this->sku,
-            'price' => $this->price,
-            'stock' => $this->stock,
+            'name' => $this->name,            
+            //'sku' => $this->sku,
+            //'size' => $this->size,
+            //'type' => $this->type,
+            'GN' => $this->GN,
+            'GW' => $this->GW,
+            'Box' => $this->Box,
+            'invoice_number' => $this->invoice_number,
             'classification_id' => $this->classification_id,
-            'warehouse_id' => $this->warehouse_id,
+            
         ]);
 
         session()->flash('message', 'Product updated successfully.');
@@ -62,11 +73,10 @@ class Edit extends Component
     public function render()
     {
         $classifications = Classification::all();
-        $warehouses = Warehouse::all();
+        
 
         return view('livewire.product.edit', [
-            'classifications' => $classifications,
-            'warehouses' => $warehouses,
+            'classifications' => $classifications
         ]);
     }
 }

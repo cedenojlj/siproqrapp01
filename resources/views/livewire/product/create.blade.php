@@ -54,9 +54,9 @@
                         </div>
 
                         <div class="col-md-12 ">
-                            <label for="tamanio" class="form-label">Size</label>
-                            <input type="text" class="form-control @error('tamanio') is-invalid @enderror" id="tamanio" wire:model="tamanio">
-                            @error('tamanio') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                            <label for="size" class="form-label">Size</label>
+                            <input type="text" class="form-control @error('size') is-invalid @enderror" id="size" wire:model="size">
+                            @error('size') <div class="invalid-feedback">{{ $message }}</div> @enderror
                         </div>
 
                         <div class="col-md-12 ">

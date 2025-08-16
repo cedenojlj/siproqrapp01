@@ -27,15 +27,35 @@ class Product extends Model
         return $this->belongsTo(Classification::class);
     }
 
+    public function orderProducts()
+    {
+        return $this->hasMany(OrderProduct::class);
+    }
+
+    public function petitionProducts()
+    {
+        return $this->hasMany(PetitionProduct::class);        
+    }
+
+
     /* public function warehouse()
     {
         return $this->belongsTo(Warehouse::class);
     } */
 
+        
      //un producto puede estar en varios almacenes
+
     public function warehouses()
     {
         return $this->belongsToMany(Warehouse::class);
+    }
+
+
+   //productwarehouse
+    public function productWarehouses()
+    {
+        return $this->hasMany(ProductWarehouse::class);
     }
 
     public function prices()
