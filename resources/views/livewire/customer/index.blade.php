@@ -1,4 +1,3 @@
-
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-12">
@@ -12,12 +11,19 @@
                         </div>
                     @endif
 
+                    @if (session()->has('error'))
+                        <div class="alert alert-danger">
+                            {{ session('error') }}
+                        </div>
+                    @endif
+
                     <div class="row mb-3">
                         <div class="col-md-6">
-                            <input wire:model.debounce.300ms="search" type="text" class="form-control" placeholder="Search customers...">
+                            <input wire:model.debounce.300ms="search" type="text" class="form-control"
+                                placeholder="Search customers...">
                         </div>
                         <div class="col-md-6 text-end">
-                            <a href="{{ route('customers.create') }}" class="btn btn-primary">Create Customer</a>
+                            <a href="{{ route('customers.create') }}" class="btn btn-primary">Create</a>
                         </div>
                     </div>
 
@@ -39,8 +45,10 @@
                                     <td>{{ $customer->email }}</td>
                                     <td>{{ $customer->phone }}</td>
                                     <td>
-                                        <a href="{{ route('customers.edit', $customer->id) }}" class="btn btn-sm btn-secondary">Edit</a>
-                                        <button wire:click="delete({{ $customer->id }})" class="btn btn-sm btn-danger" onclick="confirm('Are you sure you want to delete this customer?') || event.stopImmediatePropagation()">Delete</button>
+                                        <a href="{{ route('customers.edit', $customer->id) }}"
+                                            class="btn btn-sm btn-secondary">Edit</a>
+                                        <button wire:click="delete({{ $customer->id }})" class="btn btn-sm btn-danger"
+                                            onclick="confirm('Are you sure you want to delete this customer?') || event.stopImmediatePropagation()">Delete</button>
                                     </td>
                                 </tr>
                             @endforeach
