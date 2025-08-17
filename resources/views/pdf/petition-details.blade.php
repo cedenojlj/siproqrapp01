@@ -28,18 +28,21 @@
     </style>
 </head>
 <body>
-    <h1>Petition #{{ $petition->id }}</h1>
+    
+    
+    <h2>Report of Petition #{{ $petition->id }}</h2>
 
     <p><strong>Customer:</strong> {{ $petition->customer->name }}</p>
     <p><strong>Status:</strong> {{ $petition->status }}</p>
 
-    <h2>Products</h2>
+    <h3>Products</h3>
     <table>
         <thead>
             <tr>
                 <th>Product</th>
                 <th>Quantity</th>
                 <th>Price</th>
+                <th>Subtotal</th>
             </tr>
         </thead>
         <tbody>
@@ -48,13 +51,20 @@
                     <td>{{ $item->product->name }}</td>
                     <td>{{ $item->quantity }}</td>
                     <td>{{ number_format($item->price, 2) }}</td>
+                    <td>{{ number_format($item->quantity * $item->price, 2) }}</td>
                 </tr>
             @endforeach
         </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="3" class="text-end"><strong>Total:</strong></td>
+                <td>{{ number_format($petition->total, 2) }}</td>
+            </tr>
+        </tfoot>
     </table>
 
-    <div class="total">
-        Total Amount: {{ number_format($petition->total_amount, 2) }}
-    </div>
+    {{-- <div class="total">
+        Total: {{ number_format($petition->total, 2) }}
+    </div> --}}
 </body>
 </html>

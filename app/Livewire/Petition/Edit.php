@@ -15,18 +15,23 @@ class Edit extends Component
     public $customer_id;
     public $products = [];
     public $scannedProductSku;
+    public $status;
+    public $total;
 
     protected $rules = [
         'customer_id' => 'required|exists:customers,id',
         'products.*.product_id' => 'required|exists:products,id',
         'products.*.quantity' => 'required|numeric|min:1',
         'products.*.price' => 'required|numeric|min:0',
+        'status' => 'required|in:Pendiente,Aprobada,Rechazada',
     ];
 
     public function mount(Petition $petition)
     {
         $this->petition = $petition;
+        $this->total = $petition->total;
         $this->customer_id = $petition->customer_id;
+        $this->status = $petition->status;
         $this->products = $petition->petitionProducts->map(function ($item) {
             return [
                 'product_id' => $item->product_id,
@@ -40,7 +45,7 @@ class Edit extends Component
         }
     }
 
-    public function addProduct()
+   /* public function addProduct()
     {
         $this->products[] = ['product_id' => '', 'quantity' => 1, 'price' => 0];
     }
@@ -138,27 +143,27 @@ class Edit extends Component
         } else {
             session()->flash('qr_error', 'Product not found for scanned QR code.');
         }
-    }
+    } */
 
     public function updatePetition()
     {
         $this->validate();
 
-        $this->petition->update([
-            'customer_id' => $this->customer_id,
-            'total_amount' => array_sum(array_column($this->products, 'price')),
+        $this->petition->update([   
+
+            'status' => $this->status,
         ]);
 
-        $this->petition->petitionProducts()->delete(); // Remove old products
+       // $this->petition->petitionProducts()->delete(); // Remove old products
 
-        foreach ($this->products as $productData) {
+        /* foreach ($this->products as $productData) {
             PetitionProduct::create([
                 'petition_id' => $this->petition->id,
                 'product_id' => $productData['product_id'],
                 'quantity' => $productData['quantity'],
                 'price' => $productData['price'],
             ]);
-        }
+        } */
 
         session()->flash('message', 'Petition updated successfully.');
         return redirect()->route('petitions.index');

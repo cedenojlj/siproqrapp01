@@ -78,7 +78,7 @@
                         </div>
 
                         <div class="text-end">
-                            <h4>Total: ${{ array_sum(array_column($products, 'price')) }}</h4>
+                            <h4>Total: ${{ $totalAmount }}</h4>
                         </div>
 
                         <button type="submit" class="btn btn-primary">Create Petition</button>

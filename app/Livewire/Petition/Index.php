@@ -30,6 +30,8 @@ class Index extends Component
 
     public function delete(Petition $petition)
     {
+        $petition->petitionProducts()->delete();
+
         $petition->delete();
         session()->flash('message', 'Petition deleted successfully.');
     }

@@ -8,18 +8,21 @@ use App\Models\Product;
 use App\Models\Petition;
 use App\Models\PetitionProduct;
 use App\Models\Price;
+use Illuminate\Support\Facades\Auth;
+
 
 class Create extends Component
 {
     public $customer_id;
     public $products = [];
     public $scannedProductSku;
+    public $totalAmount = 0;
 
     protected $rules = [
         'customer_id' => 'required|exists:customers,id',
         'products.*.product_id' => 'required|exists:products,id',
         'products.*.quantity' => 'required|numeric|min:1',
-        'products.*.price' => 'required|numeric|min:0',
+        'products.*.price' => 'required|numeric|min:0',        
     ];
 
     public function mount()
@@ -40,13 +43,23 @@ class Create extends Component
 
     public function updatedProducts($value, $key)
     {
+           // Split the key to get the index and field name       
         $parts = explode('.', $key);
         $index = $parts[0];
         $field = $parts[1];
 
         if ($field === 'product_id' && !empty($value)) {
-            $this->calculateProductPrice($index);
+            $this->products[$index]['product_id'] = $value;
+           //dd($index);
+
+           $this->calculateProductPrice($index);
         }
+
+        if ($field === 'quantity' && !empty($value)) {
+            $this->products[$index]['quantity'] = $value;
+           
+        }
+       $this->totalAmount = $this->calculateTotalAmount();
     }
 
     public function updatedCustomerId()
@@ -56,6 +69,8 @@ class Create extends Component
                 $this->calculateProductPrice($index);
             }
         }
+
+       $this->totalAmount = $this->calculateTotalAmount();
     }
 
     public function calculateProductPrice($index)
@@ -133,8 +148,9 @@ class Create extends Component
 
         $petition = Petition::create([
             'customer_id' => $this->customer_id,
-            'total_amount' => array_sum(array_column($this->products, 'price')),
-            'status' => 'pending', // Default status
+            'total' => $this->totalAmount,
+            'status' => 'Pendiente', // Default status
+            'user_id' => Auth::id(), // Assuming you have Auth facade available
         ]);
 
         foreach ($this->products as $productData) {
@@ -143,11 +159,22 @@ class Create extends Component
                 'product_id' => $productData['product_id'],
                 'quantity' => $productData['quantity'],
                 'price' => $productData['price'],
+                'subtotal' => $productData['price'] * $productData['quantity'],
             ]);
         }
 
         session()->flash('message', 'Petition created successfully.');
         return redirect()->route('petitions.index');
+    }
+
+    //funcion para calcular el monto total del pedido usando $this->products
+    public function calculateTotalAmount()
+    {
+       $this->totalAmount = 0;
+       foreach ($this->products as $product) {
+           $this->totalAmount += ($product['price'] * $product['quantity']);
+       }
+         return $this->totalAmount;
     }
 
     public function render()

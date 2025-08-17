@@ -11,6 +11,12 @@
                             {{ session('message') }}
                         </div>
                     @endif
+                    
+                    @if (session()->has('error'))
+                        <div class="alert alert-danger">
+                            {{ session('error') }}
+                        </div>
+                    @endif
 
                     <div class="row mb-3">
                         <div class="col-md-6">
@@ -36,7 +42,7 @@
                                 <tr>
                                     <td>{{ $petition->id }}</td>
                                     <td>{{ $petition->customer->name }}</td>
-                                    <td>{{ number_format($petition->total_amount, 2) }}</td>
+                                    <td>{{ number_format($petition->total, 2) }}</td>
                                     <td>{{ $petition->status }}</td>
                                     <td>
                                         <a href="{{ route('petitions.show', $petition->id) }}" class="btn btn-sm btn-info">View</a>

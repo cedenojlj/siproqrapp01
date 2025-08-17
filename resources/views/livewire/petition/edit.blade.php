@@ -33,18 +33,27 @@
                                 @endforeach
                             </select>
                             @error('customer_id') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                        </div>                       
+
+                        <div class="mb-3">
+                            <label for="status" class="form-label">Status</label>
+                            <select class="form-select @error('status') is-invalid @enderror" id="status" wire:model.live="status">
+                                <option value="">Select Status</option>
+                                <option value="Pendiente">Pendiente</option>
+                                <option value="Aprobada">Aprobada</option>
+                                <option value="Rechazada">Rechazada</option>
+                            </select>
+                            @error('status') <div class="invalid-feedback">{{ $message }}</div> @enderror
                         </div>
 
-                        <hr>
-
                         <h5>Products</h5>
-                        <div class="mb-3">
+                        {{-- <div class="mb-3">
                             <label for="scannedProductSku" class="form-label">Scan QR Code or Enter SKU</label>
                             <div class="input-group">
                                 <input type="text" class="form-control" id="scannedProductSku" wire:model="scannedProductSku" placeholder="Scan QR or enter SKU">
                                 <button class="btn btn-outline-secondary" type="button" wire:click="scanQrCode">Add Product (Manual/QR)</button>
                             </div>
-                        </div>
+                        </div> --}}
 
                         @foreach ($products as $index => $productItem)
                             <div class="row mb-3 align-items-end">
@@ -60,26 +69,26 @@
                                 </div>
                                 <div class="col-md-3">
                                     <label for="quantity-{{ $index }}" class="form-label">Quantity</label>
-                                    <input type="number" class="form-control @error('products.' . $index . '.quantity') is-invalid @enderror" id="quantity-{{ $index }}" wire:model.live="products.{{ $index }}.quantity" min="1">
+                                    <input type="number" class="form-control @error('products.' . $index . '.quantity') is-invalid @enderror" id="quantity-{{ $index }}" wire:model.live="products.{{ $index }}.quantity" min="1" readonly>
                                     @error('products.' . $index . '.quantity') <div class="invalid-feedback">{{ $message }}</div> @enderror
                                 </div>
-                                <div class="col-md-2">
+                                <div class="col-md-3">
                                     <label for="price-{{ $index }}" class="form-label">Price</label>
                                     <input type="text" class="form-control" id="price-{{ $index }}" wire:model="products.{{ $index }}.price" readonly>
                                 </div>
-                                <div class="col-md-2">
+                                {{-- <div class="col-md-2">
                                     <button type="button" class="btn btn-danger" wire:click="removeProduct({{ $index }})">Remove</button>
-                                </div>
+                                </div> --}}
                             </div>
                         @endforeach
 
-                        <div class="mb-3">
+                        {{-- <div class="mb-3">
                             <button type="button" class="btn btn-secondary" wire:click="addProduct">Add Another Product</button>
-                        </div>
+                        </div> --}}
 
                         <div class="text-end">
-                            <h4>Total: ${{ array_sum(array_column($products, 'price')) }}</h4>
-                        </div>
+                            <h4>Total: ${{ $total }}</h4>
+                       </div>
 
                         <button type="submit" class="btn btn-primary">Update Petition</button>
                     </form>
