@@ -9,6 +9,7 @@ use App\Models\Petition;
 use App\Models\PetitionProduct;
 use App\Models\Price;
 use Illuminate\Support\Facades\Auth;
+use Livewire\Attributes\On; 
 
 
 class Create extends Component
@@ -17,6 +18,7 @@ class Create extends Component
     public $products = [];
     public $scannedProductSku;
     public $totalAmount = 0;
+    public $indice;
 
     protected $rules = [
         'customer_id' => 'required|exists:customers,id',
@@ -24,6 +26,31 @@ class Create extends Component
         'products.*.quantity' => 'required|numeric|min:1',
         'products.*.price' => 'required|numeric|min:0',        
     ];
+
+    function abrirModal($indice) {
+
+        $this->indice = $indice;
+        $this->dispatch('abrirModalListado');
+    }
+
+    //funcion para actualizar el producto en la lista de productos
+     #[On('colocarProducto')] 
+    function actualizarProducto($idproducto) {
+        //dd($idproducto, $this->indice);
+        if (isset($this->products[$this->indice])) {
+            $this->products[$this->indice]['product_id'] = $idproducto;
+            $this->calculateProductPrice($this->indice);
+             $this->totalAmount = $this->calculateTotalAmount();
+        } else {
+            session()->flash('error', 'Invalid product index.');
+        }
+    }
+
+   /*  #[On('actualizarTotal')]
+    function repararTotal() {
+        // Recalculate the total amount based on the current products
+        $this->totalAmount = $this->calculateTotalAmount();
+    } */
 
     public function mount()
     {
@@ -39,6 +66,7 @@ class Create extends Component
     {
         unset($this->products[$index]);
         $this->products = array_values($this->products);
+        $this->totalAmount = $this->calculateTotalAmount();
     }
 
     public function updatedProducts($value, $key)
