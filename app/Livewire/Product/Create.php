@@ -45,6 +45,30 @@ class Create extends Component
         $this->cantidad=1;
     }
 
+    //Para abrir el scanner
+    public function scanner()
+    {
+        $this->dispatch('openScannerModal');
+    }
+
+    #[On('qrValidated')] 
+    function leerScanner($data) {
+
+        $this->type = $data['type'] ?? '';
+        $this->size = $data['size'] ?? '';
+        $this->GN = $data['GN'] ?? '';
+        $this->GW = $data['GW'] ?? '';
+        $this->Box = $data['Box'] ?? '';
+        $this->invoice_number = $data['invoice'] ?? '';
+        
+    }
+
+    #[On('qrInvalid')] 
+    function manejarErrorQr($error) {
+        $this->dispatch('showError', $error);
+         session()->flash('error', $error);
+    }
+
      #[On('colocarCodigo')] 
     public function recibiendoTipo($idcodigo)
     {

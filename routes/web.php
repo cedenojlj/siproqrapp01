@@ -37,10 +37,6 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/listado', App\Livewire\Petition\Listado::class)->name('petitions.listado');
     Route::get('/modallistado', App\Livewire\Petition\ModalListado::class)->name('petitions.modalListado');
     
-   
-
-
-
     Route::get('/orders', App\Livewire\Order\Index::class)->name('orders.index');
     Route::get('/orders/create', App\Livewire\Order\Create::class)->name('orders.create');
     Route::get('/orders/{order}/edit', App\Livewire\Order\Edit::class)->name('orders.edit');
