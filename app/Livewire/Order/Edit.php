@@ -21,11 +21,13 @@ class Edit extends Component
     public $order_type; // 'entry' or 'exit'
     public $products = [];
     public $scannedProductSku;
+    public $totalAmount;
+    public $status;
 
     protected $rules = [
         'customer_id' => 'required|exists:customers,id',
         'warehouse_id' => 'required|exists:warehouses,id',
-        'order_type' => 'required|in:entry,exit',
+        'order_type' => 'required|in:Entrada,Salida',
         'products.*.product_id' => 'required|exists:products,id',
         'products.*.quantity' => 'required|numeric|min:1',
         'products.*.price' => 'required|numeric|min:0',
@@ -34,6 +36,8 @@ class Edit extends Component
     public function mount(Order $order)
     {
         $this->order = $order;
+        $this->totalAmount = $order->total;
+        $this->status = $order->status;
         $this->customer_id = $order->customer_id;
         $this->warehouse_id = $order->warehouse_id;
         $this->order_type = $order->order_type;
@@ -50,7 +54,7 @@ class Edit extends Component
         }
     }
 
-    public function addProduct()
+   /*  public function addProduct()
     {
         $this->products[] = ['product_id' => '', 'quantity' => 1, 'price' => 0];
     }
@@ -59,9 +63,9 @@ class Edit extends Component
     {
         unset($this->products[$index]);
         $this->products = array_values($this->products);
-    }
+    } */
 
-    public function updatedProducts($value, $key)
+  /*   public function updatedProducts($value, $key)
     {
         $parts = explode('.', $key);
         $index = $parts[0];
@@ -148,12 +152,13 @@ class Edit extends Component
         } else {
             session()->flash('qr_error', 'Product not found for scanned QR code.');
         }
-    }
+    } */
 
     public function updateOrder()
     {
         $this->validate();
 
+        /*
         DB::transaction(function () {
             // Revert previous stock changes and movements
             foreach ($this->order->orderProducts as $oldProduct) {
@@ -217,7 +222,15 @@ class Edit extends Component
                 ]);
             }
         });
+        */
 
+        // Update the order with the new data
+            $this->order->update([
+                
+                'status' => $this->status,
+            ]);
+       
+        
         session()->flash('message', 'Order updated successfully.');
         return redirect()->route('orders.index');
     }

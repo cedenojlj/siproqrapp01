@@ -15,7 +15,7 @@
                         <strong>Order Type:</strong> {{ ucfirst($order->order_type) }}
                     </div>
                     <div class="mb-3">
-                        <strong>Total Amount:</strong> {{ number_format($order->total_amount, 2) }}
+                        <strong>Total Amount:</strong> {{ number_format($order->total, 2) }}
                     </div>
                     <div class="mb-3">
                         <strong>Status:</strong> {{ $order->status }}
@@ -30,6 +30,7 @@
                                 <th>Product</th>
                                 <th>Quantity</th>
                                 <th>Price</th>
+                                <th>Subtotal</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -38,9 +39,16 @@
                                     <td>{{ $item->product->name }}</td>
                                     <td>{{ $item->quantity }}</td>
                                     <td>{{ number_format($item->price, 2) }}</td>
+                                    <td>{{ number_format($item->quantity * $item->price, 2) }}</td>
                                 </tr>
                             @endforeach
                         </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="3" class="text-end"><strong>Total:</strong></td>
+                                <td>{{ number_format($order->total, 2) }}</td>
+                            </tr>
+                        </tfoot>
                     </table>
 
                     <div class="text-end">

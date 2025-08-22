@@ -12,6 +12,7 @@ use App\Models\ProductWarehouse;
 use App\Models\Movement;
 use App\Models\Price;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class Create extends Component
 {
@@ -20,11 +21,13 @@ class Create extends Component
     public $order_type; // 'entry' or 'exit'
     public $products = [];
     public $scannedProductSku;
+    public $totalAmount = 0;
+    public $indice;
 
     protected $rules = [
         'customer_id' => 'required|exists:customers,id',
         'warehouse_id' => 'required|exists:warehouses,id',
-        'order_type' => 'required|in:entry,exit',
+        'order_type' => 'required|in:Entrada,Salida',
         'products.*.product_id' => 'required|exists:products,id',
         'products.*.quantity' => 'required|numeric|min:1',
         'products.*.price' => 'required|numeric|min:0',
@@ -32,7 +35,7 @@ class Create extends Component
 
     public function mount()
     {
-        $this->products[] = ['product_id' => '', 'quantity' => 1, 'price' => 0];
+       // $this->products[] = ['product_id' => '', 'quantity' => 1, 'price' => 0];
     }
 
     public function addProduct()
@@ -44,6 +47,8 @@ class Create extends Component
     {
         unset($this->products[$index]);
         $this->products = array_values($this->products);
+    
+        $this->totalAmount = $this->calculateTotalAmount();
     }
 
     public function updatedProducts($value, $key)
@@ -53,8 +58,16 @@ class Create extends Component
         $field = $parts[1];
 
         if ($field === 'product_id' && !empty($value)) {
+            
+            $this->products[$index]['product_id'] = $value;
             $this->calculateProductPrice($index);
         }
+
+        if ($field === 'quantity' && !empty($value)) {
+            $this->products[$index]['quantity'] = $value;
+           
+        }
+       $this->totalAmount = $this->calculateTotalAmount();
     }
 
     public function updatedCustomerId()
@@ -64,6 +77,8 @@ class Create extends Component
                 $this->calculateProductPrice($index);
             }
         }
+
+        $this->totalAmount = $this->calculateTotalAmount();
     }
 
     public function calculateProductPrice($index)
@@ -88,10 +103,10 @@ class Create extends Component
                             ->first();
 
         if ($classification && $priceRecord) {
-            if ($classification->unit_type === 'weight') {
-                $this->products[$index]['price'] = $priceRecord->price_weight * $quantity;
+            if ($classification->unit_type === 'Peso') {
+                $this->products[$index]['price'] = $priceRecord->price_weight;
             } else {
-                $this->products[$index]['price'] = $priceRecord->price_quantity * $quantity;
+                $this->products[$index]['price'] = $priceRecord->price_quantity;
             }
         } else {
             $this->products[$index]['price'] = 0;
@@ -127,6 +142,10 @@ class Create extends Component
                 $this->calculateProductPrice(count($this->products) - 1);
             }
 
+           // $this->eliminarProductosVacios();
+            $this->totalAmount = $this->calculateTotalAmount();
+           
+
             $this->scannedProductSku = '';
             session()->flash('qr_message', 'Product added from QR code!');
             $this->dispatch('qr-scanned-success');
@@ -144,8 +163,9 @@ class Create extends Component
                 'customer_id' => $this->customer_id,
                 'warehouse_id' => $this->warehouse_id,
                 'order_type' => $this->order_type,
-                'total_amount' => array_sum(array_column($this->products, 'price')),
-                'status' => 'completed', // Default status for simplicity
+                'total' => $this->totalAmount,
+                'status' => 'Aprobada', // Default status for simplicity
+                'user_id' => Auth::id(), 
             ]);
 
             foreach ($this->products as $productData) {
@@ -154,6 +174,7 @@ class Create extends Component
                     'product_id' => $productData['product_id'],
                     'quantity' => $productData['quantity'],
                     'price' => $productData['price'],
+                    'subtotal' => $productData['quantity'] * $productData['price'],
                 ]);
 
                 // Update product stock in warehouse
@@ -162,9 +183,9 @@ class Create extends Component
                     'warehouse_id' => $this->warehouse_id,
                 ]);
 
-                if ($this->order_type === 'entry') {
+                if ($this->order_type === 'Entrada') {
                     $productWarehouse->stock += $productData['quantity'];
-                } else { // exit
+                } else { // Salida
                     $productWarehouse->stock -= $productData['quantity'];
                 }
                 $productWarehouse->save();
@@ -176,12 +197,29 @@ class Create extends Component
                     'quantity' => $productData['quantity'],
                     'type' => $this->order_type, // 'entry' or 'exit'
                     'order_id' => $order->id,
+                    'date' => date('Y-m-d H:i:s'),
                 ]);
             }
         });
 
         session()->flash('message', 'Order created successfully.');
         return redirect()->route('orders.index');
+    }
+
+    //funcion para calcular el monto total del pedido usando $this->products
+    public function calculateTotalAmount()
+    {
+       $this->totalAmount = 0;
+       foreach ($this->products as $product) {
+           $this->totalAmount += ($product['price'] * $product['quantity']);
+       }
+         return $this->totalAmount;
+    }
+
+    function eliminarProductosVacios() : void {
+        $this->products = array_filter($this->products, function($product) {
+            return !empty($product['product_id']) && $product['price']>0;
+        });
     }
 
     public function render()

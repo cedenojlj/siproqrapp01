@@ -14,6 +14,7 @@ class Index extends Component
     use WithPagination;
 
     public $search = '';
+    public $cambiarStatus = '';
 
     public function render()
     {
@@ -37,6 +38,15 @@ class Index extends Component
 
     public function delete(Order $order)
     {
+
+        //se va a anular la orden pero sin borrar el registro original para mantener el historial
+
+        //verificar si la orden tiene status rechazada
+        if ($order->status === 'Rechazada') {
+            session()->flash('error', 'No se puede anular una orden ya rechazada.');
+            return;
+        }
+
         DB::transaction(function () use ($order) {
             // Revert stock changes
             foreach ($order->orderProducts as $orderProduct) {
@@ -45,23 +55,81 @@ class Index extends Component
                     'warehouse_id' => $order->warehouse_id,
                 ]);
 
-                if ($order->order_type === 'entry') {
+                if ($order->order_type === 'Entrada') {
                     $productWarehouse->stock -= $orderProduct->quantity;
-                } else { // exit
+                } else { // Salida
                     $productWarehouse->stock += $orderProduct->quantity;
                 }
                 $productWarehouse->save();
+
+                if ($order->order_type === 'Entrada') {
+
+                   $this->cambiarStatus = 'Salida';
+
+                }else {
+
+                    $this->cambiarStatus = 'Entrada';
+                }
+
+                // Create movement record
+                Movement::create([
+                    'product_id' => $orderProduct->product_id,
+                    'warehouse_id' => $order->warehouse_id,
+                    'quantity' => $orderProduct->quantity,
+                    'type' => $this->cambiarStatus, // 'Entrada' or 'Salida'
+                    'order_id' => $order->id,
+                    'date' => date('Y-m-d H:i:s'),
+                ]);
             }
 
             // Delete associated movements
-            Movement::where('order_id', $order->id)->delete();
+           // Movement::where('order_id', $order->id)->delete();
 
             // Delete order products
-            $order->orderProducts()->delete();
+           // $order->orderProducts()->delete();
 
             // Delete the order itself
-            $order->delete();
+           // $order->delete();
         });
+
+        $this->cambiarStatus = '';
+        $order->update(['status' => 'Rechazada']); // Update status to 'Rechazada'
+
+        session()->flash('message', 'Order cancelled successfully.');
+    }
+
+    public function borrar(Order $order)
+    {
+
+        //se va a anular la orden pero sin borrar el registro original para mantener el historial
+             
+        DB::transaction(function () use ($order) {
+            // Revert stock changes
+            foreach ($order->orderProducts as $orderProduct) {
+                $productWarehouse = ProductWarehouse::firstOrNew([
+                    'product_id' => $orderProduct->product_id,
+                    'warehouse_id' => $order->warehouse_id,
+                ]);
+
+                if ($order->order_type === 'Entrada') {
+                    $productWarehouse->stock -= $orderProduct->quantity;
+                } else { // Salida
+                    $productWarehouse->stock += $orderProduct->quantity;
+                }
+                $productWarehouse->save();
+               
+            }
+
+            // Delete associated movements
+           Movement::where('order_id', $order->id)->delete();
+
+            // Delete order products
+           $order->orderProducts()->delete();
+
+            // Delete the order itself
+           $order->delete();
+
+        });        
 
         session()->flash('message', 'Order deleted successfully.');
     }

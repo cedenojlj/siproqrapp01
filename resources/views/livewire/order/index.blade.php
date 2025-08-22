@@ -11,6 +11,11 @@
                             {{ session('message') }}
                         </div>
                     @endif
+                    @if (session()->has('error'))
+                        <div class="alert alert-danger">
+                            {{ session('error') }}
+                        </div>
+                    @endif
 
                     <div class="row mb-3">
                         <div class="col-md-6">
@@ -40,12 +45,13 @@
                                     <td>{{ $order->customer->name }}</td>
                                     <td>{{ $order->warehouse->name }}</td>
                                     <td>{{ ucfirst($order->order_type) }}</td>
-                                    <td>{{ number_format($order->total_amount, 2) }}</td>
+                                    <td>{{ number_format($order->total, 2) }}</td>
                                     <td>{{ $order->status }}</td>
                                     <td>
                                         <a href="{{ route('orders.show', $order->id) }}" class="btn btn-sm btn-info">View</a>
                                         <a href="{{ route('orders.edit', $order->id) }}" class="btn btn-sm btn-secondary">Edit</a>
                                         <button wire:click="delete({{ $order->id }})" class="btn btn-sm btn-danger" onclick="confirm('Are you sure you want to delete this order?') || event.stopImmediatePropagation()">Delete</button>
+                                        <button wire:click="borrar({{ $order->id }})" class="btn btn-sm btn-warning" onclick="confirm('Are you sure you want to delete this order?') || event.stopImmediatePropagation()">Borrar</button>   
                                     </td>
                                 </tr>
                             @endforeach
