@@ -63,7 +63,7 @@
                             <label for="scannedProductSku" class="form-label">Scan QR Code or Enter SKU</label>
                             <div class="input-group">
                                 <input type="text" class="form-control" id="scannedProductSku" wire:model="scannedProductSku" placeholder="Scan QR or enter SKU">
-                                <button class="btn btn-outline-secondary" type="button" wire:click="scanQrCode">Add Product (Manual/QR)</button>
+                                <button class="btn btn-outline-secondary" type="button" wire:click="scanQrCode">Add Product</button>
                             </div>
                         </div>
 
@@ -86,7 +86,7 @@
                                 </div>
                                 <div class="col-md-2">
                                     <label for="price-{{ $index }}" class="form-label">Price</label>
-                                    <input type="text" class="form-control" id="price-{{ $index }}" wire:model="products.{{ $index }}.price" readonly>
+                                    <input type="number" class="form-control" id="price-{{ $index }}" wire:model.live="products.{{ $index }}.price" readonly>
                                 </div>
                                 <div class="col-md-2">
                                     <button type="button" class="btn btn-danger" wire:click="removeProduct({{ $index }})"><svg
@@ -99,9 +99,9 @@
                             </div>
                         @endforeach
 
-                        <div class="mb-3">
+                        {{-- <div class="mb-3">
                             <button type="button" class="btn btn-secondary" wire:click="addProduct">Add Another Product</button>
-                        </div>
+                        </div> --}}
 
                         <div class="text-end">
                             <h4>Total: ${{ number_format($totalAmount, 2) }}</h4>

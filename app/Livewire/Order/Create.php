@@ -53,6 +53,8 @@ class Create extends Component
 
     public function updatedProducts($value, $key)
     {
+        //$this->resetValidation();
+
         $parts = explode('.', $key);
         $index = $parts[0];
         $field = $parts[1];
@@ -65,9 +67,15 @@ class Create extends Component
 
         if ($field === 'quantity' && !empty($value)) {
             $this->products[$index]['quantity'] = $value;
-           
+            $this->validarStock($index, $value);
         }
-       $this->totalAmount = $this->calculateTotalAmount();
+
+        if (!empty($value)) {
+            
+            $this->totalAmount = $this->calculateTotalAmount();
+
+        }
+       
     }
 
     public function updatedCustomerId()
@@ -121,6 +129,19 @@ class Create extends Component
         }
 
         $product = Product::where('sku', $this->scannedProductSku)->first();
+
+        //funcion para buscar el stock del producto
+        $stock = ProductWarehouse::where('product_id', $product->id)
+                                  ->where('warehouse_id', $this->warehouse_id)
+                                  ->first();
+
+        if ($stock) {
+            // Verificar si hay suficiente stock
+            if ($stock->stock < 1) {
+                session()->flash('qr_error', 'No hay suficiente stock para el producto escaneado.');
+                return;
+            }
+        }
 
         if ($product) {
             $found = false;
@@ -220,6 +241,20 @@ class Create extends Component
         $this->products = array_filter($this->products, function($product) {
             return !empty($product['product_id']) && $product['price']>0;
         });
+    }
+
+    //funcion para validar stock
+    public function validarStock($index,$value): void
+    {
+            $productid=$this->products[$index]['product_id'];            
+            $productWarehouse = ProductWarehouse::where('product_id', $productid)
+                ->where('warehouse_id', $this->warehouse_id)
+                ->first();
+            
+            if ($this->order_type === 'Salida' && $productWarehouse && $value > $productWarehouse->stock) {
+                $this->products[$index]['quantity'] = $productWarehouse->stock;
+                //$this->addError('products.'.$index.'.quantity', 'No hay suficiente stock para el producto seleccionado.');
+           }
     }
 
     public function render()
