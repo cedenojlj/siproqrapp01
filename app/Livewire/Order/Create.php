@@ -13,6 +13,7 @@ use App\Models\Movement;
 use App\Models\Price;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Livewire\Attributes\On;
 
 class Create extends Component
 {
@@ -255,6 +256,20 @@ class Create extends Component
                 $this->products[$index]['quantity'] = $productWarehouse->stock;
                 //$this->addError('products.'.$index.'.quantity', 'No hay suficiente stock para el producto seleccionado.');
            }
+    }
+
+    //funcion para abrir el escáner
+    public function abrirScanQrCode(): void
+    {
+        $this->dispatch('open-qr-scanner');
+    }
+
+    //FUNCION LEER SKU
+    #[On('enviar-sku')]
+    public function leerSku($sku): void
+    {
+        $this->scannedProductSku = $sku;
+        $this->dispatch('close-qr-scanner');
     }
 
     public function render()

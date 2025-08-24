@@ -23,6 +23,12 @@
                         </div>
                     @endif
 
+                     @if (session()->has('error'))
+                        <div class="alert alert-danger">
+                            {{ session('error') }}
+                        </div>
+                    @endif
+
                     <form wire:submit.prevent="saveOrder">
                         <div class="mb-3">
                             <label for="customer_id" class="form-label">Customer</label>
@@ -64,6 +70,7 @@
                             <div class="input-group">
                                 <input type="text" class="form-control" id="scannedProductSku" wire:model="scannedProductSku" placeholder="Scan QR or enter SKU">
                                 <button class="btn btn-outline-secondary" type="button" wire:click="scanQrCode">Add Product</button>
+                                <button class="btn btn-outline-secondary" type="button" wire:click="abrirScanQrCode">Scanner</button>
                             </div>
                         </div>
 
@@ -108,11 +115,13 @@
                         </div>
 
                         <button type="submit" class="btn btn-primary">Create Order</button>
+                        
                     </form>
                 </div>
             </div>
         </div>
     </div>
+    <div><livewire:order.modal-order /></div>
 </div>
 
 @push('scripts')
