@@ -12,7 +12,7 @@
                     @endif
 
                     <div class="mb-3">
-                        <button wire:click="generatePdf" class="btn btn-success">Generate PDF for Selected Products</button>
+                        <button wire:click="generatePdf" class="btn btn-secondary">Generate PDF for Selected Products</button>
                     </div>
 
                     <table class="table table-striped">
@@ -37,6 +37,8 @@
                             @endforeach
                         </tbody>
                     </table>
+
+                     {{-- {{ $products->links() }} --}}
                 </div>
             </div>
         </div>

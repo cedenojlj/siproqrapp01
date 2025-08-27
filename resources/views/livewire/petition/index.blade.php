@@ -20,10 +20,10 @@
 
                     <div class="row mb-3">
                         <div class="col-md-6">
-                            <input wire:model.debounce.300ms="search" type="text" class="form-control" placeholder="Search petitions...">
+                            <input wire:model.live="search" type="text" class="form-control" placeholder="Search petitions...">
                         </div>
                         <div class="col-md-6 text-end">
-                            <a href="{{ route('petitions.create') }}" class="btn btn-primary">Create Petition</a>
+                            <a href="{{ route('petitions.create') }}" class="btn btn-secondary"><i class="bi bi-plus"></i>Create Petition</a>
                         </div>
                     </div>
 
@@ -45,9 +45,9 @@
                                     <td>{{ number_format($petition->total, 2) }}</td>
                                     <td>{{ $petition->status }}</td>
                                     <td>
-                                        <a href="{{ route('petitions.show', $petition->id) }}" class="btn btn-sm btn-info">View</a>
-                                        <a href="{{ route('petitions.edit', $petition->id) }}" class="btn btn-sm btn-secondary">Edit</a>
-                                        <button wire:click="delete({{ $petition->id }})" class="btn btn-sm btn-danger" onclick="confirm('Are you sure you want to delete this petition?') || event.stopImmediatePropagation()">Delete</button>
+                                        <a href="{{ route('petitions.show', $petition->id) }}" class="btn"><i class="bi bi-eye"></i></a>
+                                        <a href="{{ route('petitions.edit', $petition->id) }}" class="btn"><i class="bi bi-pencil-square"></i></a>
+                                        <button wire:click="delete({{ $petition->id }})" class="btn" onclick="confirm('Are you sure you want to delete this petition?') || event.stopImmediatePropagation()"><i class="bi bi-trash"></i></button>
                                     </td>
                                 </tr>
                             @endforeach

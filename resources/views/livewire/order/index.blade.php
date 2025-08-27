@@ -19,10 +19,10 @@
 
                     <div class="row mb-3">
                         <div class="col-md-6">
-                            <input wire:model.debounce.300ms="search" type="text" class="form-control" placeholder="Search orders...">
+                            <input wire:model.live="search" type="text" class="form-control" placeholder="Search orders...">
                         </div>
                         <div class="col-md-6 text-end">
-                            <a href="{{ route('orders.create') }}" class="btn btn-primary">Create Order</a>
+                            <a href="{{ route('orders.create') }}" class="btn btn-secondary"><i class="bi bi-plus"></i>Create Order</a>
                         </div>
                     </div>
 
@@ -48,10 +48,10 @@
                                     <td>{{ number_format($order->total, 2) }}</td>
                                     <td>{{ $order->status }}</td>
                                     <td>
-                                        <a href="{{ route('orders.show', $order->id) }}" class="btn btn-sm btn-info">View</a>
-                                        <a href="{{ route('orders.edit', $order->id) }}" class="btn btn-sm btn-secondary">Edit</a>
-                                        <button wire:click="delete({{ $order->id }})" class="btn btn-sm btn-danger" onclick="confirm('Are you sure you want to delete this order?') || event.stopImmediatePropagation()">Delete</button>
-                                        <button wire:click="borrar({{ $order->id }})" class="btn btn-sm btn-warning" onclick="confirm('Are you sure you want to delete this order?') || event.stopImmediatePropagation()">Borrar</button>   
+                                        <a href="{{ route('orders.show', $order->id) }}" class="btn"><i class="bi bi-eye"></i></a>
+                                        <a href="{{ route('orders.edit', $order->id) }}" class="btn"><i class="bi bi-pencil-square"></i></a>
+                                        <button wire:click="delete({{ $order->id }})" class="btn" onclick="confirm('Are you sure you want to delete this order?') || event.stopImmediatePropagation()"><i class="bi bi-trash"></i></button>
+                                        {{-- <button wire:click="borrar({{ $order->id }})" class="btn" onclick="confirm('Are you sure you want to delete this order?') || event.stopImmediatePropagation()"><i class="bi bi-trash"></i></button> --}}
                                     </td>
                                 </tr>
                             @endforeach

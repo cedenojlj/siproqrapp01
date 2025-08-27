@@ -21,14 +21,14 @@
     </div>
     
     <div class="row mb-3">
-        <div class="col-md-6">
-            <input wire:model.debounce.300ms="search" type="text" class="form-control" placeholder="Search products...">
+        <div class="col-sm-12 col-md-6 mb-3 mb-md-0">
+            <input wire:model.live="search" type="text" class="form-control" placeholder="Search products...">
         </div>
-        <div class="col-md-6 text-end">
-            <i class="bi bi-plus"></i>
-            <a href="{{ route('products.create') }}" class="btn btn-primary">
-                <i class="bi bi-plus-lg"></i>Create</a>
-            <a href="{{ route('products.generate-qrcodes') }}" class="btn btn-info"><i class="bi bi-qr-code"></i>Generate QR</a>            
+        <div class="col-sm-12 col-md-6 text-end">
+
+            <a href="{{ route('products.create') }}" class="btn btn-secondary"><i class="bi bi-plus"></i>
+                Create</a>
+            <a href="{{ route('products.generate-qrcodes') }}" class="btn btn-secondary"><i class="bi bi-qr-code"></i><span class="ps-2">Generate QR</span></a>
         </div>
     </div>
    
@@ -38,7 +38,7 @@
             <tr>
                 <th>ID</th>
                 <th>Name</th>
-                <th>Description</th>
+                <th>Type - Size</th>
                 <th>Actions</th>
             </tr>
         </thead>
@@ -49,8 +49,8 @@
                     <td>{{ $product->name }}</td>
                     <td>{{ $product->type .' - '. $product->size }}</td>
                     <td>
-                        <a href="{{ route('products.edit', $product->id) }}" class="btn btn-sm btn-secondary">Edit</a>
-                        <button wire:click="delete({{ $product->id }})" class="btn btn-sm btn-danger" onclick="confirm('Are you sure you want to delete this product?') || event.stopImmediatePropagation()">Delete</button>
+                        <a href="{{ route('products.edit', $product->id) }}" class="btn"><i class="bi bi-pencil-square"></i></a>
+                        <button wire:click="delete({{ $product->id }})" class="btn" onclick="confirm('Are you sure you want to delete this product?') || event.stopImmediatePropagation()"><i class="bi bi-trash"></i></button>
                     </td>
                 </tr>
             @endforeach

@@ -17,8 +17,14 @@ class Table extends Component
     public function render()
     {
         $products = Product::where('name', 'like', '%' . $this->search . '%')
-            ->orWhere('description', 'like', '%' . $this->search . '%')
+            ->orWhere('type', 'like', '%' . $this->search . '%')
+            ->orWhere('size', 'like', '%' . $this->search . '%')
             ->paginate(10);
+
+       /*  $products = Product::where('name', 'like', '%' . $this->search . '%')
+            ->orWhere('description', 'like', '%' . $this->search . '%')
+            ->get(); */
+
 
         return view('livewire.product.table', [
             'products' => $products,

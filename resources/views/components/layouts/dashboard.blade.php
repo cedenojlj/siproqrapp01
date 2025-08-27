@@ -23,11 +23,11 @@
         <!-- Sidebar -->
         <aside id="sidebar">
             <div class="d-flex">
-                <button class="toggle-btn" type="button">
+                {{-- <button class="toggle-btn" type="button">
                     <i class="bi bi-grid"></i>
-                </button>
+                </button> --}}
                 <div class="sidebar-logo">
-                    <a href="{{ route('dashboard.index') }}">SiproqApp</a>
+                    <a href="{{ route('dashboard.index') }}"><i class="bi bi-grid"></i><span class="ps-2">SiproqApp</span></a>
                 </div>
             </div>
             <ul class="sidebar-nav">
@@ -52,7 +52,7 @@
 
                 <li class="sidebar-item">
                     <a href="{{ route('warehouses.index') }}" class="sidebar-link">
-                        <i class="bi bi-people"></i>
+                        <i class="bi bi-houses"></i>
                         <span>Almacenes</span>
                     </a>
                 </li>
@@ -66,7 +66,7 @@
 
                 <li class="sidebar-item">
                     <a href="{{ route('orders.index') }}" class="sidebar-link">
-                        <i class="bi bi-receipt"></i>
+                        <i class="bi bi-inboxes"></i>
                         <span>Ordenes</span>
                     </a>
                 </li>
@@ -78,18 +78,56 @@
                     </a>
                 </li>
 
-                {{-- agrega un dropdown para los reportes --}}
-
-                
-                
-
+                {{-- inicio de reportes --}}
 
                 <li class="sidebar-item">
+                    <a href="#reports-submenu" data-bs-toggle="collapse" class="sidebar-link collapsed">
+                        <i class="bi bi-file-earmark-bar-graph"></i>
+                        <span>Reportes</span>
+                        <i class="bi bi-chevron-down ms-auto"></i>
+                    </a>
+                    <ul id="reports-submenu" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+                        <li class="sidebar-item">
+                            <a href="{{ route('reports.inventory-by-warehouse') }}" class="sidebar-link">Inv. por Almacén</a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a href="{{ route('reports.historical-movements') }}" class="sidebar-link">Mov. Históricos</a>
+                        </li>
+                    </ul>
+                </li>
+
+                {{-- fin de reportes --}}
+
+                @auth
+                        <li class="sidebar-item">
+                    <a href="#login-submenu" data-bs-toggle="collapse" class="sidebar-link collapsed">
+                        <i class="bi bi-file-earmark-bar-graph"></i>
+                        <span>{{ Auth::user()->name }}</span>
+                        <i class="bi bi-chevron-down ms-auto"></i>
+                    </a>
+                    <ul id="login-submenu" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" href="{{ route('logout') }}" onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();" >{{ __('Logout') }}</a>
+                        
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST"
+                                        class="d-none">
+                                        @csrf
+                                    </form>
+                    </li>
+                        
+                    </ul>
+                </li>
+
+                @endauth
+
+
+                {{-- <li class="sidebar-item">
                     <a href="#" class="sidebar-link">
                         <i class="bi bi-gear"></i>
                         <span>Configuración</span>
                     </a>
-                </li>
+                </li> --}}
             </ul>
             <div class="sidebar-footer">
                 <a href="#" id="theme-toggle" class="sidebar-link">

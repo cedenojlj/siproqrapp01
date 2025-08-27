@@ -16,7 +16,7 @@
                     </div>
 
                     <div class="mb-3">
-                        <button wire:click="generatePdf" class="btn btn-success">Generate PDF Report</button>
+                        <button wire:click="generatePdf" class="btn btn-secondary">Generate PDF Report</button>
                     </div>
 
                     <table class="table table-striped">

@@ -153,7 +153,7 @@
 
                     <hr class="my-4">
 
-                    <h5>Scan QR Code to Fill Form</h5>
+                    {{-- <h5>Scan QR Code to Fill Form</h5>
                     <div class="mb-3">
                         <!-- Placeholder for QR code scanner. In a real application, this would be a JavaScript-based scanner library -->
 
@@ -162,7 +162,7 @@
                         <button type="button" class="btn btn-info mt-2"
                             onclick="Livewire.dispatch('fillFormFromQrCode', document.getElementById('qr-data-input').value)">Fill
                             from QR Data</button>
-                    </div>
+                    </div> --}}
                 </div>
             </div>
         </div>

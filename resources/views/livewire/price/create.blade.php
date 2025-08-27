@@ -40,7 +40,7 @@
                             @error('price_weight') <div class="invalid-feedback">{{ $message }}</div> @enderror
                         </div>
 
-                        <button type="submit" class="btn btn-primary">Save Price</button>
+                        <button type="submit" class="btn btn-secondary">Save Price</button>
                     </form>
                 </div>
             </div>

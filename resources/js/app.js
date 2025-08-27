@@ -3,11 +3,19 @@ import './bootstrap';
 document.addEventListener('DOMContentLoaded', function () {
     const sidebar = document.getElementById('sidebar');
     const sidebarToggle = document.getElementById('sidebar-toggle');
+    const desktopToggle = document.querySelector('.toggle-btn');
 
     // Mobile sidebar toggle
     if (sidebarToggle) {
         sidebarToggle.addEventListener('click', () => {
             sidebar.classList.toggle('is-open');
+        });
+    }
+
+    // Desktop sidebar toggle
+    if (desktopToggle) {
+        desktopToggle.addEventListener('click', () => {
+            sidebar.classList.toggle('desktop-collapsed');
         });
     }
 

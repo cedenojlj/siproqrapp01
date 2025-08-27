@@ -14,10 +14,10 @@
 
                     <div class="row mb-3">
                         <div class="col-md-6">
-                            <input wire:model.debounce.300ms="search" type="text" class="form-control" placeholder="Search warehouses...">
+                            <input wire:model.live="search" type="text" class="form-control" placeholder="Search warehouses...">
                         </div>
                         <div class="col-md-6 text-end">
-                            <a href="{{ route('warehouses.create') }}" class="btn btn-primary">Create Warehouse</a>
+                            <a href="{{ route('warehouses.create') }}" class="btn btn-secondary"><i class="bi bi-plus"></i>Create Warehouse</a>
                         </div>
                     </div>
 
@@ -37,8 +37,8 @@
                                     <td>{{ $warehouse->name }}</td>
                                     <td>{{ $warehouse->location }}</td>
                                     <td>
-                                        <a href="{{ route('warehouses.edit', $warehouse->id) }}" class="btn btn-sm btn-secondary">Edit</a>
-                                        <button wire:click="delete({{ $warehouse->id }})" class="btn btn-sm btn-danger" onclick="confirm('Are you sure you want to delete this warehouse?') || event.stopImmediatePropagation()">Delete</button>
+                                        <a href="{{ route('warehouses.edit', $warehouse->id) }}" class="btn "><i class="bi bi-pencil-square"></i></a>
+                                        <button wire:click="delete({{ $warehouse->id }})" class="btn" onclick="confirm('Are you sure you want to delete this warehouse?') || event.stopImmediatePropagation()"><i class="bi bi-trash"></i></button>
                                     </td>
                                 </tr>
                             @endforeach

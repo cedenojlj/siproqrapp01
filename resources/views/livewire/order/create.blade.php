@@ -114,8 +114,8 @@
                             <h4>Total: ${{ number_format($totalAmount, 2) }}</h4>
                         </div>
 
-                        <button type="submit" class="btn btn-primary">Create Order</button>
-                        
+                        <button type="submit" class="btn btn-secondary">Create Order</button>
+
                     </form>
                 </div>
             </div>

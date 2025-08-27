@@ -5,6 +5,7 @@ namespace App\Livewire\Product;
 use Livewire\Component;
 use App\Models\Product;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Livewire\WithPagination;
 
 class GenerateQrCodes extends Component
 {
@@ -14,6 +15,7 @@ class GenerateQrCodes extends Component
     public function mount()
     {
         $this->products = Product::all();
+       
     }
 
     public function generatePdf()
@@ -34,6 +36,7 @@ class GenerateQrCodes extends Component
 
     public function render()
     {
+         //$this->products = Product::paginate(10);
         return view('livewire.product.generate-qr-codes');
     }
 }

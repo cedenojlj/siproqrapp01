@@ -112,7 +112,7 @@
                             <h4>Total: ${{ $totalAmount }}</h4>
                         </div>
 
-                        <button type="submit" class="btn btn-primary">Create Petition</button>
+                        <button type="submit" class="btn btn-secondary">Create Petition</button>
                     </form>
                 </div>
             </div>

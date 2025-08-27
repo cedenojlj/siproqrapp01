@@ -24,7 +24,7 @@
                             @error('location') <div class="invalid-feedback">{{ $message }}</div> @enderror
                         </div>
 
-                        <button type="submit" class="btn btn-primary">Save Warehouse</button>
+                        <button type="submit" class="btn btn-secondary">Save Warehouse</button>
                     </form>
                 </div>
             </div>

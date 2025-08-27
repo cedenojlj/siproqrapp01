@@ -19,11 +19,11 @@
 
                     <div class="row mb-3">
                         <div class="col-md-6">
-                            <input wire:model.debounce.300ms="search" type="text" class="form-control"
+                            <input wire:model.live="search" type="text" class="form-control"
                                 placeholder="Search customers...">
                         </div>
                         <div class="col-md-6 text-end">
-                            <a href="{{ route('customers.create') }}" class="btn btn-primary">Create</a>
+                            <a href="{{ route('customers.create') }}" class="btn btn-secondary"><i class="bi bi-plus"></i>Create</a>
                         </div>
                     </div>
 
@@ -46,9 +46,9 @@
                                     <td>{{ $customer->phone }}</td>
                                     <td>
                                         <a href="{{ route('customers.edit', $customer->id) }}"
-                                            class="btn btn-sm btn-secondary">Edit</a>
-                                        <button wire:click="delete({{ $customer->id }})" class="btn btn-sm btn-danger"
-                                            onclick="confirm('Are you sure you want to delete this customer?') || event.stopImmediatePropagation()">Delete</button>
+                                            class="btn"><i class="bi bi-pencil-square"></i></a>
+                                        <button wire:click="delete({{ $customer->id }})" class="btn"
+                                            onclick="confirm('Are you sure you want to delete this customer?') || event.stopImmediatePropagation()"><i class="bi bi-trash"></i></button>
                                     </td>
                                 </tr>
                             @endforeach
