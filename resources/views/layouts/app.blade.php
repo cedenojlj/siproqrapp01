@@ -50,6 +50,9 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('orders.index') }}">{{ __('Orders') }}</a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('users.index') }}">{{ __('Users') }}</a>
+                            </li>
                             <li class="nav-item dropdown">
                                 <a id="reportsDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ __('Reports') }}

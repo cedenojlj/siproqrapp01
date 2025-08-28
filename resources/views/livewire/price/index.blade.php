@@ -16,9 +16,12 @@
                             <input wire:model.live="search" type="text" class="form-control"
                                 placeholder="Search by product or customer...">
                         </div>
-                        <div class="col-md-6 text-end">
-                            <a href="{{ route('prices.create') }}" class="btn btn-secondary"><i class="bi bi-plus"></i>Create</a>
-                        </div>
+
+                        @can('create precios')
+                            <div class="col-md-6 text-end">
+                                <a href="{{ route('prices.create') }}" class="btn btn-secondary"><i class="bi bi-plus"></i>Create</a>
+                            </div>
+                        @endcan
                     </div>
 
                     <table class="table table-striped">
@@ -41,10 +44,14 @@
                                     <td>{{ $price->price_quantity }}</td>
                                     <td>{{ $price->price_weight }}</td>
                                     <td>
-                                        <a href="{{ route('prices.edit', $price->id) }}"
-                                            class="btn"><i class="bi bi-pencil-square"></i></a>
-                                        <button wire:click="delete({{ $price->id }})" class="btn"
-                                            onclick="confirm('Are you sure you want to delete this price?') || event.stopImmediatePropagation()"><i class="bi bi-trash"></i></button>
+                                        @can('update precios')
+                                            <a href="{{ route('prices.edit', $price->id) }}"
+                                                class="btn"><i class="bi bi-pencil-square"></i></a>
+                                        @endcan
+                                        @can('delete precios')
+                                            <button wire:click="delete({{ $price->id }})" class="btn"
+                                                onclick="confirm('Are you sure you want to delete this price?') || event.stopImmediatePropagation()"><i class="bi bi-trash"></i></button>
+                                        @endcan
                                     </td>
                                 </tr>
                             @endforeach

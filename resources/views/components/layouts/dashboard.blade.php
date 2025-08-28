@@ -27,7 +27,8 @@
                     <i class="bi bi-grid"></i>
                 </button> --}}
                 <div class="sidebar-logo">
-                    <a href="{{ route('dashboard.index') }}"><i class="bi bi-grid"></i><span class="ps-2">SiproqApp</span></a>
+                    <a href="{{ route('dashboard.index') }}"><i class="bi bi-grid"></i><span
+                            class="ps-2">SiproqApp</span></a>
                 </div>
             </div>
             <ul class="sidebar-nav">
@@ -37,87 +38,114 @@
                         <span>Dashboard</span>
                     </a>
                 </li>
-                <li class="sidebar-item">
-                    <a href="{{ route('products.index') }}" class="sidebar-link">
-                        <i class="bi bi-box-seam"></i>
-                        <span>Productos</span>
-                    </a>
-                </li>
-                <li class="sidebar-item">
-                    <a href="{{ route('customers.index') }}" class="sidebar-link">
-                        <i class="bi bi-people"></i>
-                        <span>Clientes</span>
-                    </a>
-                </li>
 
-                <li class="sidebar-item">
-                    <a href="{{ route('warehouses.index') }}" class="sidebar-link">
-                        <i class="bi bi-houses"></i>
-                        <span>Almacenes</span>
-                    </a>
-                </li>
+                @can('read products')
+                    <li class="sidebar-item">
+                        <a href="{{ route('products.index') }}" class="sidebar-link">
+                            <i class="bi bi-box-seam"></i>
+                            <span>Productos</span>
+                        </a>
+                    </li>
+                @endcan
 
-                <li class="sidebar-item">
-                    <a href="{{ route('petitions.index') }}" class="sidebar-link">
-                        <i class="bi bi-receipt"></i>
-                        <span>Pedidos</span>
-                    </a>
-                </li>
+                @can('read customers')
+                    <li class="sidebar-item">
+                        <a href="{{ route('customers.index') }}" class="sidebar-link">
+                            <i class="bi bi-people"></i>
+                            <span>Clientes</span>
+                        </a>
+                    </li>
+                @endcan
 
-                <li class="sidebar-item">
-                    <a href="{{ route('orders.index') }}" class="sidebar-link">
-                        <i class="bi bi-inboxes"></i>
-                        <span>Ordenes</span>
-                    </a>
-                </li>
+                @can('read warehouses')
+                    <li class="sidebar-item">
+                        <a href="{{ route('warehouses.index') }}" class="sidebar-link">
+                            <i class="bi bi-houses"></i>
+                            <span>Almacenes</span>
+                        </a>
+                    </li>
+                @endcan
 
-                <li class="sidebar-item">
-                    <a href="{{ route('prices.index') }}" class="sidebar-link">
-                        <i class="bi bi-receipt"></i>
-                        <span>Precios</span>
-                    </a>
-                </li>
+                @can('read petitions')
+                    <li class="sidebar-item">
+                        <a href="{{ route('petitions.index') }}" class="sidebar-link">
+                            <i class="bi bi-receipt"></i>
+                            <span>Pedidos</span>
+                        </a>
+                    </li>
+                @endcan
+
+                @can('read orders')
+                    <li class="sidebar-item">
+                        <a href="{{ route('orders.index') }}" class="sidebar-link">
+                            <i class="bi bi-inboxes"></i>
+                            <span>Ordenes</span>
+                        </a>
+                    </li>
+                @endcan
+
+                @can('read prices')
+                    <li class="sidebar-item">
+                        <a href="{{ route('prices.index') }}" class="sidebar-link">
+                            <i class="bi bi-receipt"></i>
+                            <span>Precios</span>
+                        </a>
+                    </li>
+                @endcan
+
+                @can('read users')
+                    <li class="sidebar-item">
+                        <a href="{{ route('users.index') }}" class="sidebar-link">
+                            <i class="bi bi-person-lock"></i>
+                            <span>Roles</span>
+                        </a>
+                    </li>
+                @endcan
+
+
 
                 {{-- inicio de reportes --}}
-
-                <li class="sidebar-item">
-                    <a href="#reports-submenu" data-bs-toggle="collapse" class="sidebar-link collapsed">
-                        <i class="bi bi-file-earmark-bar-graph"></i>
-                        <span>Reportes</span>
-                        <i class="bi bi-chevron-down ms-auto"></i>
-                    </a>
-                    <ul id="reports-submenu" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
-                        <li class="sidebar-item">
-                            <a href="{{ route('reports.inventory-by-warehouse') }}" class="sidebar-link">Inv. por Almacén</a>
-                        </li>
-                        <li class="sidebar-item">
-                            <a href="{{ route('reports.historical-movements') }}" class="sidebar-link">Mov. Históricos</a>
-                        </li>
-                    </ul>
-                </li>
-
+                @can('ver reportes')
+                    <li class="sidebar-item">
+                        <a href="#reports-submenu" data-bs-toggle="collapse" class="sidebar-link collapsed">
+                            <i class="bi bi-file-earmark-bar-graph"></i>
+                            <span>Reportes</span>
+                            <i class="bi bi-chevron-down ms-auto"></i>
+                        </a>
+                        <ul id="reports-submenu" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+                            <li class="sidebar-item">
+                                <a href="{{ route('reports.inventory-by-warehouse') }}" class="sidebar-link">Inv. por
+                                    Almacén</a>
+                            </li>
+                            <li class="sidebar-item">
+                                <a href="{{ route('reports.historical-movements') }}" class="sidebar-link">Mov.
+                                    Históricos</a>
+                            </li>
+                        </ul>
+                    </li>
+                @endcan
                 {{-- fin de reportes --}}
 
                 @auth
-                        <li class="sidebar-item">
-                    <a href="#login-submenu" data-bs-toggle="collapse" class="sidebar-link collapsed">
-                        <i class="bi bi-file-earmark-bar-graph"></i>
-                        <span>{{ Auth::user()->name }}</span>
-                        <i class="bi bi-chevron-down ms-auto"></i>
-                    </a>
-                    <ul id="login-submenu" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
-                        <li class="sidebar-item">
-                            <a class="sidebar-link" href="{{ route('logout') }}" onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();" >{{ __('Logout') }}</a>
-                        
-                            <form id="logout-form" action="{{ route('logout') }}" method="POST"
-                                        class="d-none">
-                                        @csrf
-                                    </form>
+                    <li class="sidebar-item">
+                        <a href="#login-submenu" data-bs-toggle="collapse" class="sidebar-link collapsed">
+                            <i class="bi bi-file-earmark-bar-graph"></i>
+                            <span>{{ Auth::user()->name }}</span>
+                            <i class="bi bi-chevron-down ms-auto"></i>
+                        </a>
+                        <ul id="login-submenu" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+                            <li class="sidebar-item">
+                                <a class="sidebar-link" href="{{ route('logout') }}"
+                                    onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">{{ __('Logout') }}</a>
+
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                    @csrf
+                                </form>
+                            </li>
+
+                        </ul>
                     </li>
-                        
-                    </ul>
-                </li>
 
                 @endauth
 

@@ -45,10 +45,15 @@
                                     <td>{{ $customer->email }}</td>
                                     <td>{{ $customer->phone }}</td>
                                     <td>
-                                        <a href="{{ route('customers.edit', $customer->id) }}"
-                                            class="btn"><i class="bi bi-pencil-square"></i></a>
-                                        <button wire:click="delete({{ $customer->id }})" class="btn"
-                                            onclick="confirm('Are you sure you want to delete this customer?') || event.stopImmediatePropagation()"><i class="bi bi-trash"></i></button>
+                                        @can('update customers')
+                                            <a href="{{ route('customers.edit', $customer->id) }}"
+                                                class="btn"><i class="bi bi-pencil-square"></i></a>
+                                        @endcan
+
+                                        @can('delete customers')
+                                            <button wire:click="delete({{ $customer->id }})" class="btn"
+                                                onclick="confirm('Are you sure you want to delete this customer?') || event.stopImmediatePropagation()"><i class="bi bi-trash"></i></button>
+                                        @endcan
                                     </td>
                                 </tr>
                             @endforeach

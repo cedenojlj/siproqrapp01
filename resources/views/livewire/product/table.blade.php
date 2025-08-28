@@ -25,10 +25,12 @@
             <input wire:model.live="search" type="text" class="form-control" placeholder="Search products...">
         </div>
         <div class="col-sm-12 col-md-6 text-end">
-
-            <a href="{{ route('products.create') }}" class="btn btn-secondary"><i class="bi bi-plus"></i>
-                Create</a>
-            <a href="{{ route('products.generate-qrcodes') }}" class="btn btn-secondary"><i class="bi bi-qr-code"></i><span class="ps-2">Generate QR</span></a>
+            @can('create products')
+                <a href="{{ route('products.create') }}" class="btn btn-secondary"><i class="bi bi-plus"></i>
+                    Create</a>
+            
+                <a href="{{ route('products.generate-qrcodes') }}" class="btn btn-secondary"><i class="bi bi-qr-code"></i><span class="ps-2">Generate QR</span></a>
+            @endcan
         </div>
     </div>
    
@@ -49,8 +51,12 @@
                     <td>{{ $product->name }}</td>
                     <td>{{ $product->type .' - '. $product->size }}</td>
                     <td>
-                        <a href="{{ route('products.edit', $product->id) }}" class="btn"><i class="bi bi-pencil-square"></i></a>
-                        <button wire:click="delete({{ $product->id }})" class="btn" onclick="confirm('Are you sure you want to delete this product?') || event.stopImmediatePropagation()"><i class="bi bi-trash"></i></button>
+                        @can('update products')
+                            <a href="{{ route('products.edit', $product->id) }}" class="btn"><i class="bi bi-pencil-square"></i></a>
+                        @endcan
+                        @can('delete products')
+                            <button wire:click="delete({{ $product->id }})" class="btn" onclick="confirm('Are you sure you want to delete this product?') || event.stopImmediatePropagation()"><i class="bi bi-trash"></i></button>
+                        @endcan
                     </td>
                 </tr>
             @endforeach
