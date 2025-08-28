@@ -75,15 +75,16 @@
         </div>
 
         <div class="row">
-            <div class="col-12">
+            <div class="col-12 col-md-12 mb-3">
                 <div class="card border-0 shadow-sm">
                     <div class="card-header">
-                        <h5 class="card-title mb-0">Actividad Reciente</h5>
+                        <h5 class="card-title mb-0">Monthly Orders and Petitions</h5>
                     </div>
                     <div class="card-body">
-                        <p class="card-text">Aquí iría un gráfico o una tabla con la actividad reciente.</p>
-                        <div style="height: 300px;" class="bg-light d-flex align-items-center justify-content-center rounded">
-                            <span>Gráfico de Actividad</span>
+                        <div class="row">
+                            <div class="col-11">
+                                <canvas id="monthly-activity-chart" height="400px"></canvas>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -91,3 +92,25 @@
         </div>
     </div>
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const ctx = document.getElementById('monthly-activity-chart').getContext('2d');
+        const chartData = @json($this->chartData);
+
+        new Chart(ctx, {
+            type: 'line',
+            data: chartData,
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    });
+</script>
