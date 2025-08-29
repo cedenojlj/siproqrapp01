@@ -15,7 +15,7 @@
                             </div>
                             <div class="col">
                                 <h5 class="card-title text-muted fw-light mb-1">Productos</h5>
-                                <h3 class="fw-bold mb-0">2,350</h3>
+                                <h3 class="fw-bold mb-0">{{ $productosCount }}</h3>
                             </div>
                         </div>
                     </div>
@@ -31,8 +31,8 @@
                                 </div>
                             </div>
                             <div class="col">
-                                <h5 class="card-title text-muted fw-light mb-1">Clientes</h5>
-                                <h3 class="fw-bold mb-0">1,024</h3>
+                                <h5 class="card-title text-muted fw-light mb-1">Ordenes</h5>
+                                <h3 class="fw-bold mb-0">{{ $ordenesCount }}</h3>
                             </div>
                         </div>
                     </div>
@@ -49,7 +49,7 @@
                             </div>
                             <div class="col">
                                 <h5 class="card-title text-muted fw-light mb-1">Pedidos</h5>
-                                <h3 class="fw-bold mb-0">432</h3>
+                                <h3 class="fw-bold mb-0">{{ $peticionesCount }}</h3>
                             </div>
                         </div>
                     </div>
@@ -66,7 +66,7 @@
                             </div>
                             <div class="col">
                                 <h5 class="card-title text-muted fw-light mb-1">Ventas</h5>
-                                <h3 class="fw-bold mb-0">$12,500</h3>
+                                <h3 class="fw-bold mb-0">${{ $ordenesTotal }}</h3>
                             </div>
                         </div>
                     </div>

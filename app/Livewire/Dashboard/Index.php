@@ -6,16 +6,27 @@ use Livewire\Component;
 use Livewire\Attributes\Layout;
 use App\Models\Order;
 use App\Models\Petition;
+use App\Models\Product;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+
 
 #[Layout('components.layouts.dashboard')]
 class Index extends Component
 {
     public $chartData;
+    public $productosCount;
+    public $ordenesCount;
+    public $peticionesCount;
+    public $ordenesTotal;
 
     public function mount()
     {
         $this->prepareChartData();
+        $this->productosCount = Product::all()->count();
+        $this->ordenesCount = Order::where('user_id', Auth::id())->count();
+        $this->peticionesCount = Petition::where('user_id', Auth::id())->count();
+        $this->ordenesTotal = Order::where('user_id', Auth::id())->sum('total');
     }
 
     public function prepareChartData()
@@ -26,6 +37,7 @@ class Index extends Component
                 DB::raw("strftime('%m', created_at) as month")
             )
             ->where(DB::raw("strftime('%Y', created_at)"), date('Y'))
+            ->where('user_id', Auth::id())
             ->groupBy('year', 'month')
             ->get()
             ->toArray();
@@ -36,6 +48,7 @@ class Index extends Component
                 DB::raw("strftime('%m', created_at) as month")
             )
             ->where(DB::raw("strftime('%Y', created_at)"), date('Y'))
+            ->where('user_id', Auth::id())
             ->groupBy('year', 'month')
             ->get()
             ->toArray();
