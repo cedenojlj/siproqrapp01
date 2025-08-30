@@ -19,18 +19,39 @@ class Index extends Component
 
     public function render()
     {
-        $orders = Order::with('customer', 'warehouse')
-            ->where(function ($query) {
-                $query->where('status', 'like', '%' . $this->search . '%')
-                      ->orWhere('order_type', 'like', '%' . $this->search . '%')
-                      ->orWhereHas('customer', function ($query) {
-                          $query->where('name', 'like', '%' . $this->search . '%');
-                      })
-                      ->orWhereHas('warehouse', function ($query) {
-                          $query->where('name', 'like', '%' . $this->search . '%');
-                      });
-            })->where('user_id', Auth::id())
-            ->paginate(10);
+        /** @disregard P1013 */
+        $user = auth()->user();
+
+        if ($user->hasRole('superadmin')) {
+            $orders = Order::with('customer', 'warehouse')
+                ->where(function ($query) {
+                    $query->where('status', 'like', '%' . $this->search . '%')
+                        ->orWhere('order_type', 'like', '%' . $this->search . '%')
+                        ->orWhereHas('customer', function ($query) {
+                            $query->where('name', 'like', '%' . $this->search . '%');
+                        })
+                        ->orWhereHas('warehouse', function ($query) {
+                            $query->where('name', 'like', '%' . $this->search . '%');
+                        });
+                })
+                ->paginate(10);
+        } else {
+
+            $orders = Order::with('customer', 'warehouse')
+                ->where(function ($query) {
+                    $query->where('status', 'like', '%' . $this->search . '%')
+                        ->orWhere('order_type', 'like', '%' . $this->search . '%')
+                        ->orWhereHas('customer', function ($query) {
+                            $query->where('name', 'like', '%' . $this->search . '%');
+                        })
+                        ->orWhereHas('warehouse', function ($query) {
+                            $query->where('name', 'like', '%' . $this->search . '%');
+                        });
+                })
+                ->where('user_id', Auth::id())
+                ->paginate(10);
+        }       
+             
 
         return view('livewire.order.index', [
             'orders' => $orders,

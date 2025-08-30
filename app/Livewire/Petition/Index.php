@@ -15,15 +15,38 @@ class Index extends Component
 
     public function render()
     {
-        $petitions = Petition::with('customer')
+          /** @disregard P1013 */
+        $user = auth()->user();
+
+        if ($user->hasRole('superadmin')) {
+
+            $petitions = Petition::with('customer')
             ->where(function ($query) {
                 $query->where('status', 'like', '%' . $this->search . '%')
                       ->orWhereHas('customer', function ($query) {
                           $query->where('name', 'like', '%' . $this->search . '%');
                       });
-            })->where('user_id', Auth::id())
+            })
             ->paginate(10);
 
+        return view('livewire.petition.index', [
+            'petitions' => $petitions,
+        ]);
+            
+        } else {
+
+            $petitions = Petition::with('customer')
+            ->where(function ($query) {
+                $query->where('status', 'like', '%' . $this->search . '%')
+                      ->orWhereHas('customer', function ($query) {
+                          $query->where('name', 'like', '%' . $this->search . '%');
+                      });
+            })
+            ->where('user_id', Auth::id())
+            ->paginate(10);
+
+        }     
+        
         return view('livewire.petition.index', [
             'petitions' => $petitions,
         ]);
