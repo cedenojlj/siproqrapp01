@@ -99,6 +99,33 @@
         const ctx = document.getElementById('monthly-activity-chart').getContext('2d');
         const chartData = @json($this->chartData);
 
+        // Helper to convert hex to rgba for a softer area fill
+        const hexToRgba = (hex, alpha) => {
+            let r = 0, g = 0, b = 0;
+            if (hex.match(/^#/)) {
+                if (hex.length === 4) {
+                    r = parseInt(hex[1] + hex[1], 16);
+                    g = parseInt(hex[2] + hex[2], 16);
+                    b = parseInt(hex[3] + hex[3], 16);
+                } else if (hex.length === 7) {
+                    r = parseInt(hex.substring(1, 3), 16);
+                    g = parseInt(hex.substring(3, 5), 16);
+                    b = parseInt(hex.substring(5, 7), 16);
+                }
+            }
+            return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+        };
+
+        // Smooth lines and add area fill
+        chartData.datasets.forEach(dataset => {
+            dataset.tension = 0.4; // Smoothens the line
+            dataset.fill = true; // Adds area under the line
+            if (dataset.borderColor) {
+                // Use a semi-transparent version of the border color for the fill
+                dataset.backgroundColor = hexToRgba(dataset.borderColor, 0.2);
+            }
+        });
+
         new Chart(ctx, {
             type: 'line',
             data: chartData,
@@ -108,6 +135,16 @@
                 scales: {
                     y: {
                         beginAtZero: true
+                    }
+                },
+                interaction: {
+                    mode: 'index',
+                    intersect: false,
+                },
+                plugins: {
+                    tooltip: {
+                        mode: 'index',
+                        intersect: false,
                     }
                 }
             }

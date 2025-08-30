@@ -70,16 +70,12 @@ class Index extends Component
                 [
                     'label' => 'Orders',
                     'data' => $ordersData,
-                    'borderColor' => 'rgba(75, 192, 192, 1)',
-                    'fill' => false,
-                    'tension' => 0.1
+                    'borderColor' => '#3B82F6', // Blue
                 ],
                 [
                     'label' => 'Petitions',
                     'data' => $petitionsData,
-                    'borderColor' => 'rgba(255, 99, 132, 1)',
-                    'fill' => false,
-                    'tension' => 0.1
+                    'borderColor' => '#1CC809', // Green
                 ]
             ]
         ];
