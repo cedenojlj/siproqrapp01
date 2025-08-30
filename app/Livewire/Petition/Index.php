@@ -5,6 +5,7 @@ namespace App\Livewire\Petition;
 use Livewire\Component;
 use App\Models\Petition;
 use Livewire\WithPagination;
+use Illuminate\Support\Facades\Auth;
 
 class Index extends Component
 {
@@ -20,7 +21,7 @@ class Index extends Component
                       ->orWhereHas('customer', function ($query) {
                           $query->where('name', 'like', '%' . $this->search . '%');
                       });
-            })
+            })->where('user_id', Auth::id())
             ->paginate(10);
 
         return view('livewire.petition.index', [

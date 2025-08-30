@@ -8,6 +8,7 @@ use Livewire\WithPagination;
 use Illuminate\Support\Facades\DB;
 use App\Models\ProductWarehouse;
 use App\Models\Movement;
+use Illuminate\Support\Facades\Auth;
 
 class Index extends Component
 {
@@ -28,7 +29,7 @@ class Index extends Component
                       ->orWhereHas('warehouse', function ($query) {
                           $query->where('name', 'like', '%' . $this->search . '%');
                       });
-            })
+            })->where('user_id', Auth::id())
             ->paginate(10);
 
         return view('livewire.order.index', [
