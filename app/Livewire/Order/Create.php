@@ -135,14 +135,16 @@ class Create extends Component
         $stock = ProductWarehouse::where('product_id', $product->id)
                                   ->where('warehouse_id', $this->warehouse_id)
                                   ->first();
-
-        if ($stock) {
+        
+        if ($this->order_type === 'Salida') {
             // Verificar si hay suficiente stock
-            if ($stock->stock < 1) {
+            if ($stock && $stock->stock < 1) {
                 session()->flash('qr_error', 'No hay suficiente stock para el producto escaneado.');
                 return;
             }
         }
+
+            
 
         if ($product) {
             $found = false;

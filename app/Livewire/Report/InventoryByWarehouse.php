@@ -33,7 +33,7 @@ class InventoryByWarehouse extends Component
 
     public function getInventoryData()
     {
-        $query = ProductWarehouse::with('product', 'warehouse');
+        $query = ProductWarehouse::with('product', 'warehouse')->orderBy('product_id');
 
         if ($this->selectedWarehouseId) {
             $query->where('warehouse_id', $this->selectedWarehouseId);
