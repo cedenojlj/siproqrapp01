@@ -19,44 +19,47 @@
 
                         @can('create precios')
                             <div class="col-md-6 text-end">
-                                <a href="{{ route('prices.create') }}" class="btn btn-secondary"><i class="bi bi-plus"></i>Create</a>
+                                <a href="{{ route('prices.create') }}" class="btn btn-secondary"><i
+                                        class="bi bi-plus"></i>Create</a>
                             </div>
                         @endcan
                     </div>
 
-                    <table class="table table-striped">
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Product</th>
-                                <th>Customer</th>
-                                <th>Price Quantity</th>
-                                <th>Price Weight</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($prices as $price)
+                    <div class="table-responsive">
+                        <table class="table table-striped table-responsive">
+                            <thead>
                                 <tr>
-                                    <td>{{ $price->id }}</td>
-                                    <td>{{ $price->product->name }}</td>
-                                    <td>{{ $price->customer->name }}</td>
-                                    <td>{{ $price->price_quantity }}</td>
-                                    <td>{{ $price->price_weight }}</td>
-                                    <td>
-                                        @can('update precios')
-                                            <a href="{{ route('prices.edit', $price->id) }}"
-                                                class="btn"><i class="bi bi-pencil-square"></i></a>
-                                        @endcan
-                                        @can('delete precios')
-                                            <button wire:click="delete({{ $price->id }})" class="btn"
-                                                onclick="confirm('Are you sure you want to delete this price?') || event.stopImmediatePropagation()"><i class="bi bi-trash"></i></button>
-                                        @endcan
-                                    </td>
+                                    <th>ID</th>
+                                    <th>Product</th>
+                                    <th>Customer</th>
+                                    <th>Price Quantity</th>
+                                    <th>Price Weight</th>
+                                    <th>Actions</th>
                                 </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+                                @foreach ($prices as $price)
+                                    <tr>
+                                        <td>{{ $price->id }}</td>
+                                        <td>{{ $price->product->name }}</td>
+                                        <td>{{ $price->customer->name }}</td>
+                                        <td>{{ $price->price_quantity }}</td>
+                                        <td>{{ $price->price_weight }}</td>
+                                        <td>
+                                            @can('update precios')
+                                                <a href="{{ route('prices.edit', $price->id) }}" class="btn"><i
+                                                        class="bi bi-pencil-square"></i></a>
+                                            @endcan
+                                            @can('delete precios')
+                                                <button wire:click="delete({{ $price->id }})" class="btn"><i
+                                                        class="bi bi-trash"></i></button>
+                                            @endcan
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
 
                     {{ $prices->links() }}
                 </div>
