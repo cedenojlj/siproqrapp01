@@ -176,6 +176,7 @@
             <main class="content px-4 py-3">
                 <div class="container-fluid">
                     {{ $slot }}
+                    @yield('content')
                 </div>
             </main>
         </div>
