@@ -80,4 +80,11 @@ class Product extends Model
 
         return QrCode::size(200)->generate($data);
     }
+
+    //stock por producto    public function getTotalStockAttribute()
+    
+    public function getTotalStockAttribute()
+    {
+        return $this->productWarehouses()->sum('stock');
+    }   
 }

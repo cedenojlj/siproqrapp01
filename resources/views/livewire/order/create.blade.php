@@ -80,7 +80,7 @@
                                     <label for="product-{{ $index }}" class="form-label">Product</label>
                                     <select class="form-select @error('products.' . $index . '.product_id') is-invalid @enderror" id="product-{{ $index }}" wire:model.live="products.{{ $index }}.product_id">
                                         <option value="">Select Product</option>
-                                        @foreach ($allProducts as $product)
+                                        @foreach ($availableProducts as $product)
                                             <option value="{{ $product->id }}">{{ $product->name }} (SKU: {{ $product->sku }})</option>
                                         @endforeach
                                     </select>
@@ -114,7 +114,7 @@
                             <h4>Total: ${{ number_format($totalAmount, 2) }}</h4>
                         </div>
 
-                        <button type="submit" class="btn btn-secondary">Create Order</button>
+                        <button type="submit" class="btn btn-secondary" {{ count($products)>0 ? '' : 'disabled' }}>Create Order</button>
 
                     </form>
                 </div>

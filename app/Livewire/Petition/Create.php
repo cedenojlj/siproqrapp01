@@ -8,9 +8,9 @@ use App\Models\Product;
 use App\Models\Petition;
 use App\Models\PetitionProduct;
 use App\Models\Price;
+use App\Models\ProductWarehouse;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\On; 
-
 
 class Create extends Component
 {
@@ -36,7 +36,12 @@ class Create extends Component
     //funcion para actualizar el producto en la lista de productos
      #[On('colocarProducto')] 
     function actualizarProducto($idproducto) {
-        //dd($idproducto, $this->indice);
+        // Validar stock antes de actualizar el producto
+
+        if (!$this->validateStock($idproducto)) {            
+            return; // Si no hay stock, salir de la función
+        }
+
         if (isset($this->products[$this->indice])) {
             $this->products[$this->indice]['product_id'] = $idproducto;
             $this->calculateProductPrice($this->indice);
@@ -46,12 +51,7 @@ class Create extends Component
         }
     }
 
-   /*  #[On('actualizarTotal')]
-    function repararTotal() {
-        // Recalculate the total amount based on the current products
-        $this->totalAmount = $this->calculateTotalAmount();
-    } */
-
+   
     public function mount()
     {
         $this->products[] = ['product_id' => '', 'quantity' => 1, 'price' => 0];
@@ -85,9 +85,15 @@ class Create extends Component
 
         if ($field === 'quantity' && !empty($value)) {
             $this->products[$index]['quantity'] = $value;
+            $this->validateMaxQuantity($index, $value); // Validate max quantity
            
         }
-       $this->totalAmount = $this->calculateTotalAmount();
+
+        if (!empty($value)) {
+            // Recalculate the total amount whenever a product detail is updated
+            $this->totalAmount = $this->calculateTotalAmount();
+        }
+       
     }
 
     public function updatedCustomerId()
@@ -141,6 +147,15 @@ class Create extends Component
         }
 
         $product = Product::where('sku', $this->scannedProductSku)->first();
+
+        //suma de stock por producto
+        $stock = ProductWarehouse::where('product_id', $product->id)
+                                  ->sum('stock');
+
+         if ($stock < 1) {
+            session()->flash('qr_error', 'No hay suficiente stock para el producto escaneado.');
+            return;
+        }
 
         if ($product) {
             $found = false;
@@ -205,14 +220,50 @@ class Create extends Component
          return $this->totalAmount;
     }
 
+    //funcion para validar stock
+    public function validateStock($idproducto)
+    {
+
+         $producto= Product::find($idproducto);
+
+         if (!$producto) {
+            session()->flash('qr_error', 'Producto no encontrado' );
+            return false;
+        }
+
+        if ($producto->getTotalStockAttribute() < 1) {
+            session()->flash('qr_error', 'No hay suficiente stock para el producto' );
+            return false;
+        }
+        return true;
+    }
+
+    //funcion para validar maxima cantidad del producto
+    public function validateMaxQuantity($index, $value):void
+    {
+        $producto= Product::find($this->products[$index]['product_id']);
+
+        $cantidadmaxima = $producto->getTotalStockAttribute();
+        if ($value > $cantidadmaxima) {
+            $this->products[$index]['quantity'] = $cantidadmaxima;
+            session()->flash('qr_error', 'Cantidad maxima alcanzada para el producto' );           
+        }        
+    }
+
     public function render()
     {
         $customers = Customer::all();
         $allProducts = Product::all();
 
+        // productos con stock mayor que 0
+        $availableProducts = $allProducts->filter(function ($product) {
+            return $product->getTotalStockAttribute() > 0;
+        });
+
         return view('livewire.petition.create', [
             'customers' => $customers,
             'allProducts' => $allProducts,
+            'availableProducts' => $availableProducts,
         ]);
     }
 }

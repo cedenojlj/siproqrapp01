@@ -58,7 +58,7 @@
                                         id="product-{{ $index }}"
                                         wire:model.live="products.{{ $index }}.product_id">
                                         <option value="">Select Product</option>
-                                        @foreach ($allProducts as $product)
+                                        @foreach ($availableProducts as $product)
                                             <option value="{{ $product->id }}">{{ $product->name }} (SKU:
                                                 {{ $product->sku }})</option>
                                         @endforeach
@@ -68,6 +68,7 @@
                                     @enderror
                                 </div>
 
+                                
                                 <div class="col-1 col-md-1">
                                     <button type="button" class="btn btn-danger"
                                         wire:click="abrirModal({{ $index }})">Add</button>
@@ -84,6 +85,8 @@
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
                                 </div>
+
+
                                 <div class="col-10 col-md-2">
                                     <label for="price-{{ $index }}" class="form-label">Price</label>
                                     <input type="text" class="form-control" id="price-{{ $index }}"
@@ -112,7 +115,7 @@
                             <h4>Total: ${{ $totalAmount }}</h4>
                         </div>
 
-                        <button type="submit" class="btn btn-secondary">Create Petition</button>
+                        <button type="submit" class="btn btn-secondary" {{ count($products) > 0 ? '' : 'disabled' }}>Create Petition</button>
                     </form>
                 </div>
             </div>

@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\On;
 
+
 class Create extends Component
 {
     public $customer_id;
@@ -36,7 +37,7 @@ class Create extends Component
 
     public function mount()
     {
-       // $this->products[] = ['product_id' => '', 'quantity' => 1, 'price' => 0];
+        // $this->products[] = ['product_id' => '', 'quantity' => 1, 'price' => 0];
     }
 
     public function addProduct()
@@ -48,7 +49,7 @@ class Create extends Component
     {
         unset($this->products[$index]);
         $this->products = array_values($this->products);
-    
+
         $this->totalAmount = $this->calculateTotalAmount();
     }
 
@@ -61,7 +62,7 @@ class Create extends Component
         $field = $parts[1];
 
         if ($field === 'product_id' && !empty($value)) {
-            
+
             $this->products[$index]['product_id'] = $value;
             $this->calculateProductPrice($index);
         }
@@ -72,11 +73,9 @@ class Create extends Component
         }
 
         if (!empty($value)) {
-            
-            $this->totalAmount = $this->calculateTotalAmount();
 
+            $this->totalAmount = $this->calculateTotalAmount();
         }
-       
     }
 
     public function updatedCustomerId()
@@ -108,8 +107,8 @@ class Create extends Component
 
         $classification = $product->classification;
         $priceRecord = Price::where('product_id', $productId)
-                            ->where('customer_id', $this->customer_id)
-                            ->first();
+            ->where('customer_id', $this->customer_id)
+            ->first();
 
         if ($classification && $priceRecord) {
             if ($classification->unit_type === 'Peso') {
@@ -133,18 +132,23 @@ class Create extends Component
 
         //funcion para buscar el stock del producto
         $stock = ProductWarehouse::where('product_id', $product->id)
-                                  ->where('warehouse_id', $this->warehouse_id)
-                                  ->first();
-        
+            ->where('warehouse_id', $this->warehouse_id)
+            ->first();
+
         if ($this->order_type === 'Salida') {
-            // Verificar si hay suficiente stock
-            if ($stock && $stock->stock < 1) {
-                session()->flash('qr_error', 'No hay suficiente stock para el producto escaneado.');
+            if ($stock) {
+                // Verificar si hay suficiente stock
+                if ($stock->stock < 1) {
+                    session()->flash('qr_error', 'No hay suficiente stock para el producto escaneado.');
+                    return;
+                }
+            } else {
+                session()->flash('qr_error', 'Producto no encontrado en el almacén.');
                 return;
             }
         }
 
-            
+
 
         if ($product) {
             $found = false;
@@ -166,9 +170,9 @@ class Create extends Component
                 $this->calculateProductPrice(count($this->products) - 1);
             }
 
-           // $this->eliminarProductosVacios();
+            // $this->eliminarProductosVacios();
             $this->totalAmount = $this->calculateTotalAmount();
-           
+
 
             $this->scannedProductSku = '';
             session()->flash('qr_message', 'Product added from QR code!');
@@ -189,7 +193,7 @@ class Create extends Component
                 'order_type' => $this->order_type,
                 'total' => $this->totalAmount,
                 'status' => 'Aprobada', // Default status for simplicity
-                'user_id' => Auth::id(), 
+                'user_id' => Auth::id(),
             ]);
 
             foreach ($this->products as $productData) {
@@ -233,31 +237,32 @@ class Create extends Component
     //funcion para calcular el monto total del pedido usando $this->products
     public function calculateTotalAmount()
     {
-       $this->totalAmount = 0;
-       foreach ($this->products as $product) {
-           $this->totalAmount += ($product['price'] * $product['quantity']);
-       }
-         return $this->totalAmount;
+        $this->totalAmount = 0;
+        foreach ($this->products as $product) {
+            $this->totalAmount += ($product['price'] * $product['quantity']);
+        }
+        return $this->totalAmount;
     }
 
-    function eliminarProductosVacios() : void {
-        $this->products = array_filter($this->products, function($product) {
-            return !empty($product['product_id']) && $product['price']>0;
+    function eliminarProductosVacios(): void
+    {
+        $this->products = array_filter($this->products, function ($product) {
+            return !empty($product['product_id']) && $product['price'] > 0;
         });
     }
 
     //funcion para validar stock
-    public function validarStock($index,$value): void
+    public function validarStock($index, $value): void
     {
-            $productid=$this->products[$index]['product_id'];            
-            $productWarehouse = ProductWarehouse::where('product_id', $productid)
-                ->where('warehouse_id', $this->warehouse_id)
-                ->first();
-            
-            if ($this->order_type === 'Salida' && $productWarehouse && $value > $productWarehouse->stock) {
-                $this->products[$index]['quantity'] = $productWarehouse->stock;
-                //$this->addError('products.'.$index.'.quantity', 'No hay suficiente stock para el producto seleccionado.');
-           }
+        $productid = $this->products[$index]['product_id'];
+        $productWarehouse = ProductWarehouse::where('product_id', $productid)
+            ->where('warehouse_id', $this->warehouse_id)
+            ->first();
+
+        if ($this->order_type === 'Salida' && $productWarehouse && $value > $productWarehouse->stock) {
+            $this->products[$index]['quantity'] = $productWarehouse->stock;
+            //$this->addError('products.'.$index.'.quantity', 'No hay suficiente stock para el producto seleccionado.');
+        }
     }
 
     //funcion para abrir el escáner
@@ -280,10 +285,16 @@ class Create extends Component
         $warehouses = Warehouse::all();
         $allProducts = Product::all();
 
+        // productos con stock mayor que 0
+        $availableProducts = $allProducts->filter(function ($product) {
+            return $product->getTotalStockAttribute() > 0;
+        });
+
         return view('livewire.order.create', [
             'customers' => $customers,
             'warehouses' => $warehouses,
             'allProducts' => $allProducts,
+            'availableProducts' => $availableProducts,
         ]);
     }
 }
