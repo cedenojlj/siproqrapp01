@@ -28,7 +28,7 @@
                 </button> --}}
                 <div class="sidebar-logo">
                     <a href="{{ route('dashboard.index') }}"><i class="bi bi-grid"></i><span
-                            class="ps-2">SiproqApp</span></a>
+                            class="ps-2">Saycexapp</span></a>
                 </div>
             </div>
             <ul class="sidebar-nav">

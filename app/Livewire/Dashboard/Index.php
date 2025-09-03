@@ -33,10 +33,10 @@ class Index extends Component
     {
         $orders = Order::select(
                 DB::raw('count(id) as `count`'),
-                DB::raw("strftime('%Y', created_at) as year"),
-                DB::raw("strftime('%m', created_at) as month")
+                DB::raw('YEAR(created_at) as year'),
+                DB::raw('MONTH(created_at) as month')
             )
-            ->where(DB::raw("strftime('%Y', created_at)"), date('Y'))
+            ->whereYear('created_at', date('Y'))
             ->where('user_id', Auth::id())
             ->groupBy('year', 'month')
             ->get()
@@ -44,10 +44,10 @@ class Index extends Component
 
         $petitions = Petition::select(
                 DB::raw('count(id) as `count`'),
-                DB::raw("strftime('%Y', created_at) as year"),
-                DB::raw("strftime('%m', created_at) as month")
+                DB::raw('YEAR(created_at) as year'),
+                DB::raw('MONTH(created_at) as month')
             )
-            ->where(DB::raw("strftime('%Y', created_at)"), date('Y'))
+            ->whereYear('created_at', date('Y'))
             ->where('user_id', Auth::id())
             ->groupBy('year', 'month')
             ->get()
