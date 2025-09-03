@@ -129,7 +129,7 @@ class Create extends Component
                             ->first();
 
         if ($classification && $priceRecord) {
-            if ($classification->unit_type === 'weight') {
+            if ($classification->unit_type === 'Peso') {
                 $this->products[$index]['price'] = $priceRecord->price_weight * $quantity;
             } else {
                 $this->products[$index]['price'] = $priceRecord->price_quantity * $quantity;

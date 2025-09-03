@@ -20,7 +20,7 @@ class ProductFactory extends Factory
             //
             'name' => $this->faker->name(),            
             'sku' => $this->faker->unique()->swiftBicNumber(),
-            'classification_id' => $this->faker->numberBetween(1, 10),
+            'classification_id' => \App\Models\Classification::factory(),
             'type' => $this->faker->word(),
             'size' => $this->faker->word(),
             'GN' => $this->faker->word(),

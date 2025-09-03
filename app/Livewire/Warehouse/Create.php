@@ -12,7 +12,7 @@ class Create extends Component
 
     protected $rules = [
         'name' => 'required|string|max:255|unique:warehouses,name',
-        'location' => 'nullable|string|max:255',
+        'location' => 'required|string|max:255',
     ];
 
     public function save()

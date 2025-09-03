@@ -25,12 +25,13 @@ class Edit extends Component
     public $status;
 
     protected $rules = [
-        'customer_id' => 'required|exists:customers,id',
-        'warehouse_id' => 'required|exists:warehouses,id',
-        'order_type' => 'required|in:Entrada,Salida',
-        'products.*.product_id' => 'required|exists:products,id',
-        'products.*.quantity' => 'required|numeric|min:1',
-        'products.*.price' => 'required|numeric|min:0',
+        // 'customer_id' => 'required|exists:customers,id',
+        // 'warehouse_id' => 'required|exists:warehouses,id',
+        // 'order_type' => 'required|in:Entrada,Salida',
+        // 'products.*.product_id' => 'required|exists:products,id',
+        // 'products.*.quantity' => 'required|numeric|min:1',
+        // 'products.*.price' => 'required|numeric|min:0',
+        'status' => 'required|in:Pendiente,Aprobada,Rechazada',
     ];
 
     public function mount(Order $order)

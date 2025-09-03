@@ -64,6 +64,9 @@ class Create extends Component
         if ($field === 'product_id' && !empty($value)) {
 
             $this->products[$index]['product_id'] = $value;
+            if (!isset($this->products[$index]['quantity'])) {
+                $this->products[$index]['quantity'] = 1;
+            }
             $this->calculateProductPrice($index);
         }
 
