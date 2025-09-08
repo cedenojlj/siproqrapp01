@@ -13,7 +13,7 @@
                     </div>
                     <div class="modal-body">
 
-                        <livewire:product.qr-scanner />
+                        <livewire:product.qrscanner />
 
                     </div>
                 </div>

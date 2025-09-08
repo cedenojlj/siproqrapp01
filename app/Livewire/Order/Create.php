@@ -282,6 +282,14 @@ class Create extends Component
         $this->dispatch('close-qr-scanner');
     }
 
+    //FUNCION SKU INVALIDO
+    #[On('skuInvalid')]
+    public function skuInvalid(): void
+    {
+        session()->flash('qr_error', 'QR no contiene un JSON válido o falta el campo "sku".');
+        $this->dispatch('cerrarScanner');
+    }
+
     public function render()
     {
         $customers = Customer::all();

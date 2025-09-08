@@ -23,13 +23,12 @@ class Create extends Component
     public $Box;
     public $invoice_number;
     public $product_id; // Added to store the product ID if needed
-    public $warehouse_id; // Added to store the selected warehouse ID
-    
+    public $warehouse_id; // Added to store the selected warehouse ID   
 
     protected $rules = [
         'name' => 'required|string|max:255',
         'sku' => 'required|string|max:255|unique:products,sku',
-        'type' => 'required|string|max:255',
+        'type' => 'required|string|max:255|exists:classifications,code',
         'size' => 'nullable', //size en la base de datos
         //'GN' => 'nullable',
         //'GW' => 'nullable',
@@ -54,19 +53,23 @@ class Create extends Component
     #[On('qrValidated')] 
     function leerScanner($data) {
 
-        $this->type = $data['type'] ?? '';
-        $this->size = $data['size'] ?? '';
-        $this->GN = $data['GN'] ?? '';
-        $this->GW = $data['GW'] ?? '';
-        $this->Box = $data['Box'] ?? '';
-        $this->invoice_number = $data['invoice'] ?? '';
+        //dd($data);
+
+        $this->type = $data['TYPE'] ?? '';
+        $this->size = $data['SIZE'] ?? '';
+        $this->GN = $data['G.N.'] ?? '';
+        $this->GW = $data['G.W'] ?? '';
+        $this->Box = $data['BOX'] ?? '';
+        $this->invoice_number = $data['INVOICE'] ?? '';
         
     }
 
     #[On('qrInvalid')] 
     function manejarErrorQr($error) {
-        $this->dispatch('showError', $error);
-         session()->flash('error', $error);
+       // $this->dispatch('showError', $error);
+      // dd('estoy en el error');
+         session()->flash('qr_error', $error);
+         $this->dispatch('cerrarScanner');
     }
 
      #[On('colocarCodigo')] 
@@ -177,4 +180,5 @@ class Create extends Component
             session()->flash('qr_error', 'Invalid QR code data.');
         }
     }
+    
 }

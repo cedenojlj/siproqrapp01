@@ -2,14 +2,12 @@
     <div class="row justify-content-center">
 
         <div class="col-md-8">
+            
+             <div class="col-md-12">
+                    <livewire:escaneo />
+             </div>
+               
 
-            <div class="col-md-12 mb-3">
-                <button type="button" class="btn btn-secondary" wire:click="scanner">Scanner</button>
-            </div>
-
-            <div class="col-md-12">
-                <livewire:product.modal-qrscanner />
-            </div>
             <div class="card">
                 <div class="card-header">{{ __('Create New Product') }}</div>
 
@@ -33,7 +31,7 @@
                     @endif
 
 
-
+                        
 
                     <form class="row g-1" wire:submit.prevent="save">
 
@@ -169,7 +167,7 @@
     </div>
 </div>
 
-@push('scripts')
+@script
     <script>
         document.addEventListener('livewire:initialized', () => {
             Livewire.on('qr-scanned-success', () => {
@@ -179,4 +177,4 @@
             });
         });
     </script>
-@endpush
+@endscript

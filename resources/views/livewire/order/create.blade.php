@@ -1,6 +1,11 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-10">
+
+             <div class="col-md-12">
+                    <livewire:escaneosku />
+             </div>
+             
             <div class="card">
                 <div class="card-header">{{ __('Create New Order') }}</div>
 

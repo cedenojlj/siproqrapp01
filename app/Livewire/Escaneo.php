@@ -1,30 +1,49 @@
 <?php
 
-namespace App\Livewire\Product;
+namespace App\Livewire;
 
 use Livewire\Component;
 
-class Qrscanner extends Component
+class Escaneo extends Component
 {
-    
-    public $result = '';
 
-    public function setResult($data)
+    /**
+     * Propiedad para almacenar el resultado y mostrarlo en la vista.
+     */
+    public string $scannedResult = '';
+
+    /**
+     * Esta es la acción que será llamada desde JavaScript.
+     * Livewire se encarga de la comunicación automáticamente.
+     *
+     * @param string $decodedText El texto decodificado del QR.
+     */
+    public function processQrCode(string $decodedText)
     {
-        $this->result = $data;
-        $parsed = $this->parseAndValidate($data);
+        // --- Aquí va tu lógica de negocio ---
+        // Puedes buscar en la BD, validar un ticket, etc.
+        // Por ahora, solo mostraremos un mensaje de éxito.
 
-        if ($parsed['valid']) {
-            $this->dispatch('qrValidated', $parsed['data']);
-            if (session()->has('warning')) {
-                session()->reflash(); // Mantener advertencia
+        if ($decodedText) {
+            //$this->scannedResult = '✅ Código QR procesado correctamente: ' . $decodedText;
+            $parsed = $this->parseAndValidate($decodedText);
+           // dd($parsed);
+
+            if ($parsed['valid']) {
+                $this->dispatch('qrValidated', $parsed['data']);
+                if (session()->has('warning')) {
+                    session()->reflash(); // Mantener advertencia
+                }
+            } else {
+                //session()->flash('error', $parsed['error']);
+                $this->dispatch('qrInvalid', $parsed['error']);
             }
         } else {
-            session()->flash('error', $parsed['error']);
-            $this->dispatch('qrInvalid', $parsed['error']);
+            $this->scannedResult = '❌ Error: No se recibió ningún código.';
         }
     }
-    
+
+
     private function parseAndValidate($text)
     {
         $pairs = [];
@@ -62,8 +81,8 @@ class Qrscanner extends Component
         }
 
         // --- 3. Definir campos ---
-        $required = ['type', 'size', 'invoice'];
-        $optional = ['GN', 'GW', 'Box'];
+        $required = ['TYPE', 'SIZE', 'INVOICE'];
+        $optional = ['G.N.', 'G.W', 'BOX'];
         $allFields = array_merge($required, $optional);
 
         $missingRequired = [];
@@ -100,16 +119,8 @@ class Qrscanner extends Component
         ];
     }
 
-    function startScan() : void {
-        $this->dispatch('qrScannerstart');
-    }
-
-    function stopScan() : void {
-        $this->dispatch('qrScannerstop');
-    }
-
     public function render()
     {
-        return view('livewire.product.qrscanner');
+        return view('livewire.escaneo');
     }
 }

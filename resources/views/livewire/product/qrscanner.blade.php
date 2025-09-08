@@ -5,10 +5,10 @@
         </div>
         <div class="card-body">
             <div class="mb-3">
-                <button type="button" class="btn btn-success me-2" onclick="startScan()">
+                <button type="button" class="btn btn-success me-2" wire:click="startScan">
                     📷 Encender
                 </button>
-                <button type="button" class="btn btn-danger" onclick="stopScan()">
+                <button type="button" class="btn btn-danger" wire:click="stopScan">
                     🔴 Apagar
                 </button>
             </div>
@@ -20,14 +20,26 @@
 </div>
 
 @script
+    @assets
     <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
+    @endassets
+    {{-- <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script> --}}
     <script>
         let html5QrcodeScanner = null;
 
+        $wire.on('qrScannerstart', () => {
+            console.log('Livewire component loaded');
+            startScan()
+        });
+
         function startScan() {
+
+            console.log('estoy dentro del metodo startScan');
+
             const successCallback = (decodedText) => {
                 const div = document.getElementById('qr-reader-results');
-                div.innerHTML = `<div class="alert alert-info small">Leído: <code>${decodedText}</code></div>`;
+                div.innerHTML =
+                    `<div class="alert alert-info small">Leído: <code>${decodedText}</code></div>`;
                 @this.setResult(decodedText);
                 stopScan();
             };
@@ -47,7 +59,10 @@
                 },
                 false
             );
+
             html5QrcodeScanner.render(successCallback, errorCallback);
+
+            
         }
 
         function stopScan() {
