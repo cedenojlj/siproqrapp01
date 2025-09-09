@@ -1,4 +1,4 @@
-<div class="container">
+
     <div class="row justify-content-center">
         <div class="col-md-12">
             <div class="card">
@@ -26,7 +26,7 @@
                         @can('create petitions')
                             <div class="col-md-6 text-end">
                                 <a href="{{ route('petitions.create') }}" class="btn btn-secondary"><i
-                                        class="bi bi-plus"></i>Create Petition</a>
+                                        class="bi bi-plus"></i>Create</a>
                             </div>
                         @endcan
                     </div>
@@ -74,4 +74,4 @@
             </div>
         </div>
     </div>
-</div>
+

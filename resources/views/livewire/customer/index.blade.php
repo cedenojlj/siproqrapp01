@@ -1,5 +1,5 @@
-<div class="container">
-    <div class="row">
+
+    <div class="row justify-content-center">
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">{{ __('Customers') }}</div>
@@ -28,7 +28,7 @@
                         </div>
                     </div>
 
-                    <div class="row table-responsive">
+                    <div class="table-responsive">
                         <table class="table table-striped">
                             <thead>
                                 <tr>
@@ -68,4 +68,4 @@
             </div>
         </div>
     </div>
-</div>
+

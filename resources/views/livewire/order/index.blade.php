@@ -1,4 +1,4 @@
-<div class="container">
+
     <div class="row justify-content-center">
         <div class="col-md-12">
             <div class="card">
@@ -25,7 +25,7 @@
                         @can('create orders')
                             <div class="col-md-6 text-end">
                                 <a href="{{ route('orders.create') }}" class="btn btn-secondary"><i
-                                        class="bi bi-plus"></i>Create Order</a>
+                                        class="bi bi-plus"></i>Create</a>
                             </div>
                         @endcan
                     </div>
@@ -78,4 +78,4 @@
             </div>
         </div>
     </div>
-</div>
+
