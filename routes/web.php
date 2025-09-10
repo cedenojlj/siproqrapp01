@@ -49,6 +49,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/prices/{price}/edit', App\Livewire\Price\Edit::class)->name('prices.edit');
 
     Route::get('/users', App\Livewire\UserManagement::class)->name('users.index');
+    Route::get('/classifications', App\Livewire\Classification\Table::class)->name('classifications.table');
+    
 });
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
