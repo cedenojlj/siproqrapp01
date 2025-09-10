@@ -6,9 +6,11 @@ use Livewire\Component;
 use App\Models\Product;
 use App\Models\Classification;
 use App\Models\ProductWarehouse;
+use App\Models\Customer;
 use Illuminate\Support\Str;
 use App\Models\Warehouse;
 use Livewire\Attributes\On; 
+
 
 class Create extends Component
 {
@@ -23,7 +25,8 @@ class Create extends Component
     public $Box;
     public $invoice_number;
     public $product_id; // Added to store the product ID if needed
-    public $warehouse_id; // Added to store the selected warehouse ID   
+    public $warehouse_id; // Added to store the selected warehouse ID
+    public $customers;
 
     protected $rules = [
         'name' => 'required|string|max:255',
@@ -42,6 +45,7 @@ class Create extends Component
     public function mount()
     {
         $this->cantidad=1;
+        $this->customers = Customer::all();
     }
 
     //Para abrir el scanner
@@ -143,6 +147,16 @@ class Create extends Component
             'warehouse_id' => $this->warehouse_id,
             'stock' => $this->cantidad, // Assuming initial stock is 0
         ]);
+
+        //crear precios para cada cliente
+        $customers = Customer::all();
+        foreach ($customers as $customer) {
+            $producto->prices()->create([
+                'customer_id' => $customer->id,
+                'price_quantity' => $producto->classification->precio_unidad ?? 0,
+                'price_weight' => $producto->classification->precio_peso ?? 0,
+            ]);
+        }
 
         session()->flash('message', 'Product created successfully.');
 

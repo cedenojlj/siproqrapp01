@@ -33,9 +33,7 @@ class DatabaseSeeder extends Seeder
         //Product::factory(10)->create();
 
           // You can add more seeders here as needed
-        $this->call(PermisosSeeder::class); 
-
-
-
+        $this->call([PermisosSeeder::class, 
+                    WarehouseSeeder::class]);
     }
 }

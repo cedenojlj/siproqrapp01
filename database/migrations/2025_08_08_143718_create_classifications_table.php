@@ -16,6 +16,8 @@ return new class extends Migration
             $table->string('code')->unique();
             $table->string('description');
             $table->string('size');
+            $table->decimal('precio_unidad', 10, 2);
+            $table->decimal('precio_peso', 10, 2);
             $table->enum('unit_type', ['Peso', 'Cantidad']);
             $table->timestamps();
         });

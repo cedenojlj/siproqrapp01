@@ -75,11 +75,11 @@ body {
 .sidebar-link {
     display: flex;
     align-items: center;
-    padding: .30rem 1.25rem;
+    padding: .6rem 1.25rem;
     color: var(--sidebar-link-color);
     text-decoration: none;
     border-radius: 8px;
-    margin-bottom: 0.10rem;
+    margin-bottom: 0.20rem;
     font-weight: 500;
 }
 
@@ -146,8 +146,8 @@ body {
 }
 
 .sidebar-dropdown .sidebar-link {
-    padding-top: 0.2rem;
-    padding-bottom: 0.2rem;
+    padding-top: 0.3rem;
+    padding-bottom: 0.3rem;
 }
 
 /* Desktop-only collapsed sidebar styles */

@@ -13,6 +13,8 @@ class Classification extends Model
         'code',
         'description',
         'size',
+        'precio_unidad',
+        'precio_peso',      
         'unit_type',
     ];
 
