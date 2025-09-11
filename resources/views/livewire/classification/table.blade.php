@@ -30,8 +30,8 @@
                                 <th>Descripción</th>
                                 <th>Tamaño</th>
                                 <th>Tipo Unidad</th>
-                                <th>Precio por Unidad</th>
-                                <th>Precio por Peso</th>
+                                <th>Precio_por_Unidad</th>
+                                <th>Precio_por_Peso</th>
                                 <th>Acciones</th>
                             </tr>
                         </thead>

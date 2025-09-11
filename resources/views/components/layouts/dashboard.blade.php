@@ -86,12 +86,32 @@
                 @endcan
 
                 @can('read prices')
+
                     <li class="sidebar-item">
                         <a href="{{ route('prices.index') }}" class="sidebar-link">
                             <i class="bi bi-receipt"></i>
                             <span>Precios</span>
                         </a>
                     </li>
+
+                    <li class="sidebar-item">
+                        <a href="{{ route('prices.update-by-classification') }}" class="sidebar-link">
+                            <i class="bi bi-pencil"></i>
+                            <span>Precios plus</span>
+                        </a>
+                    </li>
+
+                    {{-- classifications --}}
+                    <li class="sidebar-item">
+                        <a href="{{ route('classifications.table') }}" class="sidebar-link">
+                            <i class="bi bi-tags"></i>
+                            <span>Clasificaciones</span>
+                        </a>
+                    </li>
+                    {{-- end classifications --}}
+
+
+
                 @endcan
 
                 @can('read users')

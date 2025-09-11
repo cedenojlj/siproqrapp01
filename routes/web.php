@@ -47,9 +47,11 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/prices', App\Livewire\Price\Index::class)->name('prices.index');
     Route::get('/prices/create', App\Livewire\Price\Create::class)->name('prices.create');
     Route::get('/prices/{price}/edit', App\Livewire\Price\Edit::class)->name('prices.edit');
+    Route::get('/prices/update-by-classification', App\Livewire\Price\UpdateByClassification::class)->name('prices.update-by-classification');
 
     Route::get('/users', App\Livewire\UserManagement::class)->name('users.index');
     Route::get('/classifications', App\Livewire\Classification\Table::class)->name('classifications.table');
+    
     
 });
 
