@@ -22,17 +22,23 @@
                     <table class="table table-striped">
                         <thead>
                             <tr>
+                                <th>Type</th>
                                 <th>Product</th>
+                                <th>Size</th>                                
                                 <th>Warehouse</th>
                                 <th>Stock</th>
+                                <th>Unit Type</th>
                             </tr>
                         </thead>
                         <tbody>
                             @forelse ($inventory as $item)
                                 <tr>
+                                    <td>{{ $item->product->type }}</td>
                                     <td>{{ $item->product->name }}</td>
+                                    <td>{{ $item->product->size }}</td>                                    
                                     <td>{{ $item->warehouse->name }}</td>
                                     <td>{{ $item->stock }}</td>
+                                    <td>{{ $item->product->classification->unit_type}}</td>
                                 </tr>
                             @empty
                                 <tr>

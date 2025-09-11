@@ -146,6 +146,10 @@
                                 <a href="{{ route('reports.inventory-by-classification') }}" class="sidebar-link">Inv.
                                     Clasificación</a>
                             </li>
+                            <li class="sidebar-item">
+                                <a href="{{ route('reports.inventory-by-classification-detail') }}" class="sidebar-link">Inv.
+                                    Clasificación Detalle</a>
+                            </li>
                         </ul>
                     </li>
                 @endcan
