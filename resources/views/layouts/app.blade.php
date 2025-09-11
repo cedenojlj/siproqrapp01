@@ -60,6 +60,7 @@
                                 <div class="dropdown-menu" aria-labelledby="reportsDropdown">
                                     <a class="dropdown-item" href="{{ route('reports.inventory-by-warehouse') }}">{{ __('Inventory by Warehouse') }}</a>
                                     <a class="dropdown-item" href="{{ route('reports.historical-movements') }}">{{ __('Historical Movements') }}</a>
+                                    <a class="dropdown-item" href="{{ route('reports.inventory-by-classification') }}">{{ __('Inventory by Classification') }}</a>
                                 </div>
                             </li>
                         @endauth

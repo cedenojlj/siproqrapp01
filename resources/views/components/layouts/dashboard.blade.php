@@ -142,6 +142,10 @@
                                 <a href="{{ route('reports.historical-movements') }}" class="sidebar-link">Mov.
                                     Históricos</a>
                             </li>
+                            <li class="sidebar-item">
+                                <a href="{{ route('reports.inventory-by-classification') }}" class="sidebar-link">Inv.
+                                    Clasificación</a>
+                            </li>
                         </ul>
                     </li>
                 @endcan
