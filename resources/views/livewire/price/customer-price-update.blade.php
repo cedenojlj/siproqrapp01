@@ -29,8 +29,8 @@
                                 <th>Cliente</th>
                                 <th>Código</th>
                                 <th>Descripción</th>
-                                <th style="width: 150px;">Nuevo Precio Unit.</th>
-                                <th style="width: 150px;">Nuevo Precio Peso</th>
+                                <th style="width: 150px;">Precio_Unit.</th>
+                                <th style="width: 150px;">Precio_Peso</th>
                                 <th style="width: 100px;">Acciones</th>
                             </tr>
                         </thead>
@@ -42,14 +42,12 @@
                                     <td>{{ $item->classification_description }}</td>
                                     <td>
                                         <input type="number" step="0.01" class="form-control"
-                                               wire:model="inputs.{{ $item->customer_id }}.{{ $item->classification_id }}.price_quantity"
-                                               placeholder="0.00">
+                                               wire:model="inputs.{{ $item->customer_id }}.{{ $item->classification_id }}.price_quantity">
                                         @error('inputs.' . $item->customer_id . '.' . $item->classification_id . '.price_quantity') <span class="text-danger">{{ $message }}</span> @enderror
                                     </td>
                                     <td>
                                         <input type="number" step="0.01" class="form-control"
-                                               wire:model="inputs.{{ $item->customer_id }}.{{ $item->classification_id }}.price_weight"
-                                               placeholder="0.00">
+                                               wire:model="inputs.{{ $item->customer_id }}.{{ $item->classification_id }}.price_weight">
                                         @error('inputs.' . $item->customer_id . '.' . $item->classification_id . '.price_weight') <span class="text-danger">{{ $message }}</span> @enderror
                                     </td>
                                     <td class="text-center">

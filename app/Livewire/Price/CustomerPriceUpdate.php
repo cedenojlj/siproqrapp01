@@ -25,6 +25,17 @@ class CustomerPriceUpdate extends Component
     {
         $data = $this->getQuery()->paginate(15);
 
+        // Pre-populate the inputs with current prices for the displayed page
+        foreach ($data as $item) {
+            $key = $item->customer_id . '.' . $item->classification_id;
+            if (!isset($this->inputs[$item->customer_id][$item->classification_id])) {
+                $this->inputs[$item->customer_id][$item->classification_id] = [
+                    'price_quantity' => $item->price_quantity,
+                    'price_weight' => $item->price_weight,
+                ];
+            }
+        }
+
         return view('livewire.price.customer-price-update', [
             'data' => $data,
         ]);
@@ -42,7 +53,10 @@ class CustomerPriceUpdate extends Component
                 'customers.name as customer_name',
                 'classifications.id as classification_id',
                 'classifications.code as classification_code',
-                'classifications.description as classification_description'
+                'classifications.description as classification_description',
+                // Select one of the prices from the group to display as current
+                DB::raw('MIN(prices.price_quantity) as price_quantity'),
+                DB::raw('MIN(prices.price_weight) as price_weight')
             )
             ->groupBy('customers.id', 'customers.name', 'classifications.id', 'classifications.code', 'classifications.description');
 

@@ -87,7 +87,7 @@
 
                 @can('read prices')
 
-                    <li class="sidebar-item">
+                    {{-- <li class="sidebar-item">
                         <a href="{{ route('prices.index') }}" class="sidebar-link">
                             <i class="bi bi-receipt"></i>
                             <span>Precios</span>
@@ -99,7 +99,44 @@
                             <i class="bi bi-pencil"></i>
                             <span>Precios plus</span>
                         </a>
+                    </li> --}}
+
+                    {{-- agrupando precios --}}
+
+                    <li class="sidebar-item">
+                        <a href="#precios-submenu" data-bs-toggle="collapse" class="sidebar-link collapsed">
+                            <i class="bi bi-receipt"></i>
+                            <span>Precios</span>
+                            <i class="bi bi-chevron-down ms-auto"></i>
+                        </a>
+                        <ul id="precios-submenu" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+                            <li class="sidebar-item">
+                                <a href="{{ route('prices.index') }}" class="sidebar-link">Precios Gen</a>
+                            </li>
+                            <li class="sidebar-item">
+                                <a href="{{ route('prices.update-by-classification') }}" class="sidebar-link">Precios plus</a>
+                            </li>
+                            <li class="sidebar-item">
+                                <a href="{{ route('prices.customer-update') }}" class="sidebar-link">Precios Clientes</a>
+                            </li>
+                            
+                        </ul>
                     </li>
+
+
+
+
+
+
+                    {{-- agrupando precios --}}
+
+
+
+
+
+
+
+
 
                     {{-- classifications --}}
                     <li class="sidebar-item">
