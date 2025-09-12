@@ -12,9 +12,9 @@
                     @endif
 
                     <div class="row mb-3">
-                        <div class="col-md-6">
+                        <div class="col-md-6">,
                             <input wire:model.live="search" type="text" class="form-control"
-                                placeholder="Search by product or customer...">
+                                placeholder="Search by product, sku, size, type or customer...">
                         </div>
 
                         @can('create precios')
@@ -31,6 +31,7 @@
                                 <tr>
                                     <th>ID</th>
                                     <th>Product</th>
+                                    <th>Sku</th>
                                     <th>Customer</th>
                                     <th>Price Quantity</th>
                                     <th>Price Weight</th>
@@ -42,6 +43,7 @@
                                     <tr>
                                         <td>{{ $price->id }}</td>
                                         <td>{{ $price->product->name }} - {{ $price->product->type }} - {{ $price->product->size }}</td>
+                                        <td>{{ $price->product->sku }}</td>
                                         <td>{{ $price->customer->name }}</td>
                                         <td>{{ $price->price_quantity }}</td>
                                         <td>{{ $price->price_weight }}</td>

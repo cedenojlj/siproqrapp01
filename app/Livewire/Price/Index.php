@@ -15,12 +15,21 @@ class Index extends Component
     public function render()
     {
         $prices = Price::with(['product', 'customer'])
-            ->whereHas('product', function ($query) {
+            ->whereHas('product', function ($query) {   
                 $query->where('name', 'like', '%' . $this->search . '%');
             })
             ->orWhereHas('customer', function ($query) {
                 $query->where('name', 'like', '%' . $this->search . '%');
             })
+            ->orwhereHas('product', function ($query) {
+                $query->where('sku', 'like', '%' . $this->search . '%');
+            })
+            ->orwhereHas('product', function ($query) {
+                $query->where('size', 'like', '%' . $this->search . '%');
+            })
+            ->orwhereHas('product', function ($query) {
+                $query->where('type', 'like', '%' . $this->search . '%');
+            })              
             ->paginate(10);
 
         return view('livewire.price.index', [
