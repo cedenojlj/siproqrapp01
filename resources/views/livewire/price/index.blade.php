@@ -41,7 +41,7 @@
                                 @foreach ($prices as $price)
                                     <tr>
                                         <td>{{ $price->id }}</td>
-                                        <td>{{ $price->product->name }}</td>
+                                        <td>{{ $price->product->name }} - {{ $price->product->type }} - {{ $price->product->size }}</td>
                                         <td>{{ $price->customer->name }}</td>
                                         <td>{{ $price->price_quantity }}</td>
                                         <td>{{ $price->price_weight }}</td>

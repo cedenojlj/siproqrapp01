@@ -80,13 +80,13 @@ class UpdateByClassification extends Component
 
                     
 
-                //$this->alert('success', "¡Precios actualizados! Se modificaron {$updatedCount} productos."); 
+                session()->flash('success', "¡Precios actualizados!"); 
             });
 
             $this->resetForm();
 
         } catch (\Exception $e) {
-            $this->alert('error', 'Ocurrió un error al actualizar los precios: ' . $e->getMessage());
+            session()->flash('error', 'Ocurrió un error al actualizar los precios: ' . $e->getMessage());
         }
     }
 
