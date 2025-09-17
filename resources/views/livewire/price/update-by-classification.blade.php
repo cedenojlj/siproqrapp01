@@ -13,7 +13,7 @@
                             <select wire:model.lazy="selectedClassification" id="classification" class="form-select">
                                 <option value="">Seleccione una clasificación</option>
                                 @foreach($classifications as $classification)
-                                    <option value="{{ $classification->id }}">{{ $classification->code }} - {{ $classification->description }}</option>
+                                    <option value="{{ $classification->id }}">{{ $classification->code }} - {{ $classification->description }} - {{ $classification->size }}</option>
                                 @endforeach
                             </select>
                             @error('selectedClassification') <span class="text-danger">{{ $message }}</span> @enderror

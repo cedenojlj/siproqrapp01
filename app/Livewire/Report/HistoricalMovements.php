@@ -15,6 +15,7 @@ class HistoricalMovements extends Component
     public $movementType;
     public $startDate;
     public $endDate;
+    public $size;
 
     public $products;
     public $warehouses;
@@ -48,6 +49,13 @@ class HistoricalMovements extends Component
     public function getMovementData()
     {
         $query = Movement::with('product', 'warehouse');
+
+        //filtrar por size de producto
+        if ($this->size) {
+            $query->whereHas('product', function ($q) {
+                $q->where('size', 'like', '%' . $this->size . '%');
+            });
+        }
 
         if ($this->productId) {
             $query->where('product_id', $this->productId);

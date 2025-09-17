@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('prices', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('product_id')->constrained('products');
-            $table->foreignId('customer_id')->constrained('customers');
+            $table->foreignId('product_id')->constrained('products')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreignId('customer_id')->constrained('customers')->onUpdate('cascade')->onDelete('cascade');
             $table->decimal('price_quantity');
             $table->decimal('price_weight');
             $table->timestamps();

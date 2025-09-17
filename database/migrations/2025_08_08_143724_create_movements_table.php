@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('movements', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('product_id')->constrained('products');
-            $table->foreignId('warehouse_id')->constrained('warehouses');
-            $table->foreignId('order_id')->constrained('orders');
+            $table->foreignId('product_id')->constrained('products')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreignId('warehouse_id')->constrained('warehouses')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreignId('order_id')->constrained('orders')->onUpdate('cascade')->onDelete('cascade');
             $table->enum('type', ['Entrada', 'Salida', 'Ajuste']);
             $table->integer('quantity');
             $table->date('date');

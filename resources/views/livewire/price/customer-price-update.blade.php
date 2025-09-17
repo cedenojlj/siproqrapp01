@@ -18,7 +18,7 @@
 
                 <div class="row mb-4">
                     <div class="col-md-12">
-                        <input wire:model.live.debounce.300ms="search" type="text" class="form-control" placeholder="Buscar por cliente, código o descripción de la clasificación...">
+                        <input wire:model.live.debounce.300ms="search" type="text" class="form-control" placeholder="Buscar por cliente, código, size, o descripción de la clasificación...">
                     </div>
                 </div>
 
@@ -29,6 +29,7 @@
                                 <th>Cliente</th>
                                 <th>Código</th>
                                 <th>Descripción</th>
+                                <th>Size</th>
                                 <th style="width: 150px;">Precio_Unit.</th>
                                 <th style="width: 150px;">Precio_Peso</th>
                                 <th style="width: 100px;">Acciones</th>
@@ -40,6 +41,7 @@
                                     <td>{{ $item->customer_name }}</td>
                                     <td>{{ $item->classification_code }}</td>
                                     <td>{{ $item->classification_description }}</td>
+                                    <td>{{ $item->classification_size }}</td>
                                     <td>
                                         <input type="number" step="0.01" class="form-control"
                                                wire:model="inputs.{{ $item->customer_id }}.{{ $item->classification_id }}.price_quantity">

@@ -54,16 +54,18 @@ class CustomerPriceUpdate extends Component
                 'classifications.id as classification_id',
                 'classifications.code as classification_code',
                 'classifications.description as classification_description',
+                'classifications.size as classification_size',
                 // Select one of the prices from the group to display as current
                 DB::raw('MIN(prices.price_quantity) as price_quantity'),
                 DB::raw('MIN(prices.price_weight) as price_weight')
             )
-            ->groupBy('customers.id', 'customers.name', 'classifications.id', 'classifications.code', 'classifications.description');
+            ->groupBy('customers.id', 'customers.name', 'classifications.id', 'classifications.code', 'classifications.description','classifications.size');
 
         if ($this->search) {
             $query->where(function ($q) {
                 $q->where('classifications.code', 'like', '%' . $this->search . '%')
                     ->orWhere('classifications.description', 'like', '%' . $this->search . '%')
+                    ->orWhere('classifications.size', 'like', '%' . $this->search . '%')
                     ->orWhere('customers.name', 'like', '%' . $this->search . '%');
             });
         }

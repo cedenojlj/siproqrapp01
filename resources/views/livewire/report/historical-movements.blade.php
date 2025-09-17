@@ -40,6 +40,11 @@
                             <label for="endDateFilter" class="form-label">End Date:</label>
                             <input type="date" wire:model.live="endDate" id="endDateFilter" class="form-control">
                         </div>
+
+                        <div class="col-md-3">
+                            <label for="sizeFilter" class="form-label">Size:</label>
+                            <input type="text" wire:model.live="size" id="sizeFilter" class="form-control" placeholder="Enter size">
+                        </div>
                     </div>
 
                     <div class="mb-3">
@@ -51,6 +56,7 @@
                             <tr>
                                 <th>Date</th>
                                 <th>Product</th>
+                                <th>Size</th>
                                 <th>Warehouse</th>
                                 <th>Quantity</th>
                                 <th>Type</th>
@@ -61,6 +67,7 @@
                                 <tr>
                                     <td>{{ $movement->created_at->format('Y-m-d H:i:s') }}</td>
                                     <td>{{ $movement->product->name }}</td>
+                                    <td>{{ $movement->product->size }}</td>
                                     <td>{{ $movement->warehouse->name }}</td>
                                     <td>{{ $movement->quantity }}</td>
                                     <td>{{ ucfirst($movement->type) }}</td>

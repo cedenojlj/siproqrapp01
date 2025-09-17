@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('sku')->unique();
-            $table->foreignId('classification_id')->constrained('classifications');
+            $table->foreignId('classification_id')->constrained('classifications')->onUpdate('cascade')->onDelete('cascade');
             $table->text('type');
             $table->text('size');
             $table->text('GN');

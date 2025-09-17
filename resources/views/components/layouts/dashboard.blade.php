@@ -223,12 +223,12 @@
                     </a>
                 </li> --}}
             </ul>
-            <div class="sidebar-footer">
+            {{-- <div class="sidebar-footer">
                 <a href="#" id="theme-toggle" class="sidebar-link">
                     <i class="bi bi-sun"></i>
                     <span>Modo Claro</span>
                 </a>
-            </div>
+            </div> --}}
         </aside>
 
         <!-- Page Content -->

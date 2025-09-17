@@ -58,7 +58,7 @@ class Create extends Component
     function leerScanner($data) {
 
         //dd($data);
-
+        $this->name = $data['NAME'] ?? '';
         $this->type = $data['TYPE'] ?? '';
         $this->size = $data['SIZE'] ?? '';
         $this->GN = $data['G.N.'] ?? '';

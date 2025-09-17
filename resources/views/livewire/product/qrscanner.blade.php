@@ -40,6 +40,7 @@
                 const div = document.getElementById('qr-reader-results');
                 div.innerHTML =
                     `<div class="alert alert-info small">Leído: <code>${decodedText}</code></div>`;
+                    alert(`Leído: ${decodedText}`);
                 @this.setResult(decodedText);
                 stopScan();
             };

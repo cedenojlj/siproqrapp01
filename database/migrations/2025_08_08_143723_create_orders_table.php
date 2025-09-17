@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('customer_id')->constrained('customers');
-            $table->foreignId('user_id')->constrained('users');
-            $table->foreignId('warehouse_id')->constrained('warehouses');
+            $table->foreignId('customer_id')->constrained('customers')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreignId('user_id')->constrained('users')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreignId('warehouse_id')->constrained('warehouses')->onUpdate('cascade')->onDelete('cascade');
             $table->enum('order_type', ['Entrada', 'Salida']);
             $table->decimal('total');
             $table->enum('status', ['Pendiente', 'Aprobada', 'Rechazada']);
