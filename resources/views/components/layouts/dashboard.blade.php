@@ -180,6 +180,10 @@
                                     Históricos</a>
                             </li>
                             <li class="sidebar-item">
+                                <a href="{{ route('reports.detailed') }}" class="sidebar-link">Mov.
+                                    Detalles</a>
+                            </li>
+                            <li class="sidebar-item">
                                 <a href="{{ route('reports.inventory-by-classification') }}" class="sidebar-link">Inv.
                                     Clasificación</a>
                             </li>
