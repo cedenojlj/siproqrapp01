@@ -29,7 +29,7 @@ class Create extends Component
     protected $rules = [
         'customer_id' => 'required|exists:customers,id',
         'warehouse_id' => 'required|exists:warehouses,id',
-        'order_type' => 'required|in:Entrada,Salida',
+        'order_type' => 'required|in:Entrada,Devolucion,Salida',
         'products.*.product_id' => 'required|exists:products,id',
         'products.*.quantity' => 'required|numeric|min:1',
         'products.*.price' => 'required|numeric|min:0',
@@ -215,6 +215,8 @@ class Create extends Component
                 ]);
 
                 if ($this->order_type === 'Entrada') {
+                    $productWarehouse->stock += $productData['quantity'];                
+                } elseif ($this->order_type === 'Devolucion') {
                     $productWarehouse->stock += $productData['quantity'];
                 } else { // Salida
                     $productWarehouse->stock -= $productData['quantity'];

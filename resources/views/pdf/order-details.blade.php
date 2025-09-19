@@ -41,6 +41,7 @@
             <tr>
                 <th>SKU</th>
                 <th>Product</th>
+                <th>Size</th>
                 <th>Quantity</th>
                 <th>Price</th>
                 <th>Subtotal</th>
@@ -51,6 +52,7 @@
                 <tr>
                     <td>{{ $item->product->sku }}</td>
                     <td>{{ $item->product->name }}</td>
+                    <td>{{ $item->product->size }}</td>
                     <td>{{ $item->quantity }}</td>
                     <td>{{ number_format($item->price, 2) }}</td>
                     <td>{{ number_format($item->quantity * $item->price, 2) }}</td>

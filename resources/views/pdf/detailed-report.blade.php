@@ -17,11 +17,11 @@
             <tr>
                 <th>Date</th>
                 <th>Product</th>
+                <th>Size</th>
                 <th>Warehouse</th>
                 <th>Type</th>
                 <th>Quantity</th>
-                <th>Customer Name</th>
-                <th>Size</th>
+                <th>Customer Name</th>                
                 <th>GN</th>
                 <th>Subtotal</th>
             </tr>
@@ -31,11 +31,11 @@
                 <tr>
                     <td>{{ $movement->created_at->format('Y-m-d H:i') }}</td>
                     <td>{{ $movement->product_name }}</td>
+                    <td>{{ $movement->product_size }}</td>
                     <td>{{ $movement->warehouse_name }}</td>
                     <td>{{ ucfirst($movement->type) }}</td>
                     <td>{{ $movement->quantity }}</td>
-                    <td>{{ $movement->customer_name }}</td>
-                    <td>{{ $movement->product_size }}</td>
+                    <td>{{ $movement->customer_name }}</td>                    
                     <td>{{ $movement->product_gn }}</td>
                     <td>{{ number_format($movement->subtotal, 2) }}</td>
                 </tr>

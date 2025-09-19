@@ -61,8 +61,9 @@
                             <label for="order_type" class="form-label">Order Type</label>
                             <select class="form-select @error('order_type') is-invalid @enderror" id="order_type" wire:model="order_type">
                                 <option value="">Select Order Type</option>
-                                <option value="Entrada">Entry</option>
-                                <option value="Salida">Exit</option>
+                                <option value="Entrada">Entrada</option>
+                                <option value="Devolucion">Devolucion</option>
+                                <option value="Salida">Salida</option>
                             </select>
                             @error('order_type') <div class="invalid-feedback">{{ $message }}</div> @enderror
                         </div>

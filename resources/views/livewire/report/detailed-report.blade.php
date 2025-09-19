@@ -31,6 +31,7 @@
             <select wire:model.live="movementType" id="movementType" class="form-control">
                 <option value="">All</option>
                 <option value="Entrada">Entrada</option>
+                <option value="Devolucion">Devolucion</option>               
                 <option value="Salida">Salida</option>
             </select>
         </div>

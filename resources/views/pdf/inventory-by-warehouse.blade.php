@@ -28,6 +28,7 @@
         <thead>
             <tr>
                 <th>Product</th>
+                <th>Size</th>
                 <th>Warehouse</th>
                 <th>Stock</th>
             </tr>
@@ -36,6 +37,7 @@
             @forelse ($inventory as $item)
                 <tr>
                     <td>{{ $item->product->name }}</td>
+                    <td>{{ $item->product->size }}</td>
                     <td>{{ $item->warehouse->name }}</td>
                     <td>{{ $item->stock }}</td>
                 </tr>

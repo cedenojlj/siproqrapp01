@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('product_id')->constrained('products')->onUpdate('cascade')->onDelete('cascade');
             $table->foreignId('warehouse_id')->constrained('warehouses')->onUpdate('cascade')->onDelete('cascade');
             $table->foreignId('order_id')->constrained('orders')->onUpdate('cascade')->onDelete('cascade');
-            $table->enum('type', ['Entrada', 'Salida', 'Ajuste']);
+            $table->enum('type', ['Entrada', 'Salida', 'Devolucion']);
             $table->integer('quantity');
             $table->date('date');
             $table->timestamps();

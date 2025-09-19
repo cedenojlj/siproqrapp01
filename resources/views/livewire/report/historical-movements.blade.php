@@ -28,8 +28,9 @@
                             <label for="typeFilter" class="form-label">Movement Type:</label>
                             <select wire:model.live="movementType" id="typeFilter" class="form-select">
                                 <option value="">All Types</option>
-                                <option value="entry">Entry</option>
-                                <option value="exit">Exit</option>
+                                <option value="Entrada">Entrada</option>
+                                <option value="Salida">Salida</option>
+                                <option value="Devolucion">Devolucion</option>
                             </select>
                         </div>
                         <div class="col-md-3">
