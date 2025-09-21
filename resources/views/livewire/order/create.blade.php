@@ -76,7 +76,7 @@
                             <div class="input-group">
                                 <input type="text" class="form-control" id="scannedProductSku" wire:model="scannedProductSku" placeholder="Scan QR or enter SKU">
                                 <button class="btn btn-outline-secondary" type="button" wire:click="scanQrCode">Add Product</button>
-                                <button class="btn btn-outline-secondary" type="button" wire:click="abrirScanQrCode">Scanner</button>
+                                {{-- <button class="btn btn-outline-secondary" type="button" wire:click="abrirScanQrCode">Scanner</button> --}}
                             </div>
                         </div>
 
