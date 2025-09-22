@@ -45,6 +45,7 @@ class InventoryByClassification extends Component
                 'classifications.unit_type',
                 DB::raw('COUNT(products.sku) as sku_count'),
                 DB::raw('SUM(product_warehouses.stock) as total_stock'),
+                DB::raw('SUM(products.gn) as total_gn'),
             ])
             ->join('products', 'classifications.id', '=', 'products.classification_id')
             ->join('product_warehouses', 'products.id', '=', 'product_warehouses.product_id')

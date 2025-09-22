@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>Inventario por Clasificación</title>
     <style>
@@ -7,13 +8,16 @@
             width: 100%;
             border-collapse: collapse;
         }
-        th, td {
+
+        th,
+        td {
             border: 1px solid black;
             padding: 8px;
             text-align: left;
         }
     </style>
 </head>
+
 <body>
     <h1>Inventario por Clasificación</h1>
     <table>
@@ -25,6 +29,7 @@
                 <th>SKU Count</th>
                 <th>Stock</th>
                 <th>Tipo Unidad</th>
+                <th>G.N.</th>
             </tr>
         </thead>
         <tbody>
@@ -36,6 +41,7 @@
                     <td>{{ $item->sku_count }}</td>
                     <td>{{ $item->total_stock }}</td>
                     <td>{{ $item->unit_type }}</td>
+                    <td>{{ $item->total_gn }}</td>
                 </tr>
             @empty
                 <tr>
@@ -43,6 +49,16 @@
                 </tr>
             @endforelse
         </tbody>
+        <tfoot>
+            <tr>
+                <th colspan="3" class="text-right">Total:</th>
+                <th>{{ $data->sum('sku_count') }}</th>
+                <th>{{ $data->sum('total_stock') }}</th>
+                <th></th>
+                <th>{{ $data->sum('total_gn') }}</th>
+            </tr>
+        </tfoot>
     </table>
 </body>
+
 </html>

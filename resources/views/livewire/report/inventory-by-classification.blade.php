@@ -51,6 +51,7 @@
                                 <th>SKU Count</th>
                                 <th>Stock</th>
                                 <th>Tipo Unidad</th>
+                                <th>G.N.</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -62,6 +63,7 @@
                                     <td>{{ $item->sku_count }}</td>
                                     <td>{{ $item->total_stock }}</td>
                                     <td>{{ $item->unit_type }}</td>
+                                    <td>{{ $item->total_gn }}</td>
                                 </tr>
                             @empty
                                 <tr>
@@ -69,6 +71,15 @@
                                 </tr>
                             @endforelse
                         </tbody>
+                        <tfoot>
+                            <tr>
+                                <th colspan="3" class="text-right">Total:</th>
+                                <th>{{ $data->sum('sku_count') }}</th>
+                                <th>{{ $data->sum('total_stock') }}</th>
+                                <th></th>
+                                <th>{{ $data->sum('total_gn') }}</th>
+                            </tr>
+                        </tfoot>
                     </table>
                 </div>
             </div>
