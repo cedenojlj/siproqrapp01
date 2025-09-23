@@ -31,7 +31,7 @@
     
     
     <h2>Report of Petition #{{ $petition->id }}</h2>
-
+    <p><strong>Date:</strong> {{ $petition->created_at->format('d/m/Y H:i:s') }}</p>
     <p><strong>Customer:</strong> {{ $petition->customer->name }}</p>
     <p><strong>Status:</strong> {{ $petition->status }}</p>
 

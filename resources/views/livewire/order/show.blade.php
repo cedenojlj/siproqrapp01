@@ -6,6 +6,10 @@
 
                 <div class="card-body">
                     <div class="mb-3">
+                        <strong>Fecha:</strong> {{ $order->created_at->format('d/m/Y H:i:s') }}
+                    </div>
+                    
+                    <div class="mb-3">
                         <strong>Customer:</strong> {{ $order->customer->name }}
                     </div>
                     <div class="mb-3">
@@ -30,6 +34,7 @@
                                 <th>Product</th>
                                 <th>Size</th>
                                 <th>Quantity</th>
+                                <th>GN</th>
                                 <th>Price</th>
                                 <th>Subtotal</th>
                             </tr>
@@ -40,6 +45,7 @@
                                     <td>{{ $item->product->name }}</td>
                                     <td>{{ $item->product->size }}</td>
                                     <td>{{ $item->quantity }}</td>
+                                    <td>{{ $item->product->GN }}</td>
                                     <td>{{ number_format($item->price, 2) }}</td>
                                     <td>{{ number_format($item->quantity * $item->price, 2) }}</td>
                                 </tr>

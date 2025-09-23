@@ -13,7 +13,7 @@ class InventoryByClassification extends Component
     public $warehouseId;
     public $code;
     public $size;
-    public $description;
+    public $description;    
 
     public function render()
     {
@@ -42,7 +42,7 @@ class InventoryByClassification extends Component
                 'classifications.code',
                 'classifications.description',
                 'classifications.size',
-                'classifications.unit_type',
+                'classifications.unit_type',                
                 DB::raw('COUNT(products.sku) as sku_count'),
                 DB::raw('SUM(product_warehouses.stock) as total_stock'),
                 DB::raw('SUM(products.gn) as total_gn'),
@@ -51,7 +51,7 @@ class InventoryByClassification extends Component
             ->join('product_warehouses', 'products.id', '=', 'product_warehouses.product_id')
             ->when($this->warehouseId, function ($query) {
                 $query->where('product_warehouses.warehouse_id', $this->warehouseId);
-            })
+            })            
             ->when($this->code, function ($query) {
                 $query->where('classifications.code', 'like', '%' . $this->code . '%');
             })
@@ -61,6 +61,7 @@ class InventoryByClassification extends Component
             ->when($this->description, function ($query) {
                 $query->where('classifications.description', 'like', '%' . $this->description . '%');
             })
+            ->where('product_warehouses.stock', '>', 0)
             ->groupBy(
                 'classifications.code',
                 'classifications.description',

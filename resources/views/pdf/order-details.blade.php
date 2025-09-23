@@ -30,6 +30,7 @@
 <body>
     <h2>Order #{{ $order->id }}</h2>
 
+    <p><strong>Date:</strong> {{ $order->created_at->format('d/m/Y H:i:s') }}</p>
     <p><strong>Customer:</strong> {{ $order->customer->name }}</p>
     <p><strong>Warehouse:</strong> {{ $order->warehouse->name }}</p>
     <p><strong>Order Type:</strong> {{ ucfirst($order->order_type) }}</p>

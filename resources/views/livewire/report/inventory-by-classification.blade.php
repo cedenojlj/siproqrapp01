@@ -48,7 +48,7 @@
                                 <th>Código</th>
                                 <th>Descripción</th>
                                 <th>Tamaño</th>
-                                <th>SKU Count</th>
+                                {{-- <th>SKU Count</th> --}}
                                 <th>Stock</th>
                                 <th>Tipo Unidad</th>
                                 <th>G.N.</th>
@@ -60,7 +60,7 @@
                                     <td>{{ $item->code }}</td>
                                     <td>{{ $item->description }}</td>
                                     <td>{{ $item->size }}</td>
-                                    <td>{{ $item->sku_count }}</td>
+                                    {{-- <td>{{ $item->sku_count }}</td> --}}
                                     <td>{{ $item->total_stock }}</td>
                                     <td>{{ $item->unit_type }}</td>
                                     <td>{{ $item->total_gn }}</td>
@@ -74,7 +74,7 @@
                         <tfoot>
                             <tr>
                                 <th colspan="3" class="text-right">Total:</th>
-                                <th>{{ $data->sum('sku_count') }}</th>
+                                {{-- <th>{{ $data->sum('sku_count') }}</th> --}}
                                 <th>{{ $data->sum('total_stock') }}</th>
                                 <th></th>
                                 <th>{{ $data->sum('total_gn') }}</th>

@@ -64,6 +64,7 @@ class InventoryByClassificationDetail extends Component
             ->when($this->sku, function ($query) {
                 $query->where('products.sku', 'like', '%' . $this->sku . '%');
             })
+            ->where('product_warehouses.stock', '>', 0)
             ->get();
     }
 }

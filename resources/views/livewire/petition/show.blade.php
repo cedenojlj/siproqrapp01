@@ -5,6 +5,10 @@
                 <div class="card-header">{{ __('Petition Details') }} #{{ $petition->id }}</div>
 
                 <div class="card-body">
+
+                    <div class="mb-3">
+                        <strong>Fecha:</strong> {{ $petition->created_at->format('d/m/Y H:i:s') }}
+                    </div>
                     <div class="mb-3">
                         <strong>Customer:</strong> {{ $petition->customer->name }}
                     </div>
