@@ -34,6 +34,7 @@ class Index extends Component
                             $query->where('name', 'like', '%' . $this->search . '%');
                         });
                 })
+                ->orderBy('id', 'desc')
                 ->paginate(10);
         } else {
 
@@ -49,6 +50,7 @@ class Index extends Component
                         });
                 })
                 ->where('user_id', Auth::id())
+                ->orderBy('id', 'desc')
                 ->paginate(10);
         }       
              
