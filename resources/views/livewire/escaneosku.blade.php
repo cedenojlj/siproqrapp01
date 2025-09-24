@@ -60,11 +60,14 @@
                 // Aquí está la magia. En lugar de fetch(), usamos el objeto $wire
                 // para llamar al método 'processQrCodesku' en nuestra clase de PHP.
                 @this.call('processQrCodesku', decodedText);
+
+                html5QrcodeScanner.clear();
             }
 
             // Función para manejar errores (opcional)
             function onScanFailure(error) {
-                // Podemos ignorar los errores para una mejor experiencia de usuario
+                // mostrar errores alert (opcional) 
+                //alert(`Escaneo fallido: ${error}`);
             }
 
             // 4. Escuchar el evento personalizado para reanudar el escáner
