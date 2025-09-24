@@ -127,8 +127,33 @@ class Create extends Component
 
     public function save()
     {
+        //crear producto
+       
+       //dame el id de la tabla classifications donde el campo code sea igual a $this->type
+        $classification = Classification::where('code', $this->type)->first();  
+        if (!$classification) {
+            $this->addError('type', 'Classification not found for the provided code.');
+            return;
+        }
+        $this->classification_id = $classification->id;
+        
+        
+         /* dd([
+            'name' => $this->name,            
+            'sku' => $this->sku,        
+            'type' => $this->type,
+            'size' => $this->size,
+            'GN' => $this->GN,
+            'GW' => $this->GW,
+            'Box' => $this->Box,
+            'invoice_number' => $this->invoice_number,            
+            'classification_id' => $this->classification_id,
+        ]);*/
+       
+       
+       
         $this->validate();
-
+        
        $producto =Product::create([
             'name' => $this->name,            
             'sku' => $this->sku,        
