@@ -21,6 +21,7 @@
                                 <th>Select</th>
                                 <th>ID</th>
                                 <th>Name</th>
+                                <th>Size</th>
                                 <th>SKU</th>
                             </tr>
                         </thead>
@@ -32,6 +33,7 @@
                                     </td>
                                     <td>{{ $product->id }}</td>
                                     <td>{{ $product->name }}</td>
+                                    <td>{{ $product->size }}</td>
                                     <td>{{ $product->sku }}</td>
                                 </tr>
                             @endforeach

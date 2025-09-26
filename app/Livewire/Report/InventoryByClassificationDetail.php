@@ -45,6 +45,7 @@ class InventoryByClassificationDetail extends Component
                 'classifications.size',
                 'classifications.unit_type',
                 'products.sku',
+                'products.GN',
                 'product_warehouses.stock',
             ])
             ->join('products', 'classifications.id', '=', 'products.classification_id')

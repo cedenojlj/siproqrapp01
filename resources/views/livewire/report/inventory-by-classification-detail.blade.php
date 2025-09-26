@@ -19,19 +19,22 @@
                 <div class="col-md-2">
                     <div class="form-group">
                         <label>Código</label>
-                        <input wire:model.live="code" type="text" class="form-control" placeholder="Filtrar por código">
+                        <input wire:model.live="code" type="text" class="form-control"
+                            placeholder="Filtrar por código">
                     </div>
                 </div>
                 <div class="col-md-2">
                     <div class="form-group">
                         <label>Tamaño</label>
-                        <input wire:model.live="size" type="text" class="form-control" placeholder="Filtrar por tamaño">
+                        <input wire:model.live="size" type="text" class="form-control"
+                            placeholder="Filtrar por tamaño">
                     </div>
                 </div>
                 <div class="col-md-3">
                     <div class="form-group">
                         <label>Descripción</label>
-                        <input wire:model.live="description" type="text" class="form-control" placeholder="Filtrar por descripción">
+                        <input wire:model.live="description" type="text" class="form-control"
+                            placeholder="Filtrar por descripción">
                     </div>
                 </div>
                 <div class="col-md-2">
@@ -57,6 +60,7 @@
                                 <th>SKU</th>
                                 <th>Stock</th>
                                 <th>Tipo Unidad</th>
+                                <th>G.N.</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -68,6 +72,7 @@
                                     <td>{{ $item->sku }}</td>
                                     <td>{{ $item->stock }}</td>
                                     <td>{{ $item->unit_type }}</td>
+                                    <td>{{ $item->GN }}</td>
                                 </tr>
                             @empty
                                 <tr>
@@ -75,6 +80,14 @@
                                 </tr>
                             @endforelse
                         </tbody>
+                        <tfoot>
+                            <tr>
+                                <th colspan="4" class="text-right"><strong>Total:</strong></th>
+                                <th>{{ $data->sum('stock') }}</th>
+                                <th></th>
+                                <th>{{ $data->sum('GN') }}</th>
+                            </tr>
+                        </tfoot>
                     </table>
                 </div>
             </div>

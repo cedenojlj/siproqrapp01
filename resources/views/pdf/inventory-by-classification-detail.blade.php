@@ -25,6 +25,7 @@
                 <th>SKU</th>
                 <th>Stock</th>
                 <th>Tipo Unidad</th>
+                <th>G.N.</th>
             </tr>
         </thead>
         <tbody>
@@ -36,6 +37,7 @@
                     <td>{{ $item->sku }}</td>
                     <td>{{ $item->stock }}</td>
                     <td>{{ $item->unit_type }}</td>
+                    <td>{{ $item->GN }}</td>
                 </tr>
             @empty
                 <tr>
@@ -43,6 +45,14 @@
                 </tr>
             @endforelse
         </tbody>
+        <tfoot> 
+            <tr>
+                <td colspan="4" class="text-right"><strong>Total:</strong></td>
+                <td>{{ $data->sum('stock') }}</td>
+                <td></td>
+                <td>{{ $data->sum('GN') }}</td>
+            </tr>
+        </tfoot>
     </table>
 </body>
 </html>

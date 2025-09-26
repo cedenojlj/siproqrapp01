@@ -5,7 +5,9 @@ namespace App\Livewire\Product;
 use Livewire\Component;
 use App\Models\Product;
 use Barryvdh\DomPDF\Facade\Pdf;
+//use Illuminate\Container\Attributes\DB;
 use Livewire\WithPagination;
+use Illuminate\Support\Facades\DB;
 
 class GenerateQrCodes extends Component
 {
@@ -14,7 +16,10 @@ class GenerateQrCodes extends Component
 
     public function mount()
     {
-        $this->products = Product::all();
+        // OBTENER LOS PRODUCTOS EN ORDEN DESCENDENTE
+        $this->products = Product::orderBy('id', 'desc')->get();
+
+       // $this->products = DB::table('products')->orderBy('id', 'desc')->paginate(10);
        
     }
 
