@@ -40,6 +40,24 @@ class Create extends Component
         // $this->products[] = ['product_id' => '', 'quantity' => 1, 'price' => 0];
     }
 
+    //funcion para determinar el stock maximo del producto dado su id y unit_type Peso
+    public function getMaxStock($idproducto)
+    {
+        $producto = Product::find($idproducto);
+
+        if (!$producto) {
+            session()->flash('qr_error', 'Producto no encontrado');
+            return false;
+        }
+
+        if ($producto->classification->unit_type === 'Peso') {
+            $cantidadmaxima = $producto->getTotalStockAttribute();
+            return $cantidadmaxima;
+        } else {
+            return 1;
+        };
+    }
+
     public function addProduct()
     {
         $this->products[] = ['product_id' => '', 'quantity' => 1, 'price' => 0];
@@ -64,9 +82,10 @@ class Create extends Component
         if ($field === 'product_id' && !empty($value)) {
 
             $this->products[$index]['product_id'] = $value;
-            if (!isset($this->products[$index]['quantity'])) {
-                $this->products[$index]['quantity'] = 1;
-            }
+            $this->products[$index]['quantity'] = $this->getMaxStock($value);
+            // if (!isset($this->products[$index]['quantity'])) {
+            //     $this->products[$index]['quantity'] = 1;
+            // }
             $this->calculateProductPrice($index);
         }
 
@@ -124,6 +143,33 @@ class Create extends Component
         }
     }
 
+    // funcion para calcular el precio del producto segun su clasificacion y el cliente
+
+     public function calculateProductPriceId($productId)
+    {
+        
+        $product = Product::find($productId);
+        if (!$product) {           
+            return 0;
+        }
+
+        $classification = $product->classification;
+        $priceRecord = Price::where('product_id', $productId)
+            ->where('customer_id', $this->customer_id)
+            ->first();
+
+        if ($classification && $priceRecord) {
+            if ($classification->unit_type === 'Peso') {
+                return $priceRecord->price_weight;
+            } else {
+                return $priceRecord->price_quantity;
+            }
+        } else {
+            return 0;
+        }
+    }
+
+    //funcion para colocar los valores de los productos en la lista products
     public function scanQrCode()
     {
         if (empty($this->scannedProductSku)) {
@@ -157,8 +203,8 @@ class Create extends Component
             $found = false;
             foreach ($this->products as $index => $item) {
                 if ($item['product_id'] == $product->id) {
-                    $this->products[$index]['quantity']++;
-                    $this->calculateProductPrice($index);
+                    //$this->products[$index]['quantity']++;
+                   // $this->calculateProductPrice($index);
                     $found = true;
                     break;
                 }
@@ -167,10 +213,10 @@ class Create extends Component
             if (!$found) {
                 $this->products[] = [
                     'product_id' => $product->id,
-                    'quantity' => 1,
-                    'price' => 0, // Will be calculated by updatedProducts
+                    'quantity' => $this->getMaxStock($product->id),
+                    'price' => $this->calculateProductPriceId($product->id), // Will be calculated by updatedProducts
                 ];
-                $this->calculateProductPrice(count($this->products) - 1);
+                //$this->calculateProductPrice(count($this->products) - 1);
             }
 
             // $this->eliminarProductosVacios();

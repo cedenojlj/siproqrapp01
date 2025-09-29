@@ -82,14 +82,13 @@
 
                         <div class="col-md-12 ">
                             <label for="GN" class="form-label">GN</label>
-                            <input type="text" class="form-control @error('GN') is-invalid @enderror" id="GN"
-                                wire:model="GN">
+                            <input type="number" class="form-control @error('GN') is-invalid @enderror" id="GN" wire:model="GN" step="0.01">                               
                             @error('GN')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>
 
-                        <div class="col-md-12 ">
+                        {{-- <div class="col-md-12 ">
                             <label for="GW" class="form-label">GW</label>
                             <input type="text" class="form-control @error('GW') is-invalid @enderror" id="GW"
                                 wire:model="GW">
@@ -105,11 +104,11 @@
                             @error('Box')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
-                        </div>
+                        </div> --}}
 
                         <div class="col-md-12 ">
                             <label for="invoice_number" class="form-label">Invoice Number</label>
-                            <input type="text" class="form-control @error('invoice_number') is-invalid @enderror"
+                            <input type="number" class="form-control @error('invoice_number') is-invalid @enderror"
                                 id="invoice_number" wire:model="invoice_number">
                             @error('invoice_number')
                                 <div class="invalid-feedback">{{ $message }}</div>
@@ -133,7 +132,7 @@
                         <div class="col-md-12 mb-2">
                             <label for="cantidad" class="form-label">Cantidad</label>
                             <input type="number" class="form-control @error('cantidad') is-invalid @enderror"
-                                id="cantidad" wire:model="cantidad">
+                                id="cantidad" wire:model="cantidad" step="0.01">
                             @error('cantidad')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror

@@ -80,7 +80,7 @@
                                     <input type="number"
                                         class="form-control @error('products.' . $index . '.quantity') is-invalid @enderror"
                                         id="quantity-{{ $index }}"
-                                        wire:model.live="products.{{ $index }}.quantity" min="1">
+                                        wire:model.live="products.{{ $index }}.quantity" min="1" step="0.01">
                                     @error('products.' . $index . '.quantity')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror

@@ -18,10 +18,10 @@ return new class extends Migration
             $table->foreignId('classification_id')->constrained('classifications')->onUpdate('cascade')->onDelete('cascade');
             $table->text('type');
             $table->text('size');
-            $table->text('GN');
-            $table->text('GW');
-            $table->text('Box');
-            $table->text('invoice_number');
+            $table->decimal('GN');
+            // $table->text('GW');
+            // $table->text('Box');
+            $table->integer('invoice_number');
             $table->timestamps();
         });
     }

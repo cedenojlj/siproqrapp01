@@ -36,11 +36,11 @@
 
                         <div class="mb-3">
                             <label for="GN" class="form-label">GN</label>
-                            <input type="text" class="form-control @error('GN') is-invalid @enderror" id="GN" wire:model="GN">
+                            <input type="number" class="form-control @error('GN') is-invalid @enderror" id="GN" wire:model="GN" step="0.01">
                             @error('GN') <div class="invalid-feedback">{{ $message }}</div> @enderror
                         </div>
 
-                        <div class="mb-3">
+                       {{--  <div class="mb-3">
                             <label for="GW" class="form-label">GW</label>
                             <input type="text" class="form-control @error('GW') is-invalid @enderror" id="GW" wire:model="GW">
                             @error('GW') <div class="invalid-feedback">{{ $message }}</div> @enderror
@@ -50,11 +50,11 @@
                             <label for="Box" class="form-label">Box</label>
                             <input type="text" class="form-control @error('Box') is-invalid @enderror" id="Box" wire:model="Box">
                             @error('Box') <div class="invalid-feedback">{{ $message }}</div> @enderror
-                        </div>
+                        </div> --}}
 
                         <div class="mb-3">
                             <label for="invoice_number" class="form-label">Invoice Number</label>
-                            <input type="text" class="form-control @error('invoice_number') is-invalid @enderror" id="invoice_number" wire:model="invoice_number">
+                            <input type="number" class="form-control @error('invoice_number') is-invalid @enderror" id="invoice_number" wire:model="invoice_number">
                             @error('invoice_number') <div class="invalid-feedback">{{ $message }}</div> @enderror
                         </div>
 

@@ -10,7 +10,7 @@ use App\Models\PetitionProduct;
 use App\Models\Price;
 use App\Models\ProductWarehouse;
 use Illuminate\Support\Facades\Auth;
-use Livewire\Attributes\On; 
+use Livewire\Attributes\On;
 
 class Create extends Component
 {
@@ -24,34 +24,55 @@ class Create extends Component
         'customer_id' => 'required|exists:customers,id',
         'products.*.product_id' => 'required|exists:products,id',
         'products.*.quantity' => 'required|numeric|min:1',
-        'products.*.price' => 'required|numeric|min:0',        
+        'products.*.price' => 'required|numeric|min:0',
     ];
 
-    function abrirModal($indice) {
+    function abrirModal($indice)
+    {
 
         $this->indice = $indice;
         $this->dispatch('abrirModalListado');
     }
 
     //funcion para actualizar el producto en la lista de productos
-     #[On('colocarProducto')] 
-    function actualizarProducto($idproducto) {
+    #[On('colocarProducto')]
+    function actualizarProducto($idproducto)
+    {
         // Validar stock antes de actualizar el producto
 
-        if (!$this->validateStock($idproducto)) {            
+        if (!$this->validateStock($idproducto)) {
             return; // Si no hay stock, salir de la función
         }
 
         if (isset($this->products[$this->indice])) {
             $this->products[$this->indice]['product_id'] = $idproducto;
             $this->calculateProductPrice($this->indice);
-             $this->totalAmount = $this->calculateTotalAmount();
+            $this->products[$this->indice]['quantity'] = $this->getMaxStock($idproducto);
+            $this->totalAmount = $this->calculateTotalAmount();
         } else {
             session()->flash('error', 'Invalid product index.');
         }
     }
 
-   
+    //funcion para determinar el stock maximo del producto dado su id y unit_type Peso
+    public function getMaxStock($idproducto)
+    {
+        $producto = Product::find($idproducto);
+
+        if (!$producto) {
+            session()->flash('qr_error', 'Producto no encontrado');
+            return false;
+        }
+
+        if ($producto->classification->unit_type === 'Peso') {
+            $cantidadmaxima = $producto->getTotalStockAttribute();
+            return $cantidadmaxima;
+        } else {
+            return 1;
+        };
+    }
+
+
     public function mount()
     {
         $this->products[] = ['product_id' => '', 'quantity' => 1, 'price' => 0];
@@ -71,29 +92,29 @@ class Create extends Component
 
     public function updatedProducts($value, $key)
     {
-           // Split the key to get the index and field name       
+        // Split the key to get the index and field name       
         $parts = explode('.', $key);
         $index = $parts[0];
         $field = $parts[1];
 
         if ($field === 'product_id' && !empty($value)) {
             $this->products[$index]['product_id'] = $value;
-           //dd($index);
+            $this->products[$index]['quantity'] = $this->getMaxStock($value);
+            //dd($index);
 
-           $this->calculateProductPrice($index);
+            $this->calculateProductPrice($index);
         }
 
         if ($field === 'quantity' && !empty($value)) {
             $this->products[$index]['quantity'] = $value;
             $this->validateMaxQuantity($index, $value); // Validate max quantity
-           
+
         }
 
         if (!empty($value)) {
             // Recalculate the total amount whenever a product detail is updated
             $this->totalAmount = $this->calculateTotalAmount();
         }
-       
     }
 
     public function updatedCustomerId()
@@ -104,7 +125,7 @@ class Create extends Component
             }
         }
 
-       $this->totalAmount = $this->calculateTotalAmount();
+        $this->totalAmount = $this->calculateTotalAmount();
     }
 
     public function calculateProductPrice($index)
@@ -125,14 +146,14 @@ class Create extends Component
 
         $classification = $product->classification;
         $priceRecord = Price::where('product_id', $productId)
-                            ->where('customer_id', $this->customer_id)
-                            ->first();
+            ->where('customer_id', $this->customer_id)
+            ->first();
 
         if ($classification && $priceRecord) {
             if ($classification->unit_type === 'Peso') {
-                $this->products[$index]['price'] = $priceRecord->price_weight * $quantity;
+                $this->products[$index]['price'] = $priceRecord->price_weight;
             } else {
-                $this->products[$index]['price'] = $priceRecord->price_quantity * $quantity;
+                $this->products[$index]['price'] = $priceRecord->price_quantity;
             }
         } else {
             $this->products[$index]['price'] = 0;
@@ -150,9 +171,9 @@ class Create extends Component
 
         //suma de stock por producto
         $stock = ProductWarehouse::where('product_id', $product->id)
-                                  ->sum('stock');
+            ->sum('stock');
 
-         if ($stock < 1) {
+        if ($stock < 1) {
             session()->flash('qr_error', 'No hay suficiente stock para el producto escaneado.');
             return;
         }
@@ -213,41 +234,41 @@ class Create extends Component
     //funcion para calcular el monto total del pedido usando $this->products
     public function calculateTotalAmount()
     {
-       $this->totalAmount = 0;
-       foreach ($this->products as $product) {
-           $this->totalAmount += ($product['price'] * $product['quantity']);
-       }
-         return $this->totalAmount;
+        $this->totalAmount = 0;
+        foreach ($this->products as $product) {
+            $this->totalAmount += ($product['price'] * $product['quantity']);
+        }
+        return $this->totalAmount;
     }
 
     //funcion para validar stock
     public function validateStock($idproducto)
     {
 
-         $producto= Product::find($idproducto);
+        $producto = Product::find($idproducto);
 
-         if (!$producto) {
-            session()->flash('qr_error', 'Producto no encontrado' );
+        if (!$producto) {
+            session()->flash('qr_error', 'Producto no encontrado');
             return false;
         }
 
         if ($producto->getTotalStockAttribute() < 1) {
-            session()->flash('qr_error', 'No hay suficiente stock para el producto' );
+            session()->flash('qr_error', 'No hay suficiente stock para el producto');
             return false;
         }
         return true;
     }
 
     //funcion para validar maxima cantidad del producto
-    public function validateMaxQuantity($index, $value):void
+    public function validateMaxQuantity($index, $value): void
     {
-        $producto= Product::find($this->products[$index]['product_id']);
+        $producto = Product::find($this->products[$index]['product_id']);
 
         $cantidadmaxima = $producto->getTotalStockAttribute();
         if ($value > $cantidadmaxima) {
             $this->products[$index]['quantity'] = $cantidadmaxima;
-            session()->flash('qr_error', 'Cantidad maxima alcanzada para el producto' );           
-        }        
+            session()->flash('qr_error', 'Cantidad maxima alcanzada para el producto');
+        }
     }
 
     public function render()

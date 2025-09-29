@@ -82,7 +82,8 @@ class Escaneo extends Component
 
         // --- 3. Definir campos ---
         $required = ['TYPE', 'SIZE', 'INVOICE'];
-        $optional = ['NAME','G.N.', 'G.W', 'BOX'];
+       // $optional = ['NAME','G.N.', 'G.W', 'BOX'];
+        $optional = ['NAME','G.N.'];
         $allFields = array_merge($required, $optional);
 
         $missingRequired = [];

@@ -21,8 +21,8 @@ class Create extends Component
     public $classification_id;   
     public $type;
     public $GN;
-    public $GW;
-    public $Box;
+    //public $GW;
+    //public $Box;
     public $invoice_number;
     public $product_id; // Added to store the product ID if needed
     public $warehouse_id; // Added to store the selected warehouse ID
@@ -33,11 +33,11 @@ class Create extends Component
         'sku' => 'required|string|max:255|unique:products,sku',
         'type' => 'required|string|max:255|exists:classifications,code',
         'size' => 'required|string|max:255', //size en la base de datos
-        'GN' => 'required|string|max:255',
-        'GW' => 'required|string|max:255',
-        'Box' => 'required|string|max:255',
-        'invoice_number' => 'required|string|max:255',
-        'cantidad' => 'required|integer|min:0',
+        'GN' => 'required|numeric|min:0',
+        // 'GW' => 'required|string|max:255',
+        // 'Box' => 'required|string|max:255',
+        'invoice_number' => 'required|integer|min:0',
+        'cantidad' => 'required|numeric|min:0',
         'classification_id' => 'required|exists:classifications,id',
         'warehouse_id' => 'required|exists:warehouses,id',
     ];
@@ -62,8 +62,8 @@ class Create extends Component
         $this->type = $data['TYPE'] ?? '';
         $this->size = $data['SIZE'] ?? '';
         $this->GN = $data['G.N.'] ?? '';
-        $this->GW = $data['G.W'] ?? '';
-        $this->Box = $data['BOX'] ?? '';
+        // $this->GW = $data['G.W'] ?? '';
+        // $this->Box = $data['BOX'] ?? '';
         $this->invoice_number = $data['INVOICE'] ?? '';
         
     }
@@ -160,8 +160,8 @@ class Create extends Component
             'type' => $this->type,
             'size' => $this->size,
             'GN' => $this->GN,
-            'GW' => $this->GW,
-            'Box' => $this->Box,
+            // 'GW' => $this->GW,
+            // 'Box' => $this->Box,
             'invoice_number' => $this->invoice_number,            
             'classification_id' => $this->classification_id,
         ]);

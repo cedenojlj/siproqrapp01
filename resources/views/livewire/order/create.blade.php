@@ -94,7 +94,7 @@
                                 </div>
                                 <div class="col-md-3">
                                     <label for="quantity-{{ $index }}" class="form-label">Quantity</label>
-                                    <input type="number" class="form-control @error('products.' . $index . '.quantity') is-invalid @enderror" id="quantity-{{ $index }}" wire:model.live="products.{{ $index }}.quantity" min="1">
+                                    <input type="number" class="form-control @error('products.' . $index . '.quantity') is-invalid @enderror" id="quantity-{{ $index }}" wire:model.live="products.{{ $index }}.quantity" step="0.01" min="1">
                                     @error('products.' . $index . '.quantity') <div class="invalid-feedback">{{ $message }}</div> @enderror
                                 </div>
                                 <div class="col-md-2">

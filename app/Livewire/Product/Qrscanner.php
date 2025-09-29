@@ -63,7 +63,8 @@ class Qrscanner extends Component
 
         // --- 3. Definir campos ---
         $required = ['type', 'size', 'invoice'];
-        $optional = ['NAME','GN', 'GW', 'Box'];
+       // $optional = ['NAME','GN', 'GW', 'Box'];
+        $optional = ['NAME','GN'];
         $allFields = array_merge($required, $optional);
 
         $missingRequired = [];

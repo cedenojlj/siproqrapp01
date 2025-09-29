@@ -16,8 +16,8 @@ class Edit extends Component
     public $classification_id;
     public $type;
     public $GN;
-    public $GW;
-    public $Box;
+    //public $GW;
+    //public $Box;
     public $invoice_number;
     
 
@@ -26,10 +26,10 @@ class Edit extends Component
         //'size' => 'nullable|string|max:255',
         //'sku' => 'required|string|max:255|unique:products,sku',
         //'type' => 'required|string|max:255',
-        'GN' => 'nullable|string|max:255',
-        'GW' => 'nullable|string|max:255',
-        'Box' => 'nullable|string|max:255',
-        'invoice_number' => 'nullable|string|max:255',
+        'GN' => 'required|decimal|min:0',
+        // 'GW' => 'nullable|string|max:255',
+        // 'Box' => 'nullable|string|max:255',
+        'invoice_number' => 'required|integer|min:0',
         'classification_id' => 'required|exists:classifications,id',        
     ];
 
@@ -41,8 +41,8 @@ class Edit extends Component
         $this->sku = $product->sku;
         $this->size = $product->size;
         $this->GN = $product->GN;
-        $this->GW = $product->GW;
-        $this->Box = $product->Box;
+        // $this->GW = $product->GW;
+        // $this->Box = $product->Box;
         $this->invoice_number = $product->invoice_number;
         $this->classification_id = $product->classification_id;
         
@@ -58,8 +58,8 @@ class Edit extends Component
             //'size' => $this->size,
             //'type' => $this->type,
             'GN' => $this->GN,
-            'GW' => $this->GW,
-            'Box' => $this->Box,
+            // 'GW' => $this->GW,
+            // 'Box' => $this->Box,
             'invoice_number' => $this->invoice_number,
             'classification_id' => $this->classification_id,
             

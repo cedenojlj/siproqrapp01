@@ -36,6 +36,6 @@ class DatabaseSeeder extends Seeder
         $this->call([PermisosSeeder::class, 
                     WarehouseSeeder::class,
                     CustomerSeeder::class,
-                  ClassificationSeeder::class]);
+                  /* ClassificationSeeder::class */]);
     }
 }

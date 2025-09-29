@@ -16,8 +16,8 @@ class Product extends Model
         'type',
         'size',
         'GN',
-        'GW',
-        'Box',
+        // 'GW',
+        // 'Box',
         'invoice_number',
         'classification_id',        
     ];
@@ -72,8 +72,8 @@ class Product extends Model
             'type' => $this->type,
             'size' => $this->size,
             'GN' => $this->GN,
-            'GW' => $this->GW,
-            'Box' => $this->Box,
+            // 'GW' => $this->GW,
+            // 'Box' => $this->Box,
             'invoice_number' => $this->invoice_number,
             'classification_id' => $this->classification_id,            
         ]);
