@@ -29,7 +29,7 @@ class Edit extends Component
         'GN' => 'required|decimal|min:0',
         // 'GW' => 'nullable|string|max:255',
         // 'Box' => 'nullable|string|max:255',
-        'invoice_number' => 'required|integer|min:0',
+        'invoice_number' => 'required|string|max:255',
         'classification_id' => 'required|exists:classifications,id',        
     ];
 

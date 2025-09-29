@@ -21,7 +21,7 @@ return new class extends Migration
             $table->decimal('GN');
             // $table->text('GW');
             // $table->text('Box');
-            $table->integer('invoice_number');
+            $table->text('invoice_number');
             $table->timestamps();
         });
     }

@@ -54,7 +54,7 @@
 
                         <div class="mb-3">
                             <label for="invoice_number" class="form-label">Invoice Number</label>
-                            <input type="number" class="form-control @error('invoice_number') is-invalid @enderror" id="invoice_number" wire:model="invoice_number">
+                            <input type="text" class="form-control @error('invoice_number') is-invalid @enderror" id="invoice_number" wire:model="invoice_number">
                             @error('invoice_number') <div class="invalid-feedback">{{ $message }}</div> @enderror
                         </div>
 

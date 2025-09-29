@@ -55,7 +55,7 @@
                     <td>{{ $item->product->sku }}</td>
                     <td>{{ $item->product->name }}</td>
                     <td>{{ $item->product->size }}</td>
-                    <td>{{ $item->quantity }}</td>
+                    <td>{{ number_format($item->quantity, 2) }}</td>
                     <td>{{ $item->product->GN }}</td>
                     <td>{{ number_format($item->price, 2) }}</td>
                     <td>{{ number_format($item->quantity * $item->price, 2) }}</td>

@@ -36,7 +36,7 @@ class Create extends Component
         'GN' => 'required|numeric|min:0',
         // 'GW' => 'required|string|max:255',
         // 'Box' => 'required|string|max:255',
-        'invoice_number' => 'required|integer|min:0',
+        'invoice_number' => 'required|string|max:255',
         'cantidad' => 'required|numeric|min:0',
         'classification_id' => 'required|exists:classifications,id',
         'warehouse_id' => 'required|exists:warehouses,id',
