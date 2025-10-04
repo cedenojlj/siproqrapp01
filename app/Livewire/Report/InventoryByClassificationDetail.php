@@ -15,6 +15,7 @@ class InventoryByClassificationDetail extends Component
     public $size;
     public $description;
     public $sku;
+    public $gn;
 
     public function render()
     {
@@ -65,7 +66,11 @@ class InventoryByClassificationDetail extends Component
             ->when($this->sku, function ($query) {
                 $query->where('products.sku', 'like', '%' . $this->sku . '%');
             })
+            ->when($this->gn, function ($query) {
+                $query->where('products.GN', 'like', '%' . $this->gn . '%');
+            })
             ->where('product_warehouses.stock', '>', 0)
+            ->orderBy('classifications.code')
             ->get();
     }
 }

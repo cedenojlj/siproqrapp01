@@ -36,8 +36,11 @@
     @foreach ($products as $product)
         <div class="qr-code-container">
             <img src="data:image/png;base64,{{ base64_encode($product->generateQrCode()) }}" alt="QR Code">
-            <div class="product-name">{{ $product->name }}</div>
-            <div class="product-sku">SKU: {{ $product->sku }}</div>
+            <div class="product-name">NW: {{ $product->GN }}</div>
+            <div class="product-sku">{{ $product->name }}</div>
+            {{-- <div class="product-sku">SKU: {{ $product->sku }}</div> --}}
+            <div class="product-sku">Size: {{ $product->size }}</div>
+            
         </div>
     @endforeach
 </body>

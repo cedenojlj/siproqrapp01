@@ -82,7 +82,7 @@ class Create extends Component
         if ($field === 'product_id' && !empty($value)) {
 
             $this->products[$index]['product_id'] = $value;
-            $this->products[$index]['quantity'] = $this->getMaxStock($value);
+            $this->products[$index]['quantity'] = 1;
             // if (!isset($this->products[$index]['quantity'])) {
             //     $this->products[$index]['quantity'] = 1;
             // }
@@ -134,9 +134,9 @@ class Create extends Component
 
         if ($classification && $priceRecord) {
             if ($classification->unit_type === 'Peso') {
-                $this->products[$index]['price'] = $priceRecord->price_weight;
+                $this->products[$index]['price'] = round($priceRecord->price_weight * $product->GN, 2);
             } else {
-                $this->products[$index]['price'] = $priceRecord->price_quantity;
+                $this->products[$index]['price'] = round($priceRecord->price_quantity, 2);
             }
         } else {
             $this->products[$index]['price'] = 0;
@@ -160,9 +160,9 @@ class Create extends Component
 
         if ($classification && $priceRecord) {
             if ($classification->unit_type === 'Peso') {
-                return $priceRecord->price_weight;
+                return round($priceRecord->price_weight * $product->GN, 2);
             } else {
-                return $priceRecord->price_quantity;
+                return round($priceRecord->price_quantity, 2);
             }
         } else {
             return 0;
@@ -213,7 +213,7 @@ class Create extends Component
             if (!$found) {
                 $this->products[] = [
                     'product_id' => $product->id,
-                    'quantity' => $this->getMaxStock($product->id),
+                    'quantity' => 1,
                     'price' => $this->calculateProductPriceId($product->id), // Will be calculated by updatedProducts
                 ];
                 //$this->calculateProductPrice(count($this->products) - 1);

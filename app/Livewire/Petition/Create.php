@@ -47,7 +47,8 @@ class Create extends Component
         if (isset($this->products[$this->indice])) {
             $this->products[$this->indice]['product_id'] = $idproducto;
             $this->calculateProductPrice($this->indice);
-            $this->products[$this->indice]['quantity'] = $this->getMaxStock($idproducto);
+            //$this->products[$this->indice]['quantity'] = $this->getMaxStock($idproducto);
+            $this->products[$this->indice]['quantity'] = 1;
             $this->totalAmount = $this->calculateTotalAmount();
         } else {
             session()->flash('error', 'Invalid product index.');
@@ -99,7 +100,7 @@ class Create extends Component
 
         if ($field === 'product_id' && !empty($value)) {
             $this->products[$index]['product_id'] = $value;
-            $this->products[$index]['quantity'] = $this->getMaxStock($value);
+            $this->products[$index]['quantity'] = 1;
             //dd($index);
 
             $this->calculateProductPrice($index);
@@ -151,9 +152,9 @@ class Create extends Component
 
         if ($classification && $priceRecord) {
             if ($classification->unit_type === 'Peso') {
-                $this->products[$index]['price'] = $priceRecord->price_weight;
+                $this->products[$index]['price'] = round($priceRecord->price_weight * $product->GN, 2);
             } else {
-                $this->products[$index]['price'] = $priceRecord->price_quantity;
+                $this->products[$index]['price'] = round($priceRecord->price_quantity,2);
             }
         } else {
             $this->products[$index]['price'] = 0;
@@ -269,6 +270,27 @@ class Create extends Component
             $this->products[$index]['quantity'] = $cantidadmaxima;
             session()->flash('qr_error', 'Cantidad maxima alcanzada para el producto');
         }
+    }
+
+    public function calcularSubtotalItem($product_id, $quantity, $price)
+    {
+        $subtotal = 0;
+        
+        $producto = Product::find($product_id);        
+
+        if ($producto->classification->unit_type === 'Peso') {
+
+            $subtotal = $price * $quantity * $producto->GN;
+            
+            return $subtotal;
+
+        } else {
+
+            $subtotal = $price * $quantity;
+
+            return $subtotal;
+        };
+        
     }
 
     public function render()

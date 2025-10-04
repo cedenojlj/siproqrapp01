@@ -44,6 +44,18 @@
                     </div>
                 </div>
             </div>
+
+            <div class="row">
+                
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label>NW</label>
+                        <input wire:model.live="gn" type="text" class="form-control" placeholder="Filtrar por NW">
+                    </div>
+                </div>
+            </div>
+
+
             <div class="row mt-4">
                 <div class="col-md-12">
                     <button wire:click="exportPdf" class="btn btn-primary">Exportar a PDF</button>
@@ -60,7 +72,7 @@
                                 <th>SKU</th>
                                 <th>Stock</th>
                                 <th>Tipo Unidad</th>
-                                <th>G.N.</th>
+                                <th>NW</th>
                             </tr>
                         </thead>
                         <tbody>

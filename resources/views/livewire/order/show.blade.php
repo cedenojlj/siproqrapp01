@@ -34,8 +34,9 @@
                                 <th>Product</th>
                                 <th>Size</th>
                                 <th>Quantity</th>
-                                <th>GN</th>
+                                <th>NW</th>
                                 <th>Price</th>
+                                <th>Price2</th>
                                 <th>Subtotal</th>
                             </tr>
                         </thead>
@@ -47,7 +48,19 @@
                                     <td>{{ number_format($item->quantity, 2) }}</td>
                                     <td>{{ $item->product->GN }}</td>
                                     <td>{{ number_format($item->price, 2) }}</td>
+                                    
+                                    @if ($item->product->GN > 0)
+
+                                        <td>{{ number_format($item->price / $item->product->GN, 2) }}</td>  
+
+                                    @else
+
+                                        <td>{{ number_format($item->price, 2) }}</td>
+                                        
+                                    @endif   
+
                                     <td>{{ number_format($item->quantity * $item->price, 2) }}</td>
+                                    
                                 </tr>
                             @endforeach
                         </tbody>

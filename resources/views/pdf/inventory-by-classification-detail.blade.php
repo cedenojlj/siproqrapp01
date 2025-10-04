@@ -25,7 +25,7 @@
                 <th>SKU</th>
                 <th>Stock</th>
                 <th>Tipo Unidad</th>
-                <th>G.N.</th>
+                <th>NW</th>
             </tr>
         </thead>
         <tbody>

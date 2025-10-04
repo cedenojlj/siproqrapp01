@@ -60,7 +60,7 @@
                 <th>Quantity</th>
                 <th>Customer Name</th>
                 <th>Size</th>
-                <th>GN</th>
+                <th>NW</th>
                 <th>Subtotal</th>
             </tr>
         </thead>
