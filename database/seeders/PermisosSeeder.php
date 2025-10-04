@@ -56,6 +56,14 @@ class PermisosSeeder extends Seeder
         Permission::create(['name' => 'delete precios']);       
         
         Permission::create(['name' => 'ver reportes']);
+        Permission::create(['name' => 'ver clasificaciones']);
+        Permission::create(['name' => 'ver roles']);
+        Permission::create(['name' => 'ver invAlmacen']);
+        Permission::create(['name' => 'ver movHistoricos']);
+        Permission::create(['name' => 'ver movDetalles']);
+        Permission::create(['name' => 'ver invClasificacion']);
+        Permission::create(['name' => 'ver invClasificacionDetalle']);
+
 
         // create roles
 
@@ -70,12 +78,12 @@ class PermisosSeeder extends Seeder
 
         $rol2 = Role::create(['name' => 'almacenista']);
         
-        $rol2->givePermissionTo([
+        /* $rol2->givePermissionTo([
             'create products',
             'read products',
             'update products',
             'delete products',
-        ]);
+        ]); */
 
         $rol2->givePermissionTo([
             'create petitions',
@@ -92,7 +100,7 @@ class PermisosSeeder extends Seeder
         $rol2->givePermissionTo([
             'ver reportes',
             'read customers',
-            'read warehouses',
+            // 'read warehouses',
         ]);
 
         $rol3 = Role::create(['name' => 'superadmin']); // this role gets all permissions via Gate::before rule; see AuthServiceProvider

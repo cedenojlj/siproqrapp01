@@ -23,6 +23,7 @@ class ClassificationFactory extends Factory
             'precio_unidad' => $this->faker->randomFloat(2, 10, 1000),
             'precio_peso' => $this->faker->randomFloat(2, 20, 2000),
             'unit_type' => $this->faker->randomElement(['Peso', 'Cantidad']),
+            'name' => $this->faker->name(),
         ];
     }
 }

@@ -123,33 +123,24 @@
                         </ul>
                     </li>
 
-
-
-
-
-
                     {{-- agrupando precios --}}
 
+                @endcan
 
+                 {{-- classifications --}}
 
-
-
-
-
-
-
-                    {{-- classifications --}}
+                @can('ver clasificaciones')
+                  
                     <li class="sidebar-item">
                         <a href="{{ route('classifications.table') }}" class="sidebar-link">
                             <i class="bi bi-tags"></i>
                             <span>Clasificaciones</span>
                         </a>
-                    </li>
-                    {{-- end classifications --}}
-
-
+                    </li>                    
 
                 @endcan
+
+                {{-- end classifications --}}
 
                 @can('read users')
                     <li class="sidebar-item">
@@ -163,38 +154,65 @@
 
 
                 {{-- inicio de reportes --}}
-                @can('ver reportes')
+               @can('ver reportes')
                     <li class="sidebar-item">
                         <a href="#reports-submenu" data-bs-toggle="collapse" class="sidebar-link collapsed">
                             <i class="bi bi-file-earmark-bar-graph"></i>
                             <span>Reportes</span>
                             <i class="bi bi-chevron-down ms-auto"></i>
                         </a>
-                        <ul id="reports-submenu" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
-                            <li class="sidebar-item">
-                                <a href="{{ route('reports.inventory-by-warehouse') }}" class="sidebar-link">Inv. por
-                                    Almacén</a>
-                            </li>
-                            <li class="sidebar-item">
-                                <a href="{{ route('reports.historical-movements') }}" class="sidebar-link">Mov.
-                                    Históricos</a>
-                            </li>
-                            <li class="sidebar-item">
-                                <a href="{{ route('reports.detailed') }}" class="sidebar-link">Mov.
-                                    Detalles</a>
-                            </li>
-                            <li class="sidebar-item">
-                                <a href="{{ route('reports.inventory-by-classification') }}" class="sidebar-link">Inv.
-                                    Clasificación</a>
-                            </li>
-                            <li class="sidebar-item">
-                                <a href="{{ route('reports.inventory-by-classification-detail') }}" class="sidebar-link">Inv.
-                                    Clasificación Detalle</a>
-                            </li>
+                        <ul id="reports-submenu" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">                           
+                            
+                            
+                                <li class="sidebar-item">
+                                    <a href="{{ route('reports.inventory-by-warehouse') }}" class="sidebar-link">Inv. por
+                                        Almacén</a>
+                                </li>                           
+                           
+
+                                <li class="sidebar-item">
+                                    <a href="{{ route('reports.historical-movements') }}" class="sidebar-link">Mov.
+                                        Históricos</a>
+                                </li>                                                        
+
+
+                                <li class="sidebar-item">
+                                    <a href="{{ route('reports.inventory-by-classification') }}" class="sidebar-link">Inv.
+                                        Clasificación</a>
+                                </li>
+
+                            
+                                <li class="sidebar-item">
+                                    <a href="{{ route('reports.inventory-by-classification-detail') }}" class="sidebar-link">Inv.
+                                        Clasificación Detalle</a>
+                                </li>
+                            
                         </ul>
                     </li>
                 @endcan
                 {{-- fin de reportes --}}
+
+                @can('ver movDetalles')
+
+                    <li class="sidebar-item">
+                        <a href="#reports-submenuadmin" data-bs-toggle="collapse" class="sidebar-link collapsed">
+                            <i class="bi bi-file-earmark-bar-graph"></i>
+                            <span>Reportes admin</span>
+                            <i class="bi bi-chevron-down ms-auto"></i>
+                        </a>
+                        <ul id="reports-submenuadmin" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">                          
+
+                                <li class="sidebar-item">
+                                    <a href="{{ route('reports.detailed') }}" class="sidebar-link">Mov.
+                                            Detalles</a>
+                                </li>
+                            
+                        </ul>
+                    </li>
+
+                @endcan
+
+               
 
                 @auth
                     <li class="sidebar-item">

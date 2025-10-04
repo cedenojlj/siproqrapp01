@@ -16,6 +16,7 @@ class Classification extends Model
         'precio_unidad',
         'precio_peso',      
         'unit_type',
+        'name',
     ];
 
     public function products()
