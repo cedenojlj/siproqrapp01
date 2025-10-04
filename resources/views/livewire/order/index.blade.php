@@ -21,6 +21,14 @@
                             <input wire:model.live="search" type="text" class="form-control"
                                 placeholder="Search orders...">
                         </div>
+                        <div class="col-md-3">
+                            <input wire:model.live="fechaInicio" type="date" class="form-control"
+                                placeholder="fecha Inicio">
+                        </div>
+                        <div class="col-md-3">
+                            <input wire:model.live="fechaFin" type="date" class="form-control"
+                                placeholder="fecha Fin">
+                        </div>
 
                         @can('create orders')
                             <div class="col-md-6 text-end">
@@ -35,6 +43,7 @@
                             <thead>
                                 <tr>
                                     <th>ID</th>
+                                    <th>Fecha</th>
                                     <th>Customer</th>
                                     <th>Warehouse</th>
                                     <th>Type</th>
@@ -47,6 +56,7 @@
                                 @foreach ($orders as $order)
                                     <tr>
                                         <td>{{ $order->id }}</td>
+                                        <td>{{ $order->created_at->format('Y-m-d') }}</td>
                                         <td>{{ $order->customer->name }}</td>
                                         <td>{{ $order->warehouse->name }}</td>
                                         <td>{{ ucfirst($order->order_type) }}</td>

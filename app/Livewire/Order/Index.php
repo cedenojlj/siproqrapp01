@@ -16,6 +16,8 @@ class Index extends Component
 
     public $search = '';
     public $cambiarStatus = '';
+    public $fechaInicio;
+    public $fechaFin;
 
     public function render()
     {
@@ -47,7 +49,7 @@ class Index extends Component
                         })
                         ->orWhereHas('warehouse', function ($query) {
                             $query->where('name', 'like', '%' . $this->search . '%');
-                        });
+                        });                        ;
                 })
                 ->where('user_id', Auth::id())
                 ->orderBy('id', 'desc')
