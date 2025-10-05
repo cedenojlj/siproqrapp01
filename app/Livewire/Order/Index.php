@@ -35,7 +35,7 @@ class Index extends Component
                         ->orWhereHas('warehouse', function ($query) {
                             $query->where('name', 'like', '%' . $this->search . '%');
                         });
-                })
+                })->whereBetween(DB::raw('DATE(created_at)'), [$this->fechaInicio ?? '2000-01-01', $this->fechaFin ?? date('Y-m-d')])
                 ->orderBy('id', 'desc')
                 ->paginate(10);
         } else {
@@ -50,7 +50,7 @@ class Index extends Component
                         ->orWhereHas('warehouse', function ($query) {
                             $query->where('name', 'like', '%' . $this->search . '%');
                         });                        ;
-                })
+                })->whereBetween(DB::raw('DATE(created_at)'), [$this->fechaInicio ?? '2000-01-01', $this->fechaFin ?? date('Y-m-d')])
                 ->where('user_id', Auth::id())
                 ->orderBy('id', 'desc')
                 ->paginate(10);
