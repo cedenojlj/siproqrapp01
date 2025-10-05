@@ -49,7 +49,7 @@
                                     <td>{{ $item->product->GN }}</td>
                                     <td>{{ number_format($item->price, 2) }}</td>
                                     
-                                    @if ($item->product->GN > 0)
+                                    @if ($item->product->classification->unit_type == 'Peso')
 
                                         <td>{{ number_format($item->price / $item->product->GN, 2) }}</td>  
 
