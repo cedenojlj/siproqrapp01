@@ -85,7 +85,8 @@ class Create extends Component
         
          if ($clasificacion) {
            
-            $this->name=$clasificacion->description;
+            //$this->name=$clasificacion->description;
+            $this->name=$clasificacion->name;
             $this->type=$clasificacion->code;
             $this->size=$clasificacion->size;    
             $this->classification_id = $clasificacion->id;

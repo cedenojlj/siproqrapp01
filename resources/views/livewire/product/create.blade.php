@@ -81,7 +81,7 @@
                         </div>
 
                         <div class="col-md-12 ">
-                            <label for="GN" class="form-label">GN</label>
+                            <label for="GN" class="form-label">NW</label>
                             <input type="number" class="form-control @error('GN') is-invalid @enderror" id="GN" wire:model="GN" step="0.01">                               
                             @error('GN')
                                 <div class="invalid-feedback">{{ $message }}</div>
