@@ -14,6 +14,7 @@ use App\Models\Price;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\On;
+use Illuminate\Support\Carbon;
 
 
 class Create extends Component
@@ -25,6 +26,7 @@ class Create extends Component
     public $scannedProductSku;
     public $totalAmount = 0;
     public $indice;
+    public $daysToAdd = 15; // Number of days to add for expiration date    
 
     protected $rules = [
         'customer_id' => 'required|exists:customers,id',
@@ -33,6 +35,7 @@ class Create extends Component
         'products.*.product_id' => 'required|exists:products,id',
         'products.*.quantity' => 'required|numeric|min:1',
         'products.*.price' => 'required|numeric|min:0',
+        'daysToAdd' => 'required|integer|min:1|max:365',        
     ];
 
     public function mount()
@@ -234,7 +237,7 @@ class Create extends Component
     public function saveOrder()
     {
         $this->validate();
-
+        
         DB::transaction(function () {
             $order = Order::create([
                 'customer_id' => $this->customer_id,
@@ -243,6 +246,7 @@ class Create extends Component
                 'total' => $this->totalAmount,
                 'status' => 'Aprobada', // Default status for simplicity
                 'user_id' => Auth::id(),
+                'date_expiration' => Carbon::now()->addDays(intval($this->daysToAdd)), // Set expiration date
             ]);
 
             foreach ($this->products as $productData) {

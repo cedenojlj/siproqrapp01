@@ -47,6 +47,12 @@
                         </div>
 
                         <div class="mb-3">
+                            <label for="daysToAdd" class="form-label">DaysExpiration</label>
+                            <input type="number" wire:model="daysToAdd" class="form-control @error('daysToAdd') is-invalid @enderror" id="daysToAdd">
+                            @error('daysToAdd') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                        </div>
+
+                        <div class="mb-3">
                             <label for="warehouse_id" class="form-label">Warehouse</label>
                             <select class="form-select @error('warehouse_id') is-invalid @enderror" id="warehouse_id" wire:model="warehouse_id">
                                 <option value="">Select Warehouse</option>

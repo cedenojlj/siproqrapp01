@@ -13,6 +13,7 @@ class Order extends Model
         'order_type',
         'total',
         'status',
+        'date_expiration',
     ];
 
     public function customer()

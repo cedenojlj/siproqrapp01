@@ -19,6 +19,7 @@ return new class extends Migration
             $table->enum('order_type', ['Entrada','Devolucion','Salida']);
             $table->decimal('total');
             $table->enum('status', ['Pendiente', 'Aprobada', 'Rechazada']);
+            $table->date('date_expiration')->default(now());
             $table->timestamps();
         });
     }
