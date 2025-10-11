@@ -71,7 +71,7 @@ class Product extends Model
             'sku' => $this->sku,
             'type' => $this->type,
             'size' => $this->size,
-            'GN' => $this->GN,
+            'NW' => $this->GN,
             // 'GW' => $this->GW,
             // 'Box' => $this->Box,
             'invoice_number' => $this->invoice_number,

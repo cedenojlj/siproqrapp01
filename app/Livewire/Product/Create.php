@@ -61,8 +61,8 @@ class Create extends Component
         $this->name = $data['NAME'] ?? '';
         $this->type = $data['TYPE'] ?? '';
         $this->size = $data['SIZE'] ?? '';
-        $this->GN = $data['G.N.'] ?? '';
-        // $this->GW = $data['G.W'] ?? '';
+        $this->GN = $data['NW'] ?? '';
+        // $this->GW = $data['G.N.'] ?? '';
         // $this->Box = $data['BOX'] ?? '';
         $this->invoice_number = $data['INVOICE'] ?? '';
         

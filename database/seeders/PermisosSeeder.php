@@ -67,6 +67,13 @@ class PermisosSeeder extends Seeder
 
         // create roles
 
+        $rol4 = Role::create(['name' => 'proveedor']);
+
+        $rol4->givePermissionTo([
+            'create products',            
+        ]);
+
+
         $rol1 = Role::create(['name' => 'usuario']);
 
         $rol1->givePermissionTo([
