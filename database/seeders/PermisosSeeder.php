@@ -64,13 +64,16 @@ class PermisosSeeder extends Seeder
         Permission::create(['name' => 'ver invClasificacion']);
         Permission::create(['name' => 'ver invClasificacionDetalle']);
 
+        Permission::create(['name' => 'ver codigosQR']);
+
 
         // create roles
 
         $rol4 = Role::create(['name' => 'proveedor']);
 
         $rol4->givePermissionTo([
-            'create products',            
+            'create products',
+            'ver codigosQR',            
         ]);
 
 

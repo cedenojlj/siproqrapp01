@@ -49,6 +49,15 @@
                     </li>
                 @endcan
 
+                 @can('ver codigosQR')
+                    <li class="sidebar-item">
+                        <a href="{{ route('products.report') }}" class="sidebar-link">
+                            <i class="bi bi-box-seam"></i>
+                            <span>QRcodes</span>
+                        </a>
+                    </li>
+                @endcan
+
                 @can('read customers')
                     <li class="sidebar-item">
                         <a href="{{ route('customers.index') }}" class="sidebar-link">
