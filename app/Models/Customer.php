@@ -14,6 +14,7 @@ class Customer extends Model
         'address',
         'phone',
         'email',
+        'credit_balance',
     ];
 
     public function petitions()
@@ -29,5 +30,10 @@ class Customer extends Model
     public function prices()
     {
         return $this->hasMany(Price::class);
+    }
+
+    public function payments()
+    {
+        return $this->hasMany(Payment::class);
     }
 }

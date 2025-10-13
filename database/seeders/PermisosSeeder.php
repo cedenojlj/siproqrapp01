@@ -65,6 +65,8 @@ class PermisosSeeder extends Seeder
         Permission::create(['name' => 'ver invClasificacionDetalle']);
 
         Permission::create(['name' => 'ver codigosQR']);
+        
+        Permission::create(['name' => 'ver abonos']);
 
 
         // create roles

@@ -24,7 +24,7 @@ Esta fase es la más crítica. Un buen diseño de base de datos previene problem
 ```php
 // Migración para `orders`
 Schema::table('orders', function (Blueprint $table) {
-    $table->string('payment_status')->default('pendiente')->after('id'); // pendiente, pago_parcial, pagado
+    $table->string('payment_status')->default('pendiente')->after('id'); // pendiente, parcial, pagado
     $table->decimal('monto_pagado', 10, 2)->default(0)->after('total');
 });
 
@@ -128,7 +128,7 @@ class PaymentManager extends Component
     public function updatedCustomerId($id)
     {
         $this->selectedCustomer = Customer::with(['orders' => function ($query) {
-            $query->whereIn('payment_status', ['pendiente', 'pago_parcial'])->orderBy('created_at', 'asc');
+            $query->whereIn('payment_status', ['pendiente', 'parcial'])->orderBy('created_at', 'asc');
         }])->find($id);
     }
 
@@ -151,7 +151,7 @@ class PaymentManager extends Component
 
             // 2. Obtener órdenes pendientes (más antiguas primero)
             $orders = $customer->orders()
-                ->whereIn('payment_status', ['pendiente', 'pago_parcial'])
+                ->whereIn('payment_status', ['pendiente', 'parcial'])
                 ->orderBy('created_at', 'asc')
                 ->get();
 
@@ -165,7 +165,7 @@ class PaymentManager extends Component
                 if ($montoAAplicar > 0) {
                     // Actualizar la orden
                     $order->monto_pagado += $montoAAplicar;
-                    $order->payment_status = ($order->monto_pagado >= $order->total) ? 'pagado' : 'pago_parcial';
+                    $order->payment_status = ($order->monto_pagado >= $order->total) ? 'pagado' : 'parcial';
                     $order->save();
 
                     // Registrar la aplicación del pago
@@ -322,7 +322,7 @@ Las pruebas son la red de seguridad. Con Livewire, podemos simular la interacci�
 
 *   Crea un test para `Customer/PaymentManager`.
 *   **Escenario 1: Pago completo.** Simula un pago que cubre exactamente una orden. Verifica que el estado de la orden cambie a `pagado`.
-*   **Escenario 2: Pago parcial.** Simula un pago menor a la deuda. Verifica que el estado sea `pago_parcial` y el `monto_pagado` sea correcto.
+*   **Escenario 2: Pago parcial.** Simula un pago menor a la deuda. Verifica que el estado sea `parcial` y el `monto_pagado` sea correcto.
 *   **Escenario 3: Pago múltiple.** Simula un pago que cubre una orden y parte de la siguiente. Verifica que ambas órdenes se actualicen correctamente.
 *   **Escenario 4: Saldo a favor.** Simula un pago que excede todas las deudas. Verifica que el `credit_balance` del cliente se actualice.
 *   **Escenario 5: Uso de saldo a favor.** Realiza un pago, genera saldo a favor, y luego verifica que un nuevo abono utilice primero ese saldo.

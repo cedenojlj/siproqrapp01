@@ -19,6 +19,8 @@ return new class extends Migration
             $table->enum('order_type', ['Entrada','Devolucion','Salida']);
             $table->decimal('total');
             $table->enum('status', ['Pendiente', 'Aprobada', 'Rechazada']);
+            $table->enum('payment_status', ['pagado', 'parcial','pendiente'])->default('pendiente');
+            $table->decimal('monto_pagado')->default(0);
             $table->date('date_expiration')->default(now());
             $table->timestamps();
         });

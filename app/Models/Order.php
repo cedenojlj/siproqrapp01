@@ -13,6 +13,8 @@ class Order extends Model
         'order_type',
         'total',
         'status',
+        'payment_status',
+        'monto_pagado',
         'date_expiration',
     ];
 
@@ -39,5 +41,15 @@ class Order extends Model
     public function movements()
     {
         return $this->hasMany(Movement::class);
+    }
+
+    public function paymentApplications()
+    {
+        return $this->hasMany(PaymentApplication::class);
+    }
+
+    public function getDeudaAttribute()
+    {
+        return $this->total - $this->monto_pagado;
     }
 }

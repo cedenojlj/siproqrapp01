@@ -94,6 +94,15 @@
                     </li>
                 @endcan
 
+                @can('ver abonos')
+                    <li class="sidebar-item">
+                        <a href="{{ route('payments.manage') }}" class="sidebar-link">
+                            <i class="bi bi-inboxes"></i>
+                            <span>Abonos</span>
+                        </a>
+                    </li>
+                @endcan
+
                 @can('read prices')
 
                     {{-- <li class="sidebar-item">

@@ -59,6 +59,7 @@
                                 <th>Warehouse</th>
                                 <th>Type</th>
                                 <th>Total Amount</th>
+                                <th>Payment Status</th>
                                 <th>Status</th>
                                 <th>Actions</th>
                             </tr>
@@ -71,7 +72,25 @@
                                     <td>{{ $order->customer->name }}</td>
                                     <td>{{ $order->warehouse->name }}</td>
                                     <td>{{ ucfirst($order->order_type) }}</td>
-                                    <td>{{ number_format($order->total, 2) }}</td>
+                                    <td>${{ number_format($order->monto_pagado, 2) }} / ${{ number_format($order->total, 2) }}</td>
+                                    <td>
+                                        @php
+                                            $badgeClass = '';
+                                            switch ($order->payment_status) {
+                                                case 'pagado':
+                                                    $badgeClass = 'text-bg-success';
+                                                    break;
+                                                case 'parcial':
+                                                    $badgeClass = 'text-bg-warning';
+                                                    break;
+                                                case 'pendiente':
+                                                default:
+                                                    $badgeClass = 'text-bg-danger';
+                                                    break;
+                                            }
+                                        @endphp
+                                        <span class="badge {{ $badgeClass }}">{{ ucfirst(str_replace('_', ' ', $order->payment_status)) }}</span>
+                                    </td>
                                     <td>{{ $order->status }}</td>
                                     <td>
                                         @can('read orders')

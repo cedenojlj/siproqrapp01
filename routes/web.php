@@ -56,6 +56,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/users', App\Livewire\UserManagement::class)->name('users.index');
     Route::get('/classifications', App\Livewire\Classification\Table::class)->name('classifications.table');
+    Route::get('/payments/manage', App\Livewire\Customer\PaymentManager::class)->name('payments.manage');
     
     
 });

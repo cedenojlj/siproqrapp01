@@ -14,6 +14,8 @@ class Index extends Component
 {
     use WithPagination;
 
+    protected $listeners = ['payment-registered' => '$refresh'];
+
     public $search = '';
     public $cambiarStatus = '';
     public $fechaInicio;
