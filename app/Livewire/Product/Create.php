@@ -95,6 +95,11 @@ class Create extends Component
  
     }
 
+    public function abrirListado()
+    {
+        $this->dispatch('open-listado');
+    }
+
     //funcion para crear sku
 
     public function crearSku()

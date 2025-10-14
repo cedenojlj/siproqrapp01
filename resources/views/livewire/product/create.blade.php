@@ -2,11 +2,11 @@
     <div class="row justify-content-center">
 
         <div class="col-md-8">
-            
-             <div class="col-md-12">
-                    <livewire:escaneo />
-             </div>
-               
+
+            <div class="col-md-12">
+                <livewire:escaneo />
+            </div>
+
 
             <div class="card">
                 <div class="card-header">{{ __('Create New Product') }}</div>
@@ -31,7 +31,7 @@
                     @endif
 
 
-                        
+
 
                     <form class="row g-1" wire:submit.prevent="save">
 
@@ -53,8 +53,18 @@
                             @enderror
                         </div>
 
-                        <div class="col-md-12">
+                        {{-- <div class="col-md-12">
                             <livewire:Product.ModalProduct />
+                        </div> --}}
+
+                        <div class="col-md-12">
+                            <button type="button" class="btn btn-secondary mt-1" wire:click="abrirListado">
+                                Listado Modal
+                            </button>
+                        </div>
+
+                        <div class="col-md-12">
+                            <livewire:Product.ModalListado />
                         </div>
 
                         <div class="col-md-12 ">
@@ -82,7 +92,8 @@
 
                         <div class="col-md-12 ">
                             <label for="GN" class="form-label">NW</label>
-                            <input type="number" class="form-control @error('GN') is-invalid @enderror" id="GN" wire:model="GN" step="0.01">                               
+                            <input type="number" class="form-control @error('GN') is-invalid @enderror" id="GN"
+                                wire:model="GN" step="0.01">
                             @error('GN')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
@@ -114,7 +125,7 @@
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>
-                       
+
                         <div class="col-md-12 mb-2">
                             <label for="warehouse_id" class="form-label">Warehouse</label>
                             <select class="form-select @error('warehouse_id') is-invalid @enderror" id="warehouse_id"

@@ -23,6 +23,7 @@ class Lista extends Component
     public function agregarCodigo($idcodigo)
     {
         $this->dispatch('colocarCodigo', idcodigo: $idcodigo);
+        $this->dispatch('close-listado');
     }
 
     public function render()

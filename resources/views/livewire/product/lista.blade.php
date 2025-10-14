@@ -12,7 +12,7 @@
                 <h5 class="card-title">{{ $codigo->code }}</h5>
                 <h6 class="card-subtitle mb-2 text-body-secondary">{{ $codigo->size }}</h6>
                 <p class="card-text">{{ $codigo->description }}</p>
-                <button type="button" wire:click="agregarCodigo({{ $codigo->id }})" class="btn btn-secondary">Agregar</button>
+                <button type="button" wire:click="agregarCodigo({{ $codigo->id }})" class="btn btn-secondary">Add</button>
             </div>
         </div>
     @empty
