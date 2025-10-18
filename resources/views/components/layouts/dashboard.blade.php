@@ -224,6 +224,11 @@
                                     <a href="{{ route('reports.detailed') }}" class="sidebar-link">Mov.
                                             Detalles</a>
                                 </li>
+
+                                <li class="sidebar-item">
+                                    <a href="{{ route('reports.debt-report') }}" class="sidebar-link">Ctas.
+                                            Cobrar</a>
+                                </li>
                             
                         </ul>
                     </li>

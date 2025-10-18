@@ -19,6 +19,9 @@
                     <tr>
                         <th>SKU</th>
                         <th>Producto</th>
+                        <th>Type</th>
+                        <th>Size</th>
+                        <th>NW</th>
                         <th>N° Factura</th>
                         <th>Fecha Creación</th>
                         <th>Acciones</th>
@@ -29,6 +32,9 @@
                         <tr>
                             <td>{{ $product->sku }}</td>
                             <td>{{ $product->name }}</td>
+                            <td>{{ $product->type }}</td>
+                            <td>{{ $product->size }}</td>
+                            <td>{{ $product->GN }}</td>
                             <td>{{ $product->invoice_number }}</td>
                             <td>{{ $product->created_at->format('d/m/Y') }}</td>
                             <td>

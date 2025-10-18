@@ -23,14 +23,17 @@
 
                 @if($selectedCustomer)
                     <div class="mt-3">
-                        <p><strong>Saldo a favor actual:</strong> ${{ number_format($selectedCustomer->credit_balance, 2) }}</p>
+                        <p><strong>Saldo a favor actual:</strong> <span class="badge text-bg-success">${{ number_format($selectedCustomer->credit_balance, 2) }}</span></p>
+
+                        <p><strong>Deuda total actual:</strong> <span class="badge text-bg-warning">${{ number_format($selectedCustomer->orders->sum('deuda'), 2) }}</span></p>
+
+                        <hr>
                         <h5>Órdenes Pendientes:</h5>
                         @if($selectedCustomer->orders->isNotEmpty())
                             <ul class="list-group">
                                 @foreach($selectedCustomer->orders as $order)
-                                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                                        Orden #{{ $order->id }} ({{ $order->created_at->format('d/m/Y') }})
-                                        <span class="badge badge-warning">Deuda: ${{ number_format($order->deuda, 2) }}</span>
+                                    <li class="list-group-item">
+                                        Orden #{{ $order->id }} ({{ $order->created_at->format('d/m/Y') }}) <span class="badge text-bg-warning">Deuda: ${{ number_format($order->deuda, 2) }}</span>
                                     </li>
                                 @endforeach
                             </ul>

@@ -31,7 +31,7 @@ class Create extends Component
     protected $rules = [
         'customer_id' => 'required|exists:customers,id',
         'warehouse_id' => 'required|exists:warehouses,id',
-        'order_type' => 'required|in:Entrada,Devolucion,Salida',
+        'order_type' => 'required|in:Entrada,Devolucion,Salida,Interna',
         'products.*.product_id' => 'required|exists:products,id',
         'products.*.quantity' => 'required|numeric|min:1',
         'products.*.price' => 'required|numeric|min:0',

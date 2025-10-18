@@ -14,12 +14,14 @@ class Index extends Component
 {
     use WithPagination;
 
-    protected $listeners = ['payment-registered' => '$refresh'];
+
 
     public $search = '';
     public $cambiarStatus = '';
     public $fechaInicio;
     public $fechaFin;
+    public $status_pago = '';
+    public $status_general = '';
 
     public function render()
     {
@@ -27,10 +29,12 @@ class Index extends Component
         $user = auth()->user();
 
         if ($user->hasRole('superadmin')) {
+            //filtro por status de pago usando payment_status            
             $orders = Order::with('customer', 'warehouse')
                 ->where(function ($query) {
                     $query->where('status', 'like', '%' . $this->search . '%')
                         ->orWhere('order_type', 'like', '%' . $this->search . '%')
+                        ->orWhere('payment_status', 'like', '%' . $this->search . '%')
                         ->orWhereHas('customer', function ($query) {
                             $query->where('name', 'like', '%' . $this->search . '%');
                         })
@@ -46,18 +50,19 @@ class Index extends Component
                 ->where(function ($query) {
                     $query->where('status', 'like', '%' . $this->search . '%')
                         ->orWhere('order_type', 'like', '%' . $this->search . '%')
+                        ->orWhere('payment_status', 'like', '%' . $this->search . '%')
                         ->orWhereHas('customer', function ($query) {
                             $query->where('name', 'like', '%' . $this->search . '%');
                         })
                         ->orWhereHas('warehouse', function ($query) {
                             $query->where('name', 'like', '%' . $this->search . '%');
-                        });                        ;
+                        });
                 })->whereBetween(DB::raw('DATE(created_at)'), [$this->fechaInicio ?? '2000-01-01', $this->fechaFin ?? date('Y-m-d')])
                 ->where('user_id', Auth::id())
                 ->orderBy('id', 'desc')
                 ->paginate(10);
-        }       
-             
+        }
+
 
         return view('livewire.order.index', [
             'orders' => $orders,
@@ -92,9 +97,8 @@ class Index extends Component
 
                 if ($order->order_type === 'Entrada') {
 
-                   $this->cambiarStatus = 'Salida';
-
-                }else {
+                    $this->cambiarStatus = 'Salida';
+                } else {
 
                     $this->cambiarStatus = 'Entrada';
                 }
@@ -111,13 +115,13 @@ class Index extends Component
             }
 
             // Delete associated movements
-           // Movement::where('order_id', $order->id)->delete();
+            // Movement::where('order_id', $order->id)->delete();
 
             // Delete order products
-           // $order->orderProducts()->delete();
+            // $order->orderProducts()->delete();
 
             // Delete the order itself
-           // $order->delete();
+            // $order->delete();
         });
 
         $this->cambiarStatus = '';
@@ -130,7 +134,7 @@ class Index extends Component
     {
 
         //se va a anular la orden pero sin borrar el registro original para mantener el historial
-             
+
         DB::transaction(function () use ($order) {
             // Revert stock changes
             foreach ($order->orderProducts as $orderProduct) {
@@ -145,19 +149,17 @@ class Index extends Component
                     $productWarehouse->stock += $orderProduct->quantity;
                 }
                 $productWarehouse->save();
-               
             }
 
             // Delete associated movements
-           Movement::where('order_id', $order->id)->delete();
+            Movement::where('order_id', $order->id)->delete();
 
             // Delete order products
-           $order->orderProducts()->delete();
+            $order->orderProducts()->delete();
 
             // Delete the order itself
-           $order->delete();
-
-        });        
+            $order->delete();
+        });
 
         session()->flash('message', 'Order deleted successfully.');
     }

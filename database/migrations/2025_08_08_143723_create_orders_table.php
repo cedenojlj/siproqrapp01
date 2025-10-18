@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('customer_id')->constrained('customers')->onUpdate('cascade')->onDelete('cascade');
             $table->foreignId('user_id')->constrained('users')->onUpdate('cascade')->onDelete('cascade');
             $table->foreignId('warehouse_id')->constrained('warehouses')->onUpdate('cascade')->onDelete('cascade');
-            $table->enum('order_type', ['Entrada','Devolucion','Salida']);
+            $table->enum('order_type', ['Entrada','Devolucion','Salida','Interna'])->default('Salida');
             $table->decimal('total');
             $table->enum('status', ['Pendiente', 'Aprobada', 'Rechazada']);
             $table->enum('payment_status', ['pagado', 'parcial','pendiente'])->default('pendiente');

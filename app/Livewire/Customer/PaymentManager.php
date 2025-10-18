@@ -34,7 +34,7 @@ class PaymentManager extends Component
     public function updatedCustomerId($id)
     {
         $this->selectedCustomer = Customer::with(['orders' => function ($query) {
-            $query->whereIn('payment_status', ['pendiente', 'parcial'])->orderBy('created_at', 'asc');
+            $query->whereIn('payment_status', ['pendiente', 'parcial'])->where('order_type', 'Salida')->where('status', '!=', 'Rechazada')->orderBy('created_at', 'asc');
         }])->find($id);
     }
 
@@ -59,6 +59,8 @@ class PaymentManager extends Component
             // 2. Obtener órdenes pendientes (más antiguas primero)
             $orders = $customer->orders()
                 ->whereIn('payment_status', ['pendiente', 'parcial'])
+                ->where('order_type', 'Salida')
+                ->where('status', '!=', 'Rechazada')
                 ->orderBy('created_at', 'asc')
                 ->get();
 
