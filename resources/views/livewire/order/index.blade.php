@@ -45,9 +45,51 @@
                        <label for="fechaFin">Fecha Fin</label>
                         <input wire:model.live="fechaFin" type="date" class="form-control" placeholder="fecha Fin">
                     </div>
-
-
                 </div>
+                
+                <div class="row mb-3">
+
+                    <div class="col-md-3 mb-sm-2">
+                        <label for="customer_id">Customer</label>
+                        <select wire:model.live="customer_id" class="form-select">
+                            <option value="">All Customers</option>
+                            @foreach($customers as $customer)
+                                <option value="{{ $customer->id }}">{{ $customer->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <div class="col-md-3 mb-sm-2">
+                        <label for="status_pago">Payment Status</label>
+                        <select wire:model.live="status_pago" class="form-select">
+                            <option value="">All</option>
+                            <option value="pagado">Pagado</option>
+                            <option value="parcial">Parcial</option>
+                            <option value="pendiente">Pendiente</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3 mb-sm-2">
+                        <label for="status_general">Status</label>
+                        <select wire:model.live="status_general" class="form-select">
+                            <option value="">All</option>
+                            <option value="Pendiente">Pendiente</option>
+                            <option value="Aprobada">Aprobada</option>
+                            <option value="Rechazada">Rechazada</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3 mb-sm-2">
+                        <label for="order_type">Type</label>
+                        <select wire:model.live="order_type" class="form-select">
+                            <option value="">All</option>
+                            <option value="Entrada">Entrada</option>
+                            <option value="Devolucion">Devolucion</option>
+                            <option value="Interna">Interna</option>                            
+                            <option value="Salida">Salida</option>
+                        </select>
+                    </div>
+                    
+                    
+                </div>                
 
                 <div class="table-responsive">
                     <table class="table table-striped">

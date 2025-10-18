@@ -4,6 +4,7 @@ namespace App\Livewire\Order;
 
 use Livewire\Component;
 use App\Models\Order;
+use App\Models\Customer;
 use Livewire\WithPagination;
 use Illuminate\Support\Facades\DB;
 use App\Models\ProductWarehouse;
@@ -22,50 +23,54 @@ class Index extends Component
     public $fechaFin;
     public $status_pago = '';
     public $status_general = '';
+    public $order_type = '';
+    public $customer_id = '';
 
     public function render()
     {
         /** @disregard P1013 */
         $user = auth()->user();
 
-        if ($user->hasRole('superadmin')) {
-            //filtro por status de pago usando payment_status            
-            $orders = Order::with('customer', 'warehouse')
-                ->where(function ($query) {
-                    $query->where('status', 'like', '%' . $this->search . '%')
-                        ->orWhere('order_type', 'like', '%' . $this->search . '%')
-                        ->orWhere('payment_status', 'like', '%' . $this->search . '%')
-                        ->orWhereHas('customer', function ($query) {
-                            $query->where('name', 'like', '%' . $this->search . '%');
-                        })
-                        ->orWhereHas('warehouse', function ($query) {
-                            $query->where('name', 'like', '%' . $this->search . '%');
-                        });
-                })->whereBetween(DB::raw('DATE(created_at)'), [$this->fechaInicio ?? '2000-01-01', $this->fechaFin ?? date('Y-m-d')])
-                ->orderBy('id', 'desc')
-                ->paginate(10);
-        } else {
+        $query = Order::with('customer', 'warehouse');
 
-            $orders = Order::with('customer', 'warehouse')
-                ->where(function ($query) {
-                    $query->where('status', 'like', '%' . $this->search . '%')
-                        ->orWhere('order_type', 'like', '%' . $this->search . '%')
-                        ->orWhere('payment_status', 'like', '%' . $this->search . '%')
-                        ->orWhereHas('customer', function ($query) {
-                            $query->where('name', 'like', '%' . $this->search . '%');
-                        })
-                        ->orWhereHas('warehouse', function ($query) {
-                            $query->where('name', 'like', '%' . $this->search . '%');
-                        });
-                })->whereBetween(DB::raw('DATE(created_at)'), [$this->fechaInicio ?? '2000-01-01', $this->fechaFin ?? date('Y-m-d')])
-                ->where('user_id', Auth::id())
-                ->orderBy('id', 'desc')
-                ->paginate(10);
+        if (!$user->hasRole('superadmin')) {
+            $query->where('user_id', Auth::id());
         }
 
+        $query->where(function ($q) {
+            $q->where('id', 'like', '%' . $this->search . '%')
+                ->orWhereHas('customer', function ($query) {
+                    $query->where('name', 'like', '%' . $this->search . '%');
+                })
+                ->orWhereHas('warehouse', function ($query) {
+                    $query->where('name', 'like', '%' . $this->search . '%');
+                });
+        });
+
+        $query->when($this->status_pago, function ($q) {
+            $q->where('payment_status', $this->status_pago);
+        });
+
+        $query->when($this->status_general, function ($q) {
+            $q->where('status', $this->status_general);
+        });
+
+        $query->when($this->order_type, function ($q) {
+            $q->where('order_type', $this->order_type);
+        });
+
+        $query->when($this->customer_id, function ($q) {
+            $q->where('customer_id', $this->customer_id);
+        });
+
+        $query->whereBetween(DB::raw('DATE(created_at)'), [$this->fechaInicio ?? '2000-01-01', $this->fechaFin ?? date('Y-m-d')]);
+
+        $orders = $query->orderBy('id', 'desc')->paginate(10);
+        $customers = Customer::orderBy('name')->get();
 
         return view('livewire.order.index', [
             'orders' => $orders,
+            'customers' => $customers,
         ]);
     }
 
