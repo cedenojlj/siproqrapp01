@@ -62,6 +62,7 @@
                                     <a class="dropdown-item" href="{{ route('reports.historical-movements') }}">{{ __('Historical Movements') }}</a>
                                     <a class="dropdown-item" href="{{ route('reports.inventory-by-classification') }}">{{ __('Inventory by Classification') }}</a>
                                     <a class="dropdown-item" href="{{ route('reports.inventory-by-classification-detail') }}">{{ __('Inventory by Classification Detail') }}</a>
+                                    <a class="dropdown-item" href="{{ route('reports.payment-history') }}">{{ __('Payment History') }}</a>
                                 </div>
                             </li>
                         @endauth

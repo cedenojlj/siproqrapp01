@@ -229,6 +229,11 @@
                                     <a href="{{ route('reports.debt-report') }}" class="sidebar-link">Ctas.
                                             Cobrar</a>
                                 </li>
+
+                                <li class="sidebar-item">
+                                    <a href="{{ route('reports.payment-history') }}" class="sidebar-link">Hist.
+                                            Abonos</a>
+                                </li>
                             
                         </ul>
                     </li>
