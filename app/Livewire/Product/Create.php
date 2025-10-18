@@ -10,6 +10,7 @@ use App\Models\Customer;
 use Illuminate\Support\Str;
 use App\Models\Warehouse;
 use Livewire\Attributes\On; 
+use Illuminate\Support\Number;
 
 
 class Create extends Component
@@ -61,7 +62,7 @@ class Create extends Component
         $this->name = $data['NAME'] ?? '';
         $this->type = $data['TYPE'] ?? '';
         $this->size = $data['SIZE'] ?? '';
-        $this->GN = $data['NW'] ?? '';
+        $this->GN = floatval($data['NW']) ?? 0.0;
         // $this->GW = $data['G.N.'] ?? '';
         // $this->Box = $data['BOX'] ?? '';
         $this->invoice_number = $data['INVOICE'] ?? '';
