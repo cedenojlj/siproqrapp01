@@ -85,6 +85,18 @@ class Index extends Component
             return;
         }
 
+        //verificar si la orden es de devolucion
+        if ($order->order_type === 'Devolucion') {
+
+            $order->update(['status' => 'Rechazada']); // Update status to 'Rechazada'
+
+            session()->flash('message', 'Order cancelled successfully.');
+            
+            return;
+        }
+
+        
+
         DB::transaction(function () use ($order) {
             // Revert stock changes
             foreach ($order->orderProducts as $orderProduct) {
@@ -94,16 +106,21 @@ class Index extends Component
                 ]);
 
                 if ($order->order_type === 'Entrada') {
+
                     $productWarehouse->stock -= $orderProduct->quantity;
-                } else { // Salida
+
+                } elseif ($order->order_type === 'Salida' or $order->order_type === 'Interna') { // Salida
+
                     $productWarehouse->stock += $orderProduct->quantity;
                 }
+
                 $productWarehouse->save();
 
                 if ($order->order_type === 'Entrada') {
 
                     $this->cambiarStatus = 'Salida';
-                } else {
+
+                } elseif ($order->order_type === 'Salida' or $order->order_type === 'Interna') {
 
                     $this->cambiarStatus = 'Entrada';
                 }
@@ -149,10 +166,14 @@ class Index extends Component
                 ]);
 
                 if ($order->order_type === 'Entrada') {
+
                     $productWarehouse->stock -= $orderProduct->quantity;
-                } else { // Salida
+
+                } elseif ($order->order_type === 'Salida' or $order->order_type === 'Interna') { // Salida
+
                     $productWarehouse->stock += $orderProduct->quantity;
                 }
+
                 $productWarehouse->save();
             }
 

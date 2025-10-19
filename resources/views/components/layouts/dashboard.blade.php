@@ -49,7 +49,7 @@
                     </li>
                 @endcan
 
-                 @can('ver codigosQR')
+                @can('ver codigosQR')
                     <li class="sidebar-item">
                         <a href="{{ route('products.report') }}" class="sidebar-link">
                             <i class="bi bi-box-seam"></i>
@@ -73,6 +73,11 @@
                             <i class="bi bi-houses"></i>
                             <span>Almacenes</span>
                         </a>
+                    </li>
+
+                    <li class="sidebar-item">
+                        <a href="{{ route('products.update-warehouse-qr') }}" class="sidebar-link">
+                            <i class="bi bi-houses"></i> <span>AlmacénQR</span></a>
                     </li>
                 @endcan
 
@@ -104,7 +109,6 @@
                 @endcan
 
                 @can('read prices')
-
                     {{-- <li class="sidebar-item">
                         <a href="{{ route('prices.index') }}" class="sidebar-link">
                             <i class="bi bi-receipt"></i>
@@ -132,30 +136,28 @@
                                 <a href="{{ route('prices.index') }}" class="sidebar-link">Precios Gen</a>
                             </li>
                             <li class="sidebar-item">
-                                <a href="{{ route('prices.update-by-classification') }}" class="sidebar-link">Precios plus</a>
+                                <a href="{{ route('prices.update-by-classification') }}" class="sidebar-link">Precios
+                                    plus</a>
                             </li>
                             <li class="sidebar-item">
                                 <a href="{{ route('prices.customer-update') }}" class="sidebar-link">Precios Clientes</a>
                             </li>
-                            
+
                         </ul>
                     </li>
 
                     {{-- agrupando precios --}}
-
                 @endcan
 
-                 {{-- classifications --}}
+                {{-- classifications --}}
 
                 @can('ver clasificaciones')
-                  
                     <li class="sidebar-item">
                         <a href="{{ route('classifications.table') }}" class="sidebar-link">
                             <i class="bi bi-tags"></i>
                             <span>Clasificaciones</span>
                         </a>
-                    </li>                    
-
+                    </li>
                 @endcan
 
                 {{-- end classifications --}}
@@ -172,75 +174,76 @@
 
 
                 {{-- inicio de reportes --}}
-               @can('ver reportes')
+                @can('ver reportes')
                     <li class="sidebar-item">
                         <a href="#reports-submenu" data-bs-toggle="collapse" class="sidebar-link collapsed">
                             <i class="bi bi-file-earmark-bar-graph"></i>
                             <span>Reportes</span>
                             <i class="bi bi-chevron-down ms-auto"></i>
                         </a>
-                        <ul id="reports-submenu" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">                           
-                            
-                            
-                                <li class="sidebar-item">
-                                    <a href="{{ route('reports.inventory-by-warehouse') }}" class="sidebar-link">Inv. por
-                                        Almacén</a>
-                                </li>                           
-                           
-
-                                <li class="sidebar-item">
-                                    <a href="{{ route('reports.historical-movements') }}" class="sidebar-link">Mov.
-                                        Históricos</a>
-                                </li>                                                        
+                        <ul id="reports-submenu" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
 
 
-                                <li class="sidebar-item">
-                                    <a href="{{ route('reports.inventory-by-classification') }}" class="sidebar-link">Inv.
-                                        Clasificación</a>
-                                </li>
+                            <li class="sidebar-item">
+                                <a href="{{ route('reports.inventory-by-warehouse') }}" class="sidebar-link">Inv. por
+                                    Almacén</a>
+                            </li>
 
-                            
-                                <li class="sidebar-item">
-                                    <a href="{{ route('reports.inventory-by-classification-detail') }}" class="sidebar-link">Inv.
-                                        Clasificación Detalle</a>
-                                </li>
-                            
+
+
+                            <li class="sidebar-item">
+                                <a href="{{ route('reports.historical-movements') }}" class="sidebar-link">Mov.
+                                    Históricos</a>
+                            </li>
+
+
+                            <li class="sidebar-item">
+                                <a href="{{ route('reports.inventory-by-classification') }}" class="sidebar-link">Inv.
+                                    Clasificación</a>
+                            </li>
+
+
+                            <li class="sidebar-item">
+                                <a href="{{ route('reports.inventory-by-classification-detail') }}"
+                                    class="sidebar-link">Inv.
+                                    Clasificación Detalle</a>
+                            </li>
+
                         </ul>
                     </li>
                 @endcan
                 {{-- fin de reportes --}}
 
                 @can('ver movDetalles')
-
                     <li class="sidebar-item">
                         <a href="#reports-submenuadmin" data-bs-toggle="collapse" class="sidebar-link collapsed">
                             <i class="bi bi-file-earmark-bar-graph"></i>
                             <span>Reportes admin</span>
                             <i class="bi bi-chevron-down ms-auto"></i>
                         </a>
-                        <ul id="reports-submenuadmin" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">                          
+                        <ul id="reports-submenuadmin" class="sidebar-dropdown list-unstyled collapse"
+                            data-bs-parent="#sidebar">
 
-                                <li class="sidebar-item">
-                                    <a href="{{ route('reports.detailed') }}" class="sidebar-link">Mov.
-                                            Detalles</a>
-                                </li>
+                            <li class="sidebar-item">
+                                <a href="{{ route('reports.detailed') }}" class="sidebar-link">Mov.
+                                    Detalles</a>
+                            </li>
 
-                                <li class="sidebar-item">
-                                    <a href="{{ route('reports.debt-report') }}" class="sidebar-link">Ctas.
-                                            Cobrar</a>
-                                </li>
+                            <li class="sidebar-item">
+                                <a href="{{ route('reports.debt-report') }}" class="sidebar-link">Ctas.
+                                    Cobrar</a>
+                            </li>
 
-                                <li class="sidebar-item">
-                                    <a href="{{ route('reports.payment-history') }}" class="sidebar-link">Hist.
-                                            Abonos</a>
-                                </li>
-                            
+                            <li class="sidebar-item">
+                                <a href="{{ route('reports.payment-history') }}" class="sidebar-link">Hist.
+                                    Abonos</a>
+                            </li>
+
                         </ul>
                     </li>
-
                 @endcan
 
-               
+
 
                 @auth
                     <li class="sidebar-item">
@@ -296,6 +299,7 @@
             </main>
         </div>
     </div>
+    @stack('scripts')
 </body>
 
 </html>
