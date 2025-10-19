@@ -12,12 +12,14 @@ class Edit extends Component
     public $address;
     public $phone;
     public $email;
+    public $credit_balance;
 
     protected $rules = [
         'name' => 'required|string|max:255',
         'address' => 'nullable|string|max:255',
         'phone' => 'nullable|string|max:20',
         'email' => 'required|email|max:255',
+        'credit_balance' => 'required|numeric|min:0',
         //'email' => 'nullable|email|max:255|unique:customers,email,' . '$this->customer->id',
     ];
 
@@ -28,6 +30,7 @@ class Edit extends Component
         $this->address = $customer->address;
         $this->phone = $customer->phone;
         $this->email = $customer->email;
+        $this->credit_balance = $customer->credit_balance;
     }
 
     public function update()
@@ -39,6 +42,7 @@ class Edit extends Component
             'address' => $this->address,
             'phone' => $this->phone,
             'email' => $this->email,
+            'credit_balance' => $this->credit_balance,
         ]);
 
         session()->flash('message', 'Customer updated successfully.');

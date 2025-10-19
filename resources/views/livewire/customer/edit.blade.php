@@ -36,6 +36,13 @@
                             @error('email') <div class="invalid-feedback">{{ $message }}</div> @enderror
                         </div>
 
+                        {{-- añadir el campo credit_balance --}}
+                        <div class="mb-3">
+                            <label for="credit_balance" class="form-label">Credit Balance</label>
+                            <input type="number" class="form-control @error('credit_balance') is-invalid @enderror" id="credit_balance" wire:model="credit_balance">
+                            @error('credit_balance') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                        </div>
+
                         <button type="submit" class="btn btn-primary">Update Customer</button>
                     </form>
                 </div>

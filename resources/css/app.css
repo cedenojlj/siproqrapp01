@@ -75,7 +75,7 @@ body {
 .sidebar-link {
     display: flex;
     align-items: center;
-    padding: .6rem 1.25rem;
+    padding: .3rem 1.25rem;
     color: var(--sidebar-link-color);
     text-decoration: none;
     border-radius: 8px;
