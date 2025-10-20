@@ -12,7 +12,7 @@
             @endif
 
             <div class="row">
-                <div class="col-md-6 mx-auto mb-4">
+                <div class="col-md-6 mx-auto mb-4" wire:ignore>
                     <div id="qr-reader" style="width:100%;"></div>
                 </div>
             </div>
@@ -23,13 +23,15 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Nombre</label>
-                                <input type="text" class="form-control" value="{{ $productData['name'] ?? '' }}" readonly>
+                                <input type="text" class="form-control" value="{{ $productData['name'] ?? '' }}"
+                                    readonly>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>SKU</label>
-                                <input type="text" class="form-control" value="{{ $productData['sku'] ?? '' }}" readonly>
+                                <input type="text" class="form-control" value="{{ $productData['sku'] ?? '' }}"
+                                    readonly>
                             </div>
                         </div>
                     </div>
@@ -38,19 +40,22 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label>Tipo</label>
-                                <input type="text" class="form-control" value="{{ $productData['type'] ?? '' }}" readonly>
+                                <input type="text" class="form-control" value="{{ $productData['type'] ?? '' }}"
+                                    readonly>
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label>Tamaño</label>
-                                <input type="text" class="form-control" value="{{ $productData['size'] ?? '' }}" readonly>
+                                <input type="text" class="form-control" value="{{ $productData['size'] ?? '' }}"
+                                    readonly>
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label>Peso Neto (NW)</label>
-                                <input type="text" class="form-control" value="{{ $productData['NW'] ?? '' }}" readonly>
+                                <input type="text" class="form-control" value="{{ $productData['NW'] ?? '' }}"
+                                    readonly>
                             </div>
                         </div>
                     </div>
@@ -61,20 +66,22 @@
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label for="warehouse">Asignar Almacén</label>
-                                <select wire:model="selectedWarehouseId" id="warehouse" class="form-control @error('selectedWarehouseId') is-invalid @enderror">
+                                <select wire:model="selectedWarehouseId" id="warehouse"
+                                    class="form-control @error('selectedWarehouseId') is-invalid @enderror">
                                     <option value="">-- Seleccione un Almacén --</option>
                                     @foreach ($warehouses as $warehouse)
                                         <option value="{{ $warehouse->id }}">{{ $warehouse->name }}</option>
                                     @endforeach
                                 </select>
-                                @error('selectedWarehouseId') <span class="text-danger">{{ $message }}</span> @enderror
+                                @error('selectedWarehouseId')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
                             </div>
                         </div>
                     </div>
 
-                    <div class="mt-4">
-                        <button type="submit" class="btn btn-primary">Actualizar Almacén</button>
-                        <button type="button" wire:click="resetState" class="btn btn-secondary">Escanear Otro</button>
+                    <div class="d-grid gap-2 mt-3">
+                        <button type="submit" class="btn btn-primary">Actualizar Almacén</button>                        
                     </div>
                 </form>
             @else
@@ -82,24 +89,58 @@
                     <p class="text-muted">Esperando escaneo de código QR...</p>
                 </div>
             @endif
+           
         </div>
-    </div>
 
-    @push('scripts')
-    <script src="https://unpkg.com/html5-qrcode@2.0.9/dist/html5-qrcode.min.js"></script>
-    <script type="text/javascript">
-        function onScanSuccess(decodedText, decodedResult) {
-            // Manejar el éxito del escaneo.
-            console.log(`Scan result: ${decodedText}`, decodedResult);
-            // Enviar el resultado al backend de Livewire
-            @this.call('processQrCode', decodedText);
-            // Opcional: detener el escáner después de una detección exitosa
-            // html5QrcodeScanner.clear();
-        }
+        @if ($escaneoInicial)
+            <div class="d-grid gap-2 mb-3">
+                <button id="llamado" class="btn btn-success" wire:click="$dispatch('abrirScanner')">Scannear</button>
+            </div>
+        @endif
 
-        let html5QrcodeScanner = new Html5QrcodeScanner(
-            "qr-reader", { fps: 10, qrbox: 250 });
-        html5QrcodeScanner.render(onScanSuccess);
-    </script>
-    @endpush
+        @if ($escaneoInicial)
+            <div class="d-grid gap-2">
+                <button id="llamadoCerrar" class="btn btn-secondary" wire:click="$dispatch('cerrarScanner')">Close
+                    Scanner</button>
+            </div>
+        @endif
+
+    </div>    
+
+    @script
+        <script>
+
+            let html5QrcodeScanner=null;
+
+            function onScanSuccess(decodedText, decodedResult) {
+
+                // Manejar el éxito del escaneo.
+                console.log(`Scan result: ${decodedText}`, decodedResult);
+                // Enviar el resultado al backend de Livewire
+                @this.call('processQrCode', decodedText);
+                // Opcional: detener el escáner después de una detección exitosa
+                html5QrcodeScanner.clear();
+            }
+
+            $wire.on('abrirScanner', () => {
+                // Código a ejecutar cuando se muestra el modal
+               // alert('¡El escáner ha sido mostrado exitosamente!');
+                //$wire.dispatch('cerrarModal');
+
+               html5QrcodeScanner = new Html5QrcodeScanner(
+                    "qr-reader", {
+                        fps: 10,
+                        qrbox: 250
+                    });
+                html5QrcodeScanner.render(onScanSuccess);
+            });
+
+
+            $wire.on('cerrarScanner', () => {
+                // Código a ejecutar cuando se cierra el modal
+                //alert('¡El escáner ha sido cerrado exitosamente!');
+                html5QrcodeScanner.clear();
+            });
+        </script>
+    @endscript
 </div>

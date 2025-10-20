@@ -138,6 +138,12 @@ class PermisosSeeder extends Seeder
         ]);
         $user->assignRole($rol3);
 
+        $user = \App\Models\User::factory()->create([
+            'name' => 'jezer',
+            'email' => 'jezersg@gmail.com',
+        ]);
+        $user->assignRole($rol3);
+
 
 
 

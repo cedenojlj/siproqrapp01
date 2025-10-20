@@ -59,7 +59,9 @@ class CustomerPriceUpdate extends Component
                 DB::raw('MIN(prices.price_quantity) as price_quantity'),
                 DB::raw('MIN(prices.price_weight) as price_weight')
             )
-            ->groupBy('customers.id', 'customers.name', 'classifications.id', 'classifications.code', 'classifications.description','classifications.size');
+            ->groupBy('customers.id', 'customers.name', 'classifications.id', 'classifications.code', 'classifications.description','classifications.size')
+            ->orderBy('customers.id', 'asc')
+            ->orderBy('classifications.id', 'asc');
 
         if ($this->search) {
             $query->where(function ($q) {

@@ -31,5 +31,10 @@ class WarehouseSeeder extends Seeder
                 'name' => 'Transit',
                 'location' => 'Transit',
         ]);
+
+        Warehouse::create([
+                'name' => 'Transito_Interno',
+                'location' => 'Transito Interno',
+        ]);
     }
 }

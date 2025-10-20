@@ -14,6 +14,9 @@ class UpdateWarehouseFromQr extends Component
     public $selectedWarehouseId;
     public $warehouses = [];
     public bool $productFound = false;
+    public $mostrarBotonScanner = false;
+    public $escaneoInicial = true;
+    
 
     public function mount()
     {
@@ -41,7 +44,8 @@ class UpdateWarehouseFromQr extends Component
         $this->productFound = true;
         
         // Cargar el almacén actual si existe
-        $productWarehouse = ProductWarehouse::where('product_id', $product->id)->first();
+         $productWarehouse = ProductWarehouse::where('product_id', $product->id)->first();
+
         if ($productWarehouse) {
             $this->selectedWarehouseId = $productWarehouse->warehouse_id;
         }
@@ -52,7 +56,7 @@ class UpdateWarehouseFromQr extends Component
     public function updateWarehouse()
     {
         $this->validate([
-            'selectedWarehouseId' => 'required|exists:warehouses,id',
+            'selectedWarehouseId' => 'required',
         ]);
 
         if (!$this->productFound) {
@@ -66,6 +70,9 @@ class UpdateWarehouseFromQr extends Component
         );
 
         session()->flash('message', 'Almacén actualizado con éxito para el producto: ' . $this->productData['sku']);
+
+        $this->mostrarBotonScanner = true;
+
         $this->resetState();
     }
     
