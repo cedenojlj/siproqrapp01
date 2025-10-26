@@ -26,7 +26,7 @@ class Edit extends Component
         //'size' => 'nullable|string|max:255',
         //'sku' => 'required|string|max:255|unique:products,sku',
         //'type' => 'required|string|max:255',
-        'GN' => 'required|decimal|min:0',
+        'GN' => 'required|numeric|min:0',
         // 'GW' => 'nullable|string|max:255',
         // 'Box' => 'nullable|string|max:255',
         'invoice_number' => 'required|string|max:255',

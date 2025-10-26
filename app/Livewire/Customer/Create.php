@@ -14,12 +14,13 @@ class Create extends Component
     public $address;
     public $phone;
     public $email;
+    public $idproducto;
 
     protected $rules = [
         'name' => 'required|string|max:255',
         'address' => 'nullable|string|max:255',
         'phone' => 'nullable|string|max:20',
-        'email' => 'nullable|email|max:255|unique:customers,email',
+        'email' => 'nullable|email|max:255|unique:customers,email',        
     ];
 
     public function save()
@@ -51,6 +52,40 @@ class Create extends Component
         session()->flash('message', 'Customer created successfully.');
 
         $this->reset();
+
+        return redirect()->route('customers.index');
+    }
+
+
+    function cargarProducto() {
+        
+        //recuperar todos los clientes
+        $customers = Customer::all();
+
+        //recuperar todos los productos con id >= 1
+        $products = Product::where('id', '>=', $this->idproducto)->get();
+
+        foreach ($customers as $customer) {
+            foreach ($products as $product) {
+                //verificar si ya existe un precio para este cliente y producto
+                $existingPrice = Price::where('customer_id', $customer->id)
+                    ->where('product_id', $product->id)
+                    ->first();
+
+                if (!$existingPrice) {
+                    Price::create([
+                        'product_id' => $product->id,
+                        'customer_id' => $customer->id,
+                        'price_weight' => $product->classification->precio_peso ?? 0,
+                        'price_quantity' => $product->classification->precio_unidad ?? 0,
+                    ]);
+                }
+            }
+        }
+
+        session()->flash('message', 'Prices created successfully.');
+
+        $this->idproducto = null;
 
         return redirect()->route('customers.index');
     }

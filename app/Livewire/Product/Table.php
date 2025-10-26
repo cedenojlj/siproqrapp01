@@ -19,6 +19,9 @@ class Table extends Component
         $products = Product::where('name', 'like', '%' . $this->search . '%')
             ->orWhere('type', 'like', '%' . $this->search . '%')
             ->orWhere('size', 'like', '%' . $this->search . '%')
+            ->orWhere('sku', 'like', '%' . $this->search . '%')
+            ->orWhere('invoice_number', 'like', '%' . $this->search . '%')
+            ->orWhere('GN', 'like', '%' . $this->search . '%')
             ->orderBy('id', 'desc')
             ->paginate(10);
 

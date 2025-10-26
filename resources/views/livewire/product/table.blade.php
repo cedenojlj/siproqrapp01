@@ -22,7 +22,7 @@
 
     <div class="row mb-3">
         <div class="col-sm-12 col-md-6 mb-3 mb-md-0">
-            <input wire:model.live="search" type="text" class="form-control" placeholder="Search products...">
+            <input wire:model.live="search" type="text" class="form-control" placeholder="Search products name, type, size, sku, peso, invoice...">
         </div>
         <div class="col-sm-12 col-md-6 text-end">
             @can('create products')
@@ -43,6 +43,7 @@
                     <th>ID</th>
                     <th>Name</th>
                     <th>Type - Size</th>
+                    <th>Peso</th>
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -52,6 +53,7 @@
                         <td>{{ $product->id }}</td>
                         <td>{{ $product->name }}</td>
                         <td>{{ $product->type . ' - ' . $product->size }}</td>
+                        <td>{{ $product->GN }}</td>
                         <td>
                             @can('update products')
                                 <a href="{{ route('products.edit', $product->id) }}" class="btn"><i

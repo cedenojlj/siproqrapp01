@@ -144,21 +144,7 @@ class Create extends Component
         }
         $this->classification_id = $classification->id;
         
-        
-         /* dd([
-            'name' => $this->name,            
-            'sku' => $this->sku,        
-            'type' => $this->type,
-            'size' => $this->size,
-            'GN' => $this->GN,
-            'GW' => $this->GW,
-            'Box' => $this->Box,
-            'invoice_number' => $this->invoice_number,            
-            'classification_id' => $this->classification_id,
-        ]);*/
-       
-       
-       
+               
         $this->validate();
         
        $producto =Product::create([
