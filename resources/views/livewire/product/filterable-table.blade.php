@@ -36,7 +36,7 @@
                             <td>{{ $product->size }}</td>
                             <td>{{ $product->GN }}</td>
                             <td>{{ $product->invoice_number }}</td>
-                            <td>{{ $product->created_at->format('d/m/Y') }}</td>
+                            <td>{{ $product->created_at->format('d/m/Y H:i:s') }}</td>
                             <td>
                                 <button wire:click="downloadQrPdf({{ $product->id }})" class="btn btn-danger btn-sm">PDF</button>
                                 {{-- <button wire:click="downloadQrImage({{ $product->id }})" class="btn btn-success btn-sm">Imagen</button> --}}

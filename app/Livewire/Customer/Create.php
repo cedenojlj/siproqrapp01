@@ -4,6 +4,9 @@ namespace App\Livewire\Customer;
 
 use Livewire\Component;
 use App\Models\Customer;
+use App\Models\Product;
+use App\Models\Price;
+
 
 class Create extends Component
 {
@@ -29,6 +32,21 @@ class Create extends Component
             'phone' => $this->phone,
             'email' => $this->email,
         ]);
+
+        //recuperar el id del cliente recien creado
+        $customer = Customer::where('email', $this->email)->first();
+
+        //crear precios por defecto para el cliente
+        $products = Product::all();
+
+        foreach ($products as $product) {
+            Price::create([
+                'product_id' => $product->id,
+                'customer_id' => $customer->id,
+                'price_weight' => $product->classification->precio_peso ?? 0,
+                'price_quantity' => $product->classification->precio_unidad ?? 0,
+            ]);
+        }
 
         session()->flash('message', 'Customer created successfully.');
 

@@ -45,7 +45,7 @@
                         </tbody>
                         <tfoot>
                             <tr>
-                                <td colspan="3" class="text-end"><strong>Total:</strong></td>
+                                <td colspan="4" class="text-end"><strong>Total:</strong></td>
                                 <td>{{ number_format($petition->total, 2) }}</td>
                             </tr>
                         </tfoot>

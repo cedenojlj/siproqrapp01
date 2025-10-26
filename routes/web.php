@@ -34,6 +34,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/petitions/create', App\Livewire\Petition\Create::class)->name('petitions.create');
     Route::get('/petitions/{petition}/edit', App\Livewire\Petition\Edit::class)->name('petitions.edit');
     Route::get('/petitions/{petition}', App\Livewire\Petition\Show::class)->name('petitions.show');
+    Route::get('/petitions/create-by-classification', App\Livewire\Petition\CreatePetitionByClassification::class)->name('petitions.create-by-classification');
     
     //Para la lista de productos
     Route::get('/listado', App\Livewire\Petition\Listado::class)->name('petitions.listado');
@@ -65,3 +66,6 @@ Route::middleware(['auth'])->group(function () {
 });
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+//crea ruta para ensayo
+Route::get('/ensayo', App\Livewire\Ensayo::class)->name('ensayo');

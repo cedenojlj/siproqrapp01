@@ -33,7 +33,7 @@
                             <ul class="list-group">
                                 @foreach($selectedCustomer->orders as $order)
                                     <li class="list-group-item">
-                                        Orden #{{ $order->id }} ({{ $order->created_at->format('d/m/Y') }}) <span class="badge text-bg-warning">Deuda: ${{ number_format($order->deuda, 2) }}</span>
+                                        Orden #{{ $order->id }} ({{ $order->created_at->format('d/m/Y H:i:s') }}) <span class="badge text-bg-warning">Deuda: ${{ number_format($order->deuda, 2) }}</span>
                                     </li>
                                 @endforeach
                             </ul>

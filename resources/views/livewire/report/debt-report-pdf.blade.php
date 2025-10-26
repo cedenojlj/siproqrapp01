@@ -43,7 +43,7 @@
             @foreach ($orders as $order)
                 <tr>
                     <td>{{ $order->id }}</td>
-                    <td>{{ $order->created_at->format('Y-m-d') }}</td>
+                    <td>{{ $order->created_at->format('d/m/Y H:i:s') }}</td>
                     <td>{{ $order->customer->name }}</td>
                     <td>{{ $order->warehouse->name }}</td>
                     <td>{{ ucfirst($order->order_type) }}</td>

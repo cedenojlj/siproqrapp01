@@ -29,7 +29,8 @@ class Index extends Component
             })
             ->orwhereHas('product', function ($query) {
                 $query->where('type', 'like', '%' . $this->search . '%');
-            })              
+            })
+            ->orderBy('id', 'desc')
             ->paginate(10);
 
         return view('livewire.price.index', [
