@@ -29,7 +29,8 @@ class InventoryByClassification extends Component
     public function exportPdf()
     {
         $data = $this->getData();
-        $pdf = Pdf::loadView('pdf.inventory-by-classification', ['data' => $data]);
+        $warehouse = Warehouse::find($this->warehouseId);
+        $pdf = Pdf::loadView('pdf.inventory-by-classification', ['data' => $data, 'warehouse' => $warehouse]);
         return response()->streamDownload(function () use ($pdf) {
             echo $pdf->stream();
         }, 'inventory-by-classification.pdf');
@@ -68,6 +69,7 @@ class InventoryByClassification extends Component
                 'classifications.size',
                 'classifications.unit_type'
             )
+            ->orderBy('classifications.code')
             ->get();
     }
 }

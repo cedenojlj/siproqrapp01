@@ -16,6 +16,11 @@
 </head>
 <body>
     <h1>Detalle de Inventario por Clasificación</h1>
+
+    <p>Fecha: {{ now()->format('d/m/Y H:i') }}</p>
+
+    <p>Almacén: {{ $warehouse->name ?? 'Todos los almacenes' }}</p>
+    
     <table>
         <thead>
             <tr>

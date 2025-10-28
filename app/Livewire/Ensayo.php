@@ -128,6 +128,7 @@ class Ensayo extends Component
             ->join('product_warehouses', 'products.id', '=', 'product_warehouses.product_id')
             ->where('product_warehouses.stock', '>', 0)
             ->groupBy('classifications.id', 'classifications.code', 'classifications.description', 'classifications.size')
+            ->orderBy('classifications.code', 'asc')
             ->get();
         
         

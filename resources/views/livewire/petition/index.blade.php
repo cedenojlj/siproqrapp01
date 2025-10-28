@@ -25,7 +25,7 @@
 
                         @can('create petitions')
                             <div class="col-md-6 text-end">
-                                <a href="{{ route('petitions.create') }}" class="btn btn-secondary"><i
+                                <a href="{{ route('ensayo') }}" class="btn btn-secondary"><i
                                         class="bi bi-plus"></i>Create</a>
                             </div>
                         @endcan

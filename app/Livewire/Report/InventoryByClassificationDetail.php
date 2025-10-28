@@ -31,7 +31,9 @@ class InventoryByClassificationDetail extends Component
     public function exportPdf()
     {
         $data = $this->getData();
-        $pdf = Pdf::loadView('pdf.inventory-by-classification-detail', ['data' => $data]);
+        $warehouse = Warehouse::find($this->warehouseId);
+        $pdf = Pdf::loadView('pdf.inventory-by-classification-detail', ['data' => $data, 'warehouse' => $warehouse]);
+
         return response()->streamDownload(function () use ($pdf) {
             echo $pdf->stream();
         }, 'inventory-by-classification-detail.pdf');
