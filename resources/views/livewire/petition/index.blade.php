@@ -46,7 +46,7 @@
                                 @foreach ($petitions as $petition)
                                     <tr>
                                         <td>{{ $petition->id }}</td>
-                                        <td>{{ $petition->customer->name }}</td>
+                                        <td>{{ $petition->user->name }}</td>
                                         <td>{{ number_format($petition->total, 2) }}</td>
                                         <td>{{ $petition->status }}</td>
                                         <td>
@@ -54,10 +54,10 @@
                                                 <a href="{{ route('petitions.show', $petition->id) }}" class="btn"><i
                                                         class="bi bi-eye"></i></a>
                                             @endcan
-                                            @can('update petitions')
+                                            {{-- @can('update petitions')
                                                 <a href="{{ route('petitions.edit', $petition->id) }}" class="btn"><i
                                                         class="bi bi-pencil-square"></i></a>
-                                            @endcan
+                                            @endcan --}}
                                             @can('delete petitions')
                                                 <button wire:click="delete({{ $petition->id }})" class="btn"><i
                                                         class="bi bi-trash"></i></button>

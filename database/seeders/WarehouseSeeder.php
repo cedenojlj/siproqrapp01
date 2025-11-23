@@ -28,13 +28,13 @@ class WarehouseSeeder extends Seeder
                 'location' => 'Caracas, Distrito Capital',
         ]);
         Warehouse::create([
-                'name' => 'Transit',
-                'location' => 'Transit',
+                'name' => 'Import',
+                'location' => 'Import',
         ]);
 
         Warehouse::create([
-                'name' => 'Transito_Interno',
-                'location' => 'Transito Interno',
+                'name' => 'Transito',
+                'location' => 'Transito',
         ]);
     }
 }

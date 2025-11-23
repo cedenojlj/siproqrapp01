@@ -4,10 +4,12 @@ namespace App\Livewire;
 use App\Models\Classification;
 use App\Models\Customer;
 use App\Models\Petition;
+use App\Models\PetitionClassification;
 use App\Models\PetitionProduct;
 use App\Models\Price;
 use App\Models\Product;
 use App\Models\ProductWarehouse;
+use App\Models\Warehouse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
@@ -15,19 +17,23 @@ use Livewire\Component;
 
 class Ensayo extends Component
 {
-   
-   public $customerId;
-    public $items = [];
-    public $allCustomers;
+      
+    public $items = [];    
     public $totalAmount = 0;
+    public $allWarehouses;
+    public $warehouseId;
 
-    protected $rules = [
-        'customerId' => 'required|exists:customers,id',
-    ];
+        protected $rules = [        
+            'warehouseId' => 'required|exists:warehouses,id',
+            'items.*' => 'nullable|integer|min:0',        
+        ];
 
     public function mount()
     {
-        $this->allCustomers = Customer::all();
+        
+        $this->allWarehouses = Warehouse::all();
+        $this->warehouseId = $this->allWarehouses->first()->id ?? null;
+
     }
 
     public function save()
@@ -40,8 +46,7 @@ class Ensayo extends Component
         }
 
         DB::transaction(function () {
-            $petition = Petition::create([
-                'customer_id' => $this->customerId,
+            $petition = Petition::create([                
                 'user_id' => Auth::id(),
                 'status' => 'Pendiente',
                 'total' => 0, // Se calculará después
@@ -56,7 +61,7 @@ class Ensayo extends Component
 
                 $quantityToAssign = $quantityRequested;
 
-                $products = Product::where('classification_id', $classificationId)
+               /*  $products = Product::where('classification_id', $classificationId)
                     ->orderBy('created_at', 'asc')
                     ->get();
 
@@ -65,41 +70,34 @@ class Ensayo extends Component
                         break;
                     }
 
-                    $stock = $product->getTotalStockAttribute();
+                    
+                } */
+
+
+                // obtener el stock por clasificación y bodega
+                    $stockByClassificationWarehouse = ProductWarehouse::join('products', 'product_warehouses.product_id', '=', 'products.id')
+                        ->where('products.classification_id', $classificationId)
+                        ->where('product_warehouses.warehouse_id', $this->warehouseId)
+                        ->sum('product_warehouses.stock');
+
+                    $stock = $stockByClassificationWarehouse;
+
+                    // $stock = $product->getTotalStockAttribute();
 
                     if ($stock <= 0) {
                         continue;
                     }
 
                     $amountForThisProduct = min($quantityToAssign, $stock);
-
-                    // Calcular precio
-                    $priceRecord = Price::where('product_id', $product->id)
-                        ->where('customer_id', $this->customerId)
-                        ->first();
-
-                    $price = 0;
-                    if ($priceRecord) {
-                        if ($product->classification->unit_type === 'Peso') {
-                            $price = round($priceRecord->price_weight * $product->GN, 2);
-                        } else {
-                            $price = round($priceRecord->price_quantity, 2);
-                        }
-                    }
                     
-                    $subtotal = $price * $amountForThisProduct;
-
-                    PetitionProduct::create([
+                    PetitionClassification::create([
                         'petition_id' => $petition->id,
-                        'product_id' => $product->id,
+                        'classification_id' => $classificationId,                        
                         'quantity' => $amountForThisProduct,
-                        'price' => $price,
-                        'subtotal' => $subtotal,
-                    ]);
+                    ]);                    
 
-                    $totalPetitionAmount += $subtotal;
-                    $quantityToAssign -= $amountForThisProduct;
-                }
+                    $totalPetitionAmount += $amountForThisProduct;
+                    // $quantityToAssign -= $amountForThisProduct;
             }
 
             // Actualizar el total de la petición
@@ -127,6 +125,7 @@ class Ensayo extends Component
             ->join('products', 'classifications.id', '=', 'products.classification_id')
             ->join('product_warehouses', 'products.id', '=', 'product_warehouses.product_id')
             ->where('product_warehouses.stock', '>', 0)
+            ->where('product_warehouses.warehouse_id', $this->warehouseId)
             ->groupBy('classifications.id', 'classifications.code', 'classifications.description', 'classifications.size')
             ->orderBy('classifications.code', 'asc')
             ->get();

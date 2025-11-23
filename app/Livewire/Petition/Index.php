@@ -20,10 +20,12 @@ class Index extends Component
 
         if ($user->hasRole('superadmin')) {
 
-            $petitions = Petition::with('customer')
+            // Fetch petitions with user relationship and apply search filter            
+            
+            $petitions = Petition::with('user')
             ->where(function ($query) {
                 $query->where('status', 'like', '%' . $this->search . '%')
-                      ->orWhereHas('customer', function ($query) {
+                      ->orWhereHas('user', function ($query) {
                           $query->where('name', 'like', '%' . $this->search . '%');
                       });
             })
@@ -36,10 +38,10 @@ class Index extends Component
             
         } else {
 
-            $petitions = Petition::with('customer')
+            $petitions = Petition::with('user')
             ->where(function ($query) {
                 $query->where('status', 'like', '%' . $this->search . '%')
-                      ->orWhereHas('customer', function ($query) {
+                      ->orWhereHas('user', function ($query) {
                           $query->where('name', 'like', '%' . $this->search . '%');
                       });
             })

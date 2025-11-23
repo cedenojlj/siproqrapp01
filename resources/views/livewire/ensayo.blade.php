@@ -14,16 +14,17 @@
             </div>
         @endif
 
-        <form wire:submit.prevent="save">
-            <div class="mb-4">
-                <label for="customer" class="block text-gray-700 text-sm font-bold mb-2">Cliente:</label>
-                <select id="customer" wire:model="customerId" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-                    <option value="">-- Seleccione un cliente --</option>
-                    @foreach($allCustomers as $customer)
-                        <option value="{{ $customer->id }}">{{ $customer->name }}</option>
+        <form wire:submit.prevent="save">            
+
+            <div class="mb-4">  
+                <label for="warehouse" class="block text-gray-700 text-sm font-bold mb-2">Almacén:</label>
+                <select id="warehouse" wire:model.live="warehouseId" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                    <option value="">-- Seleccione un almacén --</option>
+                    @foreach($allWarehouses as $warehouse)
+                        <option value="{{ $warehouse->id }}">{{ $warehouse->name }}</option>
                     @endforeach
                 </select>
-                @error('customerId') <p class="text-red-500 text-xs italic">{{ $message }}</p> @enderror
+                @error('warehouseId') <p class="text-red-500 text-xs italic">{{ $message }}</p> @enderror
             </div>
 
             <div class="overflow-x-auto bg-white rounded-lg shadow-md">

@@ -6,8 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Petition extends Model
 {
-    protected $fillable = [
-        'customer_id',
+    protected $fillable = [       
         'user_id',
         'status',
         'total',
@@ -27,4 +26,11 @@ class Petition extends Model
     {
         return $this->hasMany(PetitionProduct::class);
     }
+
+   
+    public function petitionClassifications()
+    {
+        return $this->hasMany(PetitionClassification::class);
+    }
+    
 }
