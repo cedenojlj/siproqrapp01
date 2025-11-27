@@ -27,7 +27,24 @@
             </tr>
         </thead>
         <tbody>
+
+             @php
+                $totalcuenta = 0;
+            @endphp
+
             @forelse($movements as $movement)
+
+            @php                
+
+                    if ($movement->type === 'Entrada') {
+                        $subtotalItem= (-1) * $movement->subtotal;
+                    }else {
+                        $subtotalItem = $movement->subtotal;                    }
+
+                    $totalcuenta += $subtotalItem;
+
+                @endphp
+
                 <tr>
                     <td>{{ $movement->created_at->format('Y-m-d H:i') }}</td>
                     <td>{{ $movement->product_name }}</td>
@@ -37,7 +54,7 @@
                     <td>{{ $movement->quantity }}</td>
                     <td>{{ $movement->customer_name }}</td>                    
                     <td>{{ $movement->product_gn }}</td>
-                    <td>{{ number_format($movement->subtotal, 2) }}</td>
+                     <td>{{ number_format($subtotalItem, 2) }}</td>
                 </tr>
             @empty
                 <tr>
@@ -48,7 +65,7 @@
         <tfoot>
             <tr>
                 <td colspan="8" class="text-right"><strong>Total:</strong></td>
-                <td><strong>{{ number_format($totalSubtotal, 2) }}</strong></td>
+                <td><strong>{{ number_format($totalcuenta, 2) }}</strong></td>
             </tr>
         </tfoot>
     </table>
