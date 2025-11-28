@@ -65,6 +65,11 @@
                             <span>Clientes</span>
                         </a>
                     </li>
+
+                    <li class="sidebar-item">
+                        <a href="{{ route('products.update-warehouse-qr') }}" class="sidebar-link">
+                            <i class="bi bi-houses"></i> <span>AlmacénQR</span></a>
+                    </li>
                 @endcan
 
                 @can('read warehouses')
@@ -75,10 +80,7 @@
                         </a>
                     </li>
 
-                    <li class="sidebar-item">
-                        <a href="{{ route('products.update-warehouse-qr') }}" class="sidebar-link">
-                            <i class="bi bi-houses"></i> <span>AlmacénQR</span></a>
-                    </li>
+                    
                 @endcan
 
                 @can('read petitions')

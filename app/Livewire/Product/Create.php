@@ -11,6 +11,7 @@ use Illuminate\Support\Str;
 use App\Models\Warehouse;
 use Livewire\Attributes\On; 
 use Illuminate\Support\Number;
+use Illuminate\Support\Facades\DB;
 
 
 class Create extends Component
@@ -169,10 +170,29 @@ class Create extends Component
         //crear precios para cada cliente
         $customers = Customer::all();
         foreach ($customers as $customer) {
+
+            $dataPrecioQry = $this->getQuery($this->classification_id,$customer->id)->first();
+
+           // dd($dataPrecioQry);
+           
+            if ($dataPrecioQry) { 
+
+                $precio_quantity = (float) $dataPrecioQry->price_quantityQry;
+                $precio_weight = (float) $dataPrecioQry->price_weightQry;
+
+                //dd($precio_quantity,$precio_weight);
+
+            } else {
+
+                $precio_quantity = $producto->classification->precio_unidad;
+                $precio_weight = $producto->classification->precio_peso;
+
+            }
+
             $producto->prices()->create([
                 'customer_id' => $customer->id,
-                'price_quantity' => $producto->classification->precio_unidad ?? 0,
-                'price_weight' => $producto->classification->precio_peso ?? 0,
+                'price_quantity' => $precio_quantity ?? 0,
+                'price_weight' => $precio_weight ?? 0,
             ]);
         }
 
@@ -182,6 +202,34 @@ class Create extends Component
 
         return redirect()->route('products.index');
     }
+
+
+
+     private function getQuery($clasificacionId,$clienteId)
+    {
+        // This query now groups by customer and classification
+        $query = DB::table('prices')
+            ->join('products', 'prices.product_id', '=', 'products.id')
+            ->join('customers', 'prices.customer_id', '=', 'customers.id')
+            ->join('classifications', 'products.classification_id', '=', 'classifications.id')
+            ->select(
+                'customers.id as customer_id',                
+                'classifications.id as classification_id',                
+                // Select one of the prices from the group to display as current
+                DB::raw('MIN(prices.price_quantity) as price_quantityQry'),
+                DB::raw('MIN(prices.price_weight) as price_weightQry')
+            )->where('customers.id', $clienteId)
+             ->where('classifications.id', $clasificacionId)
+            ->groupBy('customers.id', 'classifications.id')
+            ->orderBy('customers.id', 'asc')
+            ->orderBy('classifications.id', 'asc');        
+        
+            
+        return $query;
+    }
+
+
+
 
     public function render()
     {
