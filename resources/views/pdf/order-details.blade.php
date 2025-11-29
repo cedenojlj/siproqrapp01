@@ -28,6 +28,9 @@
     </style>
 </head>
 <body>
+
+    <img src="{{public_path('img/logoMejorado.jpg')}}" alt="" srcset="" width="200px">   
+  
     <h2>Order #{{ $order->id }}</h2>
 
     <p><strong>Date:</strong> {{ $order->created_at->format('d/m/Y H:i:s') }}</p>
@@ -51,7 +54,13 @@
             </tr>
         </thead>
         <tbody>
+            @php
+                $totalWeight = 0;
+            @endphp
             @foreach ($order->orderProducts as $item)
+                @php
+                    $totalWeight += $item->product->GN * $item->quantity;
+                @endphp
                 <tr>
                     <td>{{ $item->product->sku }}</td>
                     <td>{{ $item->product->name }}</td>
@@ -71,8 +80,13 @@
         </tbody>
         <tfoot>
             <tr>
-                <td colspan="4" class="text-end"><strong>Total:</strong></td>
-                <td>{{ number_format($order->total, 2) }}</td>
+                <td colspan="7" class="text-end"><strong>Total:</strong></td>
+                <td>${{ number_format($order->total, 2) }}</td>
+            </tr>
+
+            <tr>
+                <td colspan="7" class="text-end"><strong>Total Weight:</strong></td>
+                <td>{{ number_format($totalWeight, 2) }}</td>
             </tr>
         </tfoot>
     </table>

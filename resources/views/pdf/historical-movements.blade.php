@@ -22,6 +22,7 @@
     </style>
 </head>
 <body>
+    <img src="{{public_path('img/logoMejorado.jpg')}}" alt="" srcset="" width="200px">
     <h1>Historical Movements Report</h1>
 
     <p><strong>Filters:</strong></p>

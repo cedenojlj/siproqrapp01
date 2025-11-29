@@ -86,20 +86,47 @@
                                 {{-- <button class="btn btn-outline-secondary" type="button" wire:click="abrirScanQrCode">Scanner</button> --}}
                             </div>
                         </div>
+                        
+                        @php
+
+                            $totalPeso = 0;
+
+                        @endphp
 
                         @foreach ($products as $index => $productItem)
                             <div class="row mb-3 align-items-end">
-                                <div class="col-md-5">
+                                <div class="col-md-4">
                                     <label for="product-{{ $index }}" class="form-label">Product</label>
                                     <select class="form-select @error('products.' . $index . '.product_id') is-invalid @enderror" id="product-{{ $index }}" wire:model.live="products.{{ $index }}.product_id">
                                         <option value="">Select Product</option>
                                         @foreach ($availableProducts as $product)
                                             <option value="{{ $product->id }}">{{ $product->name }} (SKU: {{ $product->sku }})</option>
+                                            @php
+                                                $miGn = $product->gn;                                                
+                                            @endphp
                                         @endforeach
                                     </select>
                                     @error('products.' . $index . '.product_id') <div class="invalid-feedback">{{ $message }}</div> @enderror
                                 </div>
-                                <div class="col-md-3">
+
+                                {{-- requiero el valor de gn del producto mediante su product_id seleccionado para mostrarlo en el campo de peso y acumular el total de peso del pedido --}}
+                                {{-- para ello debo buscar en availableProducts el producto con el id igual a products.index.product_id y obtener su gn --}}
+                                @php
+                                    $selectedProduct = null;
+                                    if (!empty($productItem['product_id'])) {
+                                        $selectedProduct = collect($availableProducts)->firstWhere('id', $productItem['product_id']);
+                                    }
+                                    $gn = optional($selectedProduct)->GN ?? null;                                    
+                                    $gnValue = is_numeric($gn) ? floatval($gn) : 0;                                    
+                                    $totalPeso += $gnValue * floatval($productItem['quantity'] ?? 0);
+                                @endphp
+                                <div class="col-md-2">  
+                                    <label for="quantity-{{ $index }}" class="form-label">Weight </label>
+                                    <input type="text" class="form-control" id="gn-{{ $index }}" value="{{ $gnValue ?? '' }}" readonly>
+                                </div>
+                                    
+
+                                <div class="col-md-2">
                                     <label for="quantity-{{ $index }}" class="form-label">Quantity</label>
                                     <input type="number" class="form-control @error('products.' . $index . '.quantity') is-invalid @enderror" id="quantity-{{ $index }}" wire:model.live="products.{{ $index }}.quantity" step="0.01" min="1">
                                     @error('products.' . $index . '.quantity') <div class="invalid-feedback">{{ $message }}</div> @enderror
@@ -125,6 +152,7 @@
 
                         <div class="text-end">
                             <h4>Total: ${{ number_format($totalAmount, 2) }}</h4>
+                            <h4>Total Weight: {{ number_format($totalPeso, 2) }}</h4>
                         </div>
 
                         <button type="submit" class="btn btn-secondary" {{ count($products)>0 ? '' : 'disabled' }}>Create Order</button>

@@ -29,6 +29,7 @@
     </style>
 </head>
 <body>
+    <img src="{{public_path('img/logoMejorado.jpg')}}" alt="" srcset="" width="200px">
     <h1>Historial de Abonos</h1>
     <table>
         <thead>

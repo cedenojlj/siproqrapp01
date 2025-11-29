@@ -66,8 +66,8 @@
                         </tbody>
                         <tfoot>
                             <tr>
-                                <td colspan="3" class="text-end"><strong>Total:</strong></td>
-                                <td>{{ number_format($order->total, 2) }}</td>
+                                <td colspan="6" class="text-end"><strong>Total:</strong></td>
+                                <td>${{ number_format($order->total, 2) }}</td>
                             </tr>
                         </tfoot>
                     </table>

@@ -35,7 +35,7 @@
 </head>
 
 <body>
-
+    <img src="{{public_path('img/logoMejorado.jpg')}}" alt="" srcset="" width="200px">
 
     <h2>Report of Petition #{{ $petition->id }}</h2>
     <p><strong>Date:</strong> {{ $petition->created_at->format('d/m/Y H:i:s') }}</p>

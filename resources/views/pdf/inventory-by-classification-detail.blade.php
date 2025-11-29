@@ -15,6 +15,7 @@
     </style>
 </head>
 <body>
+    <img src="{{public_path('img/logoMejorado.jpg')}}" alt="" srcset="" width="200px">
     <h1>Detalle de Inventario por Clasificación</h1>
 
     <p>Fecha: {{ now()->format('d/m/Y H:i') }}</p>
