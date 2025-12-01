@@ -11,6 +11,13 @@
                 </div>
             @endif
 
+            {{-- mensaje de error --}}
+            @if (session()->has('error'))
+                <div class="alert alert-danger">
+                    {{ session('error') }}
+                </div>
+            @endif
+
             <div class="row">
                 <div class="col-md-6 mx-auto mb-4" wire:ignore>
                     <div id="qr-reader" style="width:100%;"></div>
@@ -63,7 +70,23 @@
                     <hr>
 
                     <div class="row">
-                        <div class="col-md-12">
+                        {{-- crea un div igual a selectedWarehouseId pero con warehousesAnterior --}}
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="warehouseAnterior">Almacén Actual</label>
+                                <select wire:model="warehousesAnterior" id="warehouseAnterior"
+                                    class="form-control @error('warehousesAnterior') is-invalid @enderror">
+                                    <option value="">-- Seleccione un Almacén --</option>
+                                    @foreach ($warehouses as $warehouse)
+                                        <option value="{{ $warehouse->id }}">{{ $warehouse->name }}</option>
+                                    @endforeach
+                                </select>
+                                @error('warehousesAnterior')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="col-md-4">
                             <div class="form-group">
                                 <label for="warehouse">Asignar Almacén</label>
                                 <select wire:model="selectedWarehouseId" id="warehouse"
@@ -76,6 +99,12 @@
                                 @error('selectedWarehouseId')
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="cantidad">Cantidad</label>
+                                <input type="number" wire:model.live="cantidad" id="cantidad" class="form-control" min="0">
                             </div>
                         </div>
                     </div>
