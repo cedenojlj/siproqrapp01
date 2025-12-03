@@ -69,7 +69,7 @@
                                 <option value="">Select Order Type</option>
                                 <option value="Entrada">Entrada</option>
                                 <option value="Devolucion">Devolucion</option>
-                                <option value="Salida">Salida</option>
+                                <option value="Salida">Ventas</option>
                                 <option value="Interna">Interna</option>
                             </select>
                             @error('order_type') <div class="invalid-feedback">{{ $message }}</div> @enderror

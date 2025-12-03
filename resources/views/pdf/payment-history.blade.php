@@ -26,10 +26,15 @@
             text-align: right;
             padding-top: 10px;
         }
+        .text-end {
+            text-align: right;
+        }
     </style>
 </head>
 <body>
-    <img src="{{public_path('img/logoMejorado.jpg')}}" alt="" srcset="" width="200px">
+    <div class="text-end">
+        <img src="{{public_path('img/logoMejorado.jpg')}}" alt="" srcset="" width="200px"> 
+    </div>
     <h1>Historial de Abonos</h1>
     <table>
         <thead>

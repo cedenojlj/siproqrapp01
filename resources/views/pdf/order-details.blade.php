@@ -25,11 +25,17 @@
             font-size: 1.2em;
             font-weight: bold;
         }
+        .text-end {
+            text-align: right;
+        }
     </style>
 </head>
 <body>
 
-    <img src="{{public_path('img/logoMejorado.jpg')}}" alt="" srcset="" width="200px">   
+    <div class="text-end">
+        <img src="{{public_path('img/logoMejorado.jpg')}}" alt="" srcset="" width="200px"> 
+    </div>
+      
   
     <h2>Order #{{ $order->id }}</h2>
 

@@ -71,7 +71,7 @@
                                 <option value="Pago_Movil">Pago Movil</option>
                                 <option value="Zelle">Zelle</option>
                                 <option value="Divisa">Divisa</option>
-                                <option value="Euro">Euro</option>
+                                <option value="Euro">Banesco Panama</option>
                             </select>
                             @error('metodo_pago') <span class="text-danger">{{ $message }}</span> @enderror
                         </div>
