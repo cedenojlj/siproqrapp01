@@ -50,9 +50,9 @@
         <thead>
             <tr>
                 <th>SKU</th>
-                <th>Product</th>
+                <th>Prod</th>
                 <th>Size</th>
-                <th>Quantity</th>
+                <th>Qty</th>
                 <th>NW</th>
                 <th>Price</th>
                 <th>Price2</th>
