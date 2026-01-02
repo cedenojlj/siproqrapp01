@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\ProductController;
 
 Route::get('/', function () {
     return view('auth.login');
@@ -10,9 +11,9 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::middleware(['auth'])->group(function () {
-    
+
     Route::get('/dashboard', App\Livewire\Dashboard\Index::class)->name('dashboard.index');
-    
+
     Route::get('/products', App\Livewire\Product\Index::class)->name('products.index');
     Route::get('/products/create', App\Livewire\Product\Create::class)->name('products.create');
     Route::get('/products/{product}/edit', App\Livewire\Product\Edit::class)->name('products.edit');
@@ -21,25 +22,25 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/products/generate-qrcodes', App\Livewire\Product\GenerateQrCodes::class)->name('products.generate-qrcodes');
     Route::get('/products/update-warehouse-qr', App\Livewire\Product\UpdateWarehouseFromQr::class)->name('products.update-warehouse-qr');
     Route::get('/products/report', App\Livewire\Product\FilterableTable::class)->name('products.report');
-   
+
     Route::get('/customers', App\Livewire\Customer\Index::class)->name('customers.index');
     Route::get('/customers/create', App\Livewire\Customer\Create::class)->name('customers.create');
     Route::get('/customers/{customer}/edit', App\Livewire\Customer\Edit::class)->name('customers.edit');
-   
+
     Route::get('/warehouses', App\Livewire\Warehouse\Index::class)->name('warehouses.index');
     Route::get('/warehouses/create', App\Livewire\Warehouse\Create::class)->name('warehouses.create');
     Route::get('/warehouses/{warehouse}/edit', App\Livewire\Warehouse\Edit::class)->name('warehouses.edit');
-   
+
     Route::get('/petitions', App\Livewire\Petition\Index::class)->name('petitions.index');
     Route::get('/petitions/create', App\Livewire\Petition\Create::class)->name('petitions.create');
     Route::get('/petitions/{petition}/edit', App\Livewire\Petition\Edit::class)->name('petitions.edit');
     Route::get('/petitions/{petition}', App\Livewire\Petition\Show::class)->name('petitions.show');
     Route::get('/petitions/create-by-classification', App\Livewire\Petition\CreatePetitionByClassification::class)->name('petitions.create-by-classification');
-    
+
     //Para la lista de productos
     Route::get('/listado', App\Livewire\Petition\Listado::class)->name('petitions.listado');
     Route::get('/modallistado', App\Livewire\Petition\ModalListado::class)->name('petitions.modalListado');
-    
+
     Route::get('/orders', App\Livewire\Order\Index::class)->name('orders.index');
     Route::get('/orders/create', App\Livewire\Order\Create::class)->name('orders.create');
     Route::get('/orders/{order}/edit', App\Livewire\Order\Edit::class)->name('orders.edit');
@@ -61,8 +62,11 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/users', App\Livewire\UserManagement::class)->name('users.index');
     Route::get('/classifications', App\Livewire\Classification\Table::class)->name('classifications.table');
     Route::get('/payments/manage', App\Livewire\Customer\PaymentManager::class)->name('payments.manage');
-    
-    
+
+    Route::get('/carga', [ProductController::class, 'uploadForm'])->name('products.uploadForm');
+    Route::post('/process', [ProductController::class, 'processCSV'])->name('process.csv');
+    Route::get('/descargar-errores', [ProductController::class, 'descargarErroresSession'])
+        ->name('descargar.errores');
 });
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

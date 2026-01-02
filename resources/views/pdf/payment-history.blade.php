@@ -43,6 +43,7 @@
                 <th># Orden</th>
                 <th>Cliente</th>
                 <th>Monto Abonado</th>
+                <th>Metodo de Pago</th>
             </tr>
         </thead>
         <tbody>
@@ -52,6 +53,7 @@
                     <td>{{ $application->order_id }}</td>
                     <td>{{ $application->payment->customer->name }}</td>
                     <td>${{ number_format($application->monto_aplicado, 2) }}</td>
+                    <td>{{ $application->payment->metodo_pago }}</td>
                 </tr>
             @empty
                 <tr>

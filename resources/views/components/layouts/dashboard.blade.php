@@ -47,6 +47,13 @@
                             <span>Productos</span>
                         </a>
                     </li>
+
+                     <li class="sidebar-item">
+                        <a href="{{ route('products.uploadForm') }}" class="sidebar-link">
+                            <i class="bi bi-box-seam"></i>
+                            <span>Carga de productos</span>
+                        </a>
+                    </li>
                 @endcan
 
                 @can('ver codigosQR')
