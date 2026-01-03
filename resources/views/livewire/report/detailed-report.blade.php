@@ -37,14 +37,21 @@
         </div>
     </div>
     <div class="row mb-3">
-        <div class="col-md-3">
+        <div class="col-md-2">
             <label for="startDate">Start Date</label>
             <input type="date" class="form-control" wire:model.live="startDate" id="startDate">
         </div>
-        <div class="col-md-3">
+        <div class="col-md-2">
             <label for="endDate">End Date</label>
             <input type="date" class="form-control" wire:model.live="endDate" id="endDate">
         </div>
+
+        
+        <div class="col-md-2">
+            <label for="sku">Sku</label>
+            <input type="text" class="form-control" wire:model.live="sku" id="sku">
+        </div>
+
         <div class="col-md-2 align-self-end">
             <button class="btn btn-primary" wire:click="generatePdf">Export to PDF</button>
         </div>
@@ -55,6 +62,7 @@
             <tr>
                 <th>Date</th>
                 <th>Product</th>
+                <th>SKU</th>
                 <th>Warehouse</th>
                 <th>Type</th>
                 <th>Quantity</th>
@@ -85,6 +93,7 @@
                 <tr>
                     <td>{{ $movement->created_at->format('Y-m-d H:i') }}</td>
                     <td>{{ $movement->product_name }}</td>
+                    <td>{{ $movement->product_sku }}</td>
                     <td>{{ $movement->warehouse_name }}</td>
                     <td>{{ ucfirst($movement->type) }}</td>
                     <td>{{ $movement->quantity }}</td>

@@ -20,6 +20,7 @@ class DetailedReport extends Component
 
     public $products;
     public $warehouses;
+    public $sku;
 
     public function mount()
     {
@@ -67,6 +68,7 @@ class DetailedReport extends Component
                 'products.name as product_name',
                 'products.size as product_size',
                 'products.GN as product_gn',
+                'products.sku as product_sku',
                 'warehouses.name as warehouse_name',
                 'customers.name as customer_name',
                 'order_products.subtotal'
@@ -91,6 +93,10 @@ class DetailedReport extends Component
 
         if ($this->movementType) {
             $query->where('movements.type', $this->movementType);
+        }
+
+        if ($this->sku) {
+            $query->where('products.sku', 'like', '%' . $this->sku . '%');
         }
 
         if ($this->startDate) {
