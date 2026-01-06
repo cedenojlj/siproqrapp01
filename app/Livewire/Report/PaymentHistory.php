@@ -71,7 +71,7 @@ class PaymentHistory extends Component
         $pdf = Pdf::loadView('pdf.payment-history', [
             'paymentApplications' => $paymentApplications,
             'totalAbonado' => $totalAbonado
-        ]);
+        ])->setPaper('letter', 'landscape');
 
         return response()->streamDownload(function () use ($pdf) {
             echo $pdf->stream();

@@ -44,6 +44,7 @@
                 <th>Cliente</th>
                 <th>Monto Abonado</th>
                 <th>Metodo de Pago</th>
+                <th>Notas</th>
             </tr>
         </thead>
         <tbody>
@@ -54,6 +55,7 @@
                     <td>{{ $application->payment->customer->name }}</td>
                     <td>${{ number_format($application->monto_aplicado, 2) }}</td>
                     <td>{{ $application->payment->metodo_pago }}</td>
+                    <td>{{ $application->payment->notas }}</td>
                 </tr>
             @empty
                 <tr>
