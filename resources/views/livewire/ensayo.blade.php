@@ -35,6 +35,7 @@
                             <th class="px-5 py-2  border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Medida</th>
                             <th class="px-5 py-2  border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Descripción</th>
                             <th class="px-5 py-2  border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Stock Disponible</th>
+                            <th class="px-5 py-2  border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Peso</th>
                             <th class="px-5 py-2  border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Cantidad a Pedir</th>
                         </tr>
                     </thead>
@@ -45,6 +46,7 @@
                                 <td class="px-5 py-1 border-b border-gray-200 bg-white text-sm">{{ $classification->size }}</td>
                                 <td class="px-5 py-1 border-b border-gray-200 bg-white text-sm">{{ $classification->description }}</td>
                                 <td class="px-5 py-1 border-b border-gray-200 bg-white text-sm">{{ $classification->total_stock }}</td>
+                                <td class="px-5 py-1 border-b border-gray-200 bg-white text-sm">{{ $classification->total_gn }}</td>
                                 <td class="px-5 py-1 border-b border-gray-200 bg-white text-sm">
                                     <input type="number" wire:model.defer="items.{{ $classification->id }}" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" min="0">
                                 </td>

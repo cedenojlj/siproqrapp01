@@ -121,6 +121,7 @@ class Ensayo extends Component
                 'classifications.description',
                 'classifications.size',
                 DB::raw('SUM(product_warehouses.stock) as total_stock'),
+                DB::raw('SUM(products.GN) as total_gn'),
             ])
             ->join('products', 'classifications.id', '=', 'products.classification_id')
             ->join('product_warehouses', 'products.id', '=', 'product_warehouses.product_id')
