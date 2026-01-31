@@ -7,6 +7,7 @@
                 <p class="text-muted">Cliente: {{ $order->customer->name ?? 'N/A' }}</p>
             </div>
             <div class="col-md-4 text-md-end">
+                <a href="{{ route('orders.return', $order) }}" class="btn btn-info me-2">Procesar Devolución</a>
                 <a href="{{ route('orders.show', $order) }}" class="btn btn-secondary">Volver a la Orden</a>
             </div>
         </div>

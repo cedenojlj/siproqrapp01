@@ -46,6 +46,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/orders/{order}/edit', App\Livewire\Order\Edit::class)->name('orders.edit');
     Route::get('/orders/{order}', App\Livewire\Order\Show::class)->name('orders.show');
     Route::get('/orders/{order}/edit-products', App\Livewire\Order\EditProducts::class)->name('orders.edit-products');
+    Route::get('/orders/{order}/return', App\Livewire\Order\ProcessReturn::class)->name('orders.return');
 
     Route::get('/reports/inventory-by-warehouse', App\Livewire\Report\InventoryByWarehouse::class)->name('reports.inventory-by-warehouse');
     Route::get('/reports/historical-movements', App\Livewire\Report\HistoricalMovements::class)->name('reports.historical-movements');
