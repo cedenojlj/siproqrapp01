@@ -136,18 +136,20 @@
                                     <td>{{ $order->status }}</td>
                                     <td>
                                         @can('read orders')
-                                            <a href="{{ route('orders.show', $order->id) }}" class="btn"><i
+                                            <a href="{{ route('orders.show', $order->id) }}" class="btn btn-sm" title="Ver Orden"><i
                                                     class="bi bi-eye"></i></a>
+                                            <a href="{{ route('orders.edit-products', $order->id) }}" class="btn btn-sm" title="Editar Productos"><i
+                                                    class="bi bi-card-list"></i></a>
                                         @endcan
                                         {{-- @can('update orders')
                                             <a href="{{ route('orders.edit', $order->id) }}" class="btn"><i
                                                     class="bi bi-pencil-square"></i></a>
                                         @endcan --}}
                                          @can('delete orders')
-                                                <button wire:click="delete({{ $order->id }})" class="btn"><i
+                                                <button wire:click="delete({{ $order->id }})" class="btn btn-sm" title="Eliminar Orden"><i
                                                         class="bi bi-trash"></i></button>
                                             @endcan
-                                            {{-- <button wire:click="borrar({{ $order->id }})" class="btn" onclick="confirm('Are you sure you want to delete this order?') || event.stopImmediatePropagation()"><i class="bi bi-trash"></i></button> --}}
+                                           <button wire:click="borrar({{ $order->id }})" class="btn" onclick="confirm('Are you sure you want to delete this order?') || event.stopImmediatePropagation()"><i class="bi bi-trash"></i></button>
                                     </td>
                                 </tr>
                             @endforeach

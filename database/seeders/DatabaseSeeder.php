@@ -35,7 +35,8 @@ class DatabaseSeeder extends Seeder
           // You can add more seeders here as needed
         $this->call([PermisosSeeder::class, 
                     WarehouseSeeder::class,
-                    /*CustomerSeeder::class,
-                     ClassificationSeeder::class */]);
+                    UserSeeder::class,
+                    CustomerSeeder::class,
+                    ClassificationSeeder::class]);
     }
 }

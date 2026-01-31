@@ -39,6 +39,18 @@ class Order extends Model
         return $this->hasMany(OrderProduct::class);
     }
 
+    public function products()
+    {
+        return $this->belongsToMany(Product::class, 'order_products')->withPivot('quantity', 'price', 'id');
+    }
+
+    public function recalculateTotals()
+    {
+        $subtotal = $this->products()->sum(DB::raw('price * quantity'));
+        // Asumiendo que el total es igual al subtotal, ajusta si manejas impuestos u otros cargos.
+        $this->total = $subtotal;
+    }
+
     public function movements()
     {
         return $this->hasMany(Movement::class);
