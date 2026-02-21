@@ -149,7 +149,7 @@
                                                 <button wire:click="delete({{ $order->id }})" class="btn btn-sm" title="Eliminar Orden"><i
                                                         class="bi bi-trash"></i></button>
                                             @endcan
-                                           <button wire:click="borrar({{ $order->id }})" class="btn" onclick="confirm('Are you sure you want to delete this order?') || event.stopImmediatePropagation()"><i class="bi bi-trash"></i></button>
+                                           {{-- <button wire:click="borrar({{ $order->id }})" class="btn" onclick="confirm('Are you sure you want to delete this order?') || event.stopImmediatePropagation()"><i class="bi bi-trash"></i></button> --}}
                                     </td>
                                 </tr>
                             @endforeach
