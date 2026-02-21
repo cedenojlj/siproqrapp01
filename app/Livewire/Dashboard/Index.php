@@ -5,9 +5,8 @@ namespace App\Livewire\Dashboard;
 use Livewire\Component;
 use Livewire\Attributes\Layout;
 use App\Models\Order;
-use App\Models\Petition;
+use App\Models\Payment;
 use App\Models\Product;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 
@@ -17,75 +16,71 @@ class Index extends Component
     public $chartData;
     public $productosCount;
     public $ordenesCount;
-    public $peticionesCount;
     public $ordenesTotal;
 
     public function mount()
     {
         $this->prepareChartData();
-        $this->productosCount = Product::all()->count();
-        $this->ordenesCount = Order::where('user_id', Auth::id())->count();
-        $this->peticionesCount = Petition::where('user_id', Auth::id())->count();
-        $this->ordenesTotal = Order::where('user_id', Auth::id())->sum('total');
+        $this->productosCount = Product::count();
+        $this->ordenesCount = Order::count();
+        $this->ordenesTotal = Order::sum('total');
     }
 
     public function prepareChartData()
     {
-        $orders = Order::select(
-                DB::raw('count(id) as `count`'),
+        $sales = Order::select(
+                DB::raw('sum(total) as `amount`'),
                 DB::raw('YEAR(created_at) as year'),
                 DB::raw('MONTH(created_at) as month')
             )
             ->whereYear('created_at', date('Y'))
-            ->where('user_id', Auth::id())
             ->groupBy('year', 'month')
             ->get()
             ->toArray();
 
-        $petitions = Petition::select(
-                DB::raw('count(id) as `count`'),
-                DB::raw('YEAR(created_at) as year'),
-                DB::raw('MONTH(created_at) as month')
+        $payments = Payment::select(
+                DB::raw('sum(monto) as `amount`'),
+                DB::raw('YEAR(fecha_pago) as year'),
+                DB::raw('MONTH(fecha_pago) as month')
             )
-            ->whereYear('created_at', date('Y'))
-            ->where('user_id', Auth::id())
+            ->whereYear('fecha_pago', date('Y'))
             ->groupBy('year', 'month')
             ->get()
             ->toArray();
 
         $labels = [];
-        $ordersData = [];
-        $petitionsData = [];
+        $salesData = [];
+        $paymentsData = [];
 
         for ($i = 1; $i <= 12; $i++) {
             $monthName = date('F', mktime(0, 0, 0, $i, 10));
             $labels[] = $monthName;
-            $ordersData[] = $this->getCountForMonth($orders, $i);
-            $petitionsData[] = $this->getCountForMonth($petitions, $i);
+            $salesData[] = $this->getAmountForMonth($sales, $i);
+            $paymentsData[] = $this->getAmountForMonth($payments, $i);
         }
 
         $this->chartData = [
             'labels' => $labels,
             'datasets' => [
                 [
-                    'label' => 'Orders',
-                    'data' => $ordersData,
+                    'label' => 'Ventas',
+                    'data' => $salesData,
                     'borderColor' => '#3B82F6', // Blue
                 ],
                 [
-                    'label' => 'Petitions',
-                    'data' => $petitionsData,
+                    'label' => 'Abonos',
+                    'data' => $paymentsData,
                     'borderColor' => '#1CC809', // Green
                 ]
             ]
         ];
     }
 
-    private function getCountForMonth($data, $month)
+    private function getAmountForMonth($data, $month)
     {
         foreach ($data as $item) {
             if ((int)$item['month'] == $month) {
-                return $item['count'];
+                return $item['amount'];
             }
         }
         return 0;

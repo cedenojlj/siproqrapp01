@@ -4,7 +4,7 @@
             <h1 class="h3 d-inline align-middle">Dashboard</h1>
         </div>
         <div class="row">
-            <div class="col-12 col-md-6 col-xl-3 mb-3">
+            <div class="col-12 col-md-6 col-xl-4 mb-3">
                 <div class="card border-0 shadow-sm h-100">
                     <div class="card-body d-flex flex-column">
                         <div class="row d-flex align-items-center">
@@ -21,7 +21,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-12 col-md-6 col-xl-3 mb-3">
+            <div class="col-12 col-md-6 col-xl-4 mb-3">
                 <div class="card border-0 shadow-sm h-100">
                     <div class="card-body d-flex flex-column">
                         <div class="row d-flex align-items-center">
@@ -38,24 +38,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-12 col-md-6 col-xl-3 mb-3">
-                <div class="card border-0 shadow-sm h-100">
-                    <div class="card-body d-flex flex-column">
-                        <div class="row d-flex align-items-center">
-                            <div class="col-auto">
-                                <div class="avatar bg-warning text-white rounded-circle p-3">
-                                    <i class="bi bi-receipt fs-4"></i>
-                                </div>
-                            </div>
-                            <div class="col">
-                                <h5 class="card-title text-muted fw-light mb-1">Pedidos</h5>
-                                <h3 class="fw-bold mb-0">{{ $peticionesCount }}</h3>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-12 col-md-6 col-xl-3 mb-3">
+            <div class="col-12 col-md-6 col-xl-4 mb-3">
                 <div class="card border-0 shadow-sm h-100">
                     <div class="card-body d-flex flex-column">
                         <div class="row d-flex align-items-center">
@@ -66,7 +49,7 @@
                             </div>
                             <div class="col">
                                 <h5 class="card-title text-muted fw-light mb-1">Ventas</h5>
-                                <h3 class="fw-bold mb-0">${{ $ordenesTotal }}</h3>
+                                <h3 class="fw-bold mb-0">${{ number_format($ordenesTotal, 2) }}</h3>
                             </div>
                         </div>
                     </div>
@@ -78,7 +61,7 @@
             <div class="col-12 col-md-12 mb-3">
                 <div class="card border-0 shadow-sm">
                     <div class="card-header">
-                        <h5 class="card-title mb-0">Monthly Orders and Petitions</h5>
+                        <h5 class="card-title mb-0">Ventas y Abonos Mensuales</h5>
                     </div>
                     <div class="card-body">
                         <div class="row">
@@ -134,7 +117,12 @@
                 maintainAspectRatio: false,
                 scales: {
                     y: {
-                        beginAtZero: true
+                        beginAtZero: true,
+                        ticks: {
+                            callback: function(value, index, values) {
+                                return '$' + new Intl.NumberFormat().format(value);
+                            }
+                        }
                     }
                 },
                 interaction: {
@@ -145,6 +133,19 @@
                     tooltip: {
                         mode: 'index',
                         intersect: false,
+                         callbacks: {
+                            label: function(context) {
+                                let label = context.dataset.label || '';
+
+                                if (label) {
+                                    label += ': ';
+                                }
+                                if (context.parsed.y !== null) {
+                                    label += new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(context.parsed.y);
+                                }
+                                return label;
+                            }
+                        }
                     }
                 }
             }
