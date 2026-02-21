@@ -63,6 +63,7 @@
                                     <a class="dropdown-item" href="{{ route('reports.inventory-by-classification') }}">{{ __('Inventory by Classification') }}</a>
                                     <a class="dropdown-item" href="{{ route('reports.inventory-by-classification-detail') }}">{{ __('Inventory by Classification Detail') }}</a>
                                     <a class="dropdown-item" href="{{ route('reports.payment-history') }}">{{ __('Payment History') }}</a>
+                                    <a class="dropdown-item" href="{{ route('reports.customer-debt-report') }}">{{ __('Customer Debt Report') }}</a>
                                 </div>
                             </li>
                         @endauth

@@ -55,6 +55,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/reports/detailed', App\Livewire\Report\DetailedReport::class)->name('reports.detailed');
     Route::get('/reports/debt-report', App\Livewire\Report\DebtReport::class)->name('reports.debt-report');
     Route::get('/reports/payment-history', App\Livewire\Report\PaymentHistory::class)->name('reports.payment-history');
+    Route::get('/reports/customer-debt-report', App\Livewire\Report\CustomerDebtReport::class)->name('reports.customer-debt-report');
 
     Route::get('/prices', App\Livewire\Price\Index::class)->name('prices.index');
     Route::get('/prices/create', App\Livewire\Price\Create::class)->name('prices.create');
