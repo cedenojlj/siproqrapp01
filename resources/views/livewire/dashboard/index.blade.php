@@ -4,41 +4,41 @@
             <h1 class="h3 d-inline align-middle">Dashboard</h1>
         </div>
         <div class="row">
-            <div class="col-12 col-md-6 col-xl-4 mb-3">
+            <div class="col-12 col-md-6 col-xl-3 mb-3">
                 <div class="card border-0 shadow-sm h-100">
                     <div class="card-body d-flex flex-column">
                         <div class="row d-flex align-items-center">
                             <div class="col-auto">
                                 <div class="avatar bg-primary text-white rounded-circle p-3">
-                                    <i class="bi bi-box-seam-fill fs-4"></i>
+                                    <i class="bi bi-box-seam fs-4"></i>
                                 </div>
                             </div>
                             <div class="col">
-                                <h5 class="card-title text-muted fw-light mb-1">Productos</h5>
-                                <h3 class="fw-bold mb-0">{{ $productosCount }}</h3>
+                                <h5 class="card-title text-muted fw-light mb-1">Órdenes del Mes</h5>
+                                <h3 class="fw-bold mb-0">{{ $monthlyOrdersCount }}</h3>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="col-12 col-md-6 col-xl-4 mb-3">
+            <div class="col-12 col-md-6 col-xl-3 mb-3">
                 <div class="card border-0 shadow-sm h-100">
                     <div class="card-body d-flex flex-column">
                         <div class="row d-flex align-items-center">
                             <div class="col-auto">
                                 <div class="avatar bg-success text-white rounded-circle p-3">
-                                    <i class="bi bi-people-fill fs-4"></i>
+                                    <i class="bi bi-cash-coin fs-4"></i>
                                 </div>
                             </div>
                             <div class="col">
-                                <h5 class="card-title text-muted fw-light mb-1">Ordenes</h5>
-                                <h3 class="fw-bold mb-0">{{ $ordenesCount }}</h3>
+                                <h5 class="card-title text-muted fw-light mb-1">Abonos del Mes</h5>
+                                <h3 class="fw-bold mb-0">${{ number_format($monthlyPayments, 2) }}</h3>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="col-12 col-md-6 col-xl-4 mb-3">
+            <div class="col-12 col-md-6 col-xl-3 mb-3">
                 <div class="card border-0 shadow-sm h-100">
                     <div class="card-body d-flex flex-column">
                         <div class="row d-flex align-items-center">
@@ -48,8 +48,25 @@
                                 </div>
                             </div>
                             <div class="col">
-                                <h5 class="card-title text-muted fw-light mb-1">Ventas</h5>
-                                <h3 class="fw-bold mb-0">${{ number_format($ordenesTotal, 2) }}</h3>
+                                <h5 class="card-title text-muted fw-light mb-1">Ventas del Mes</h5>
+                                <h3 class="fw-bold mb-0">${{ number_format($monthlySales, 2) }}</h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 col-xl-3 mb-3">
+                <div class="card border-0 shadow-sm h-100">
+                    <div class="card-body d-flex flex-column">
+                        <div class="row d-flex align-items-center">
+                            <div class="col-auto">
+                                <div class="avatar bg-warning text-white rounded-circle p-3">
+                                    <i class="bi bi-calendar-event fs-4"></i>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <h5 class="card-title text-muted fw-light mb-1">Ventas del Año</h5>
+                                <h3 class="fw-bold mb-0">${{ number_format($yearlySales, 2) }}</h3>
                             </div>
                         </div>
                     </div>

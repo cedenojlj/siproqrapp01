@@ -14,16 +14,31 @@ use Illuminate\Support\Facades\DB;
 class Index extends Component
 {
     public $chartData;
-    public $productosCount;
-    public $ordenesCount;
-    public $ordenesTotal;
+    public $monthlyOrdersCount;
+    public $monthlyPayments;
+    public $monthlySales;
+    public $yearlySales;
 
     public function mount()
     {
         $this->prepareChartData();
-        $this->productosCount = Product::count();
-        $this->ordenesCount = Order::count();
-        $this->ordenesTotal = Order::sum('total');
+        
+        $now = now();
+        
+        $this->monthlyOrdersCount = Order::whereYear('created_at', $now->year)
+                                         ->whereMonth('created_at', $now->month)
+                                         ->count();
+                                         
+        $this->monthlyPayments = Payment::whereYear('fecha_pago', $now->year)
+                                        ->whereMonth('fecha_pago', $now->month)
+                                        ->sum('monto');
+                                        
+        $this->monthlySales = Order::whereYear('created_at', $now->year)
+                                   ->whereMonth('created_at', $now->month)
+                                   ->sum('total');
+                                   
+        $this->yearlySales = Order::whereYear('created_at', $now->year)
+                                  ->sum('total');
     }
 
     public function prepareChartData()

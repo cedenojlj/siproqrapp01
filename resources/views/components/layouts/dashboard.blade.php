@@ -248,6 +248,11 @@
                                     Abonos</a>
                             </li>
 
+                            <li class="sidebar-item">
+                                <a href="{{ route('reports.customer-debt-report') }}" class="sidebar-link">
+                                    Abonos por Cliente</a>
+                            </li>
+
                         </ul>
                     </li>
                 @endcan
