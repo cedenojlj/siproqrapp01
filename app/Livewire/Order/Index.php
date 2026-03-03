@@ -25,6 +25,8 @@ class Index extends Component
     public $status_general = '';
     public $order_type = '';
     public $customer_id = '';
+    public $totalVendido = 0;
+
 
     public function render()
     {
@@ -67,6 +69,9 @@ class Index extends Component
 
         $orders = $query->orderBy('id', 'desc')->paginate(10);
         $customers = Customer::orderBy('name')->get();
+
+        //total de ordenes monto vendido
+        $this->totalVendido = $query->sum('total');
 
         return view('livewire.order.index', [
             'orders' => $orders,

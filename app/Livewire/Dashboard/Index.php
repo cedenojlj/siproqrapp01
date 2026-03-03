@@ -35,10 +35,12 @@ class Index extends Component
                                         
         $this->monthlySales = Order::whereYear('created_at', $now->year)
                                    ->whereMonth('created_at', $now->month)
+                                   ->where('status', '<>', 'Rechazada') // Asegura que solo se sumen las ventas completadas
                                    ->sum('total');
                                    
         $this->yearlySales = Order::whereYear('created_at', $now->year)
-                                  ->sum('total');
+                                    ->where('status', '<>', 'Rechazada')
+                                    ->sum('total');
     }
 
     public function prepareChartData()
@@ -49,6 +51,7 @@ class Index extends Component
                 DB::raw('MONTH(created_at) as month')
             )
             ->whereYear('created_at', date('Y'))
+            ->where('status', '<>', 'Rechazada')
             ->groupBy('year', 'month')
             ->get()
             ->toArray();

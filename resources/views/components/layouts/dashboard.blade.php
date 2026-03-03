@@ -250,7 +250,7 @@
 
                             <li class="sidebar-item">
                                 <a href="{{ route('reports.customer-debt-report') }}" class="sidebar-link">
-                                    Abonos por Cliente</a>
+                                    Deudas por Cliente</a>
                             </li>
 
                         </ul>

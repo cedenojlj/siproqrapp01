@@ -89,7 +89,14 @@
                     </div>
                     
                     
-                </div>                
+                </div>  
+                
+                <div class="row mb-3">
+                    <div class="col-md-3 mb-sm-2">
+                        <label for="totalVendido">Total Vendido</label>
+                        <input type="text" class="form-control" value="${{ number_format($totalVendido, 2) }}" readonly>
+                    </div>
+                </div>
 
                 <div class="table-responsive">
                     <table class="table table-striped">
