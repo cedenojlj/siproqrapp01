@@ -253,6 +253,12 @@
                                     Deudas por Cliente</a>
                             </li>
 
+                            {{-- <li class="sidebar-item">
+                                <a href="{{ route('classifications.crud') }}" class="sidebar-link">
+                                    Classification Crud</a>
+                            </li> --}}
+
+
                         </ul>
                     </li>
                 @endcan

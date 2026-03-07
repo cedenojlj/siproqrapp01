@@ -65,6 +65,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/users', App\Livewire\UserManagement::class)->name('users.index');
     Route::get('/classifications', App\Livewire\Classification\Table::class)->name('classifications.table');
+    Route::get('/classifications/crud', App\Livewire\Classification\ClassificationCrud::class)->name('classifications.crud');
     Route::get('/payments/manage', App\Livewire\Customer\PaymentManager::class)->name('payments.manage');
 
     Route::get('/carga', [ProductController::class, 'uploadForm'])->name('products.uploadForm');
